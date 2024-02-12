@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "WindowSettingsMixin",
+    "GameOptionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
