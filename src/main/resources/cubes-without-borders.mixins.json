@@ -4,6 +4,7 @@
   "package": "dev.kir.cubeswithoutborders.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "WindowMixin",
     "VideoOptionsScreenMixin",
     "WindowSettingsMixin",
     "MainMixin",
