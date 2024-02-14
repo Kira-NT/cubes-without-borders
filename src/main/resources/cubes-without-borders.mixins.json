@@ -8,6 +8,7 @@
     "VideoOptionsScreenMixin",
     "WindowSettingsMixin",
     "MainMixin",
+    "MinecraftClientMixin",
     "GameOptionsMixin"
   ],
   "injectors": {
