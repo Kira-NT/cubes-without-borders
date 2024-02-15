@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "dev.kir.cubeswithoutborders.compat.sodium.SodiumMixinPlugin",
   "client": [
+    "SodiumGameOptionPagesMixin"
   ],
   "injectors": {
     "defaultRequire": 0
