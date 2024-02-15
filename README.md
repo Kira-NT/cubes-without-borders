@@ -31,7 +31,7 @@ Additionally, the mod introduces a `--borderless` startup flag for those interes
 
 Requirements:
 
- - Minecraft `1.19.x`
+ - Minecraft `1.20.x`
  - Fabric Loader `>=0.15.0`
 
 You can download the mod from:
