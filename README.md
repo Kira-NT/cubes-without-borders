@@ -6,7 +6,24 @@
 [![CurseForge](https://img.shields.io/badge/dynamic/json?color=F16436&label=CurseForge&query=title&url=https://api.cfwidget.com/975120&cacheSeconds=3600&logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/cubes-without-borders)
 [![License](https://img.shields.io/github/license/Kir-Antipov/cubes-without-borders?style=flat&cacheSeconds=36000)](https://github.com/Kir-Antipov/cubes-without-borders/blob/HEAD/LICENSE.md)
 
+<img alt="Cubes Without Borders Icon" src="https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/icon.png" width="128">
+
 A mod that allows you to play Minecraft in a borderless fullscreen window. This way, you can have the game open on one monitor, while interacting with other applications on a different monitor, without consistently causing Minecraft to minimize.
+
+----
+
+## Usage
+
+The mod doesn't introduce any additional configuration screens. Instead, it utilizes the existing `Video Settings` tab, where you would expect to find an option of this kind, and extends the pre-existing `Fullscreen` setting, adding a third option to it: `Borderless`.
+
+So, depending on whether you have Sodium installed, you may find the option in question here:
+
+| ![Video Setting](https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/video-settings.png) | ![Video Setting (Sodium)](https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/video-settings-sodium.png) |
+| - | - |
+
+Simply choose the new `Borderless` option, click `Apply` and/or `Done`, and you are good to go.
+
+Additionally, the mod introduces a `--borderless` startup flag for those interested, which works the same way as the existing `--fullscreen` one, but forces the game to start as a borderless fullscreen window instead.
 
 ----
 
