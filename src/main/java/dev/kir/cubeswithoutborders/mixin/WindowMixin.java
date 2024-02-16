@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
-import dev.kir.cubeswithoutborders.util.SystemUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.*;
@@ -120,19 +119,10 @@ abstract class WindowMixin implements BorderlessWindowState {
         // which resets values of `width` and `height`.
         GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
 
-        // There's a bug that causes a fullscreen window to flicker when it loses focus.
-        // As far as I know, this is relevant for Windows and X11 desktops.
-        // Fuck X11 - it's a perpetually broken piece of legacy.
-        // However, we do need to implement a fix for Windows desktops, as they
-        // are not going anywhere in the foreseeable future (sadly enough).
-        // This "fix" involves not bringing a window into a "proper" fullscreen mode,
-        // but rather stretching it 1 pixel beyond the screen's supported resolution.
-        int heightOffset = SystemUtil.isWindows() ? 1 : 0;
-
         this.x = 0;
         this.y = 0;
         this.width = videoMode.getWidth();
-        this.height = videoMode.getHeight() + heightOffset;
+        this.height = videoMode.getHeight();
         GLFW.glfwSetWindowMonitor(this.handle, 0L, this.x, this.y, this.width, this.height, -1);
 
         this.currentBorderless = true;
