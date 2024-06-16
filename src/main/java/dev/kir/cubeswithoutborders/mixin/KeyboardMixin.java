@@ -22,4 +22,14 @@ import org.spongepowered.asm.mixin.injection.At;
 abstract class KeyboardMixin {
     @Shadow
     private @Final MinecraftClient client;
+
+    @WrapOperation(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/SimpleOption;setValue(Ljava/lang/Object;)V"))
+    private <T> void saveOptions(SimpleOption<T> option, T value, Operation<Void> setValue) {
+        // Minecraft doesn't save options when they are changed during a key press.
+        // This means that, for example, if you toggle fullscreen mode via F11,
+        // the new window state won't be preserved upon a game restart.
+        // So, we force Minecraft to save options whenever some new value is set.
+        setValue.call(option, value);
+        this.client.options.write();
+    }
 }
