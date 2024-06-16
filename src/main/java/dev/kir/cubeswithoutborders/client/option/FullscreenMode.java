@@ -1,9 +1,7 @@
 package dev.kir.cubeswithoutborders.client.option;
 
-import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.Window;
 import net.minecraft.util.TranslatableOption;
 
 @Environment(EnvType.CLIENT)
@@ -43,15 +41,21 @@ public enum FullscreenMode implements TranslatableOption {
         return OFF;
     }
 
-    public static FullscreenMode of(Window window) {
-        if (window.isFullscreen()) {
-            return FullscreenMode.ON;
+    public static FullscreenMode get(boolean isFullscreen, boolean isBorderless) {
+        if (isFullscreen) {
+            return ON;
         }
 
-        if (((BorderlessWindowState)(Object)window).isBorderless()) {
-            return FullscreenMode.BORDERLESS;
+        if (isBorderless) {
+            return BORDERLESS;
         }
 
-        return FullscreenMode.OFF;
+        return OFF;
+    }
+
+    public static FullscreenMode combine(FullscreenMode left, FullscreenMode right) {
+        boolean isFullscreen = left == ON || right == ON;
+        boolean isBorderless = left == BORDERLESS || right == BORDERLESS;
+        return FullscreenMode.get(isFullscreen, isBorderless);
     }
 }
