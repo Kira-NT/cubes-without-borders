@@ -49,24 +49,11 @@ Requirements:
 
  - JDK `17`
 
-### Linux/MacOS
-
-```cmd
-git clone https://github.com/Kir-Antipov/cubes-without-borders.git
+```bash
+git clone https://github.com/Kir-Antipov/cubes-without-borders
 cd cubes-without-borders
 
-chmod +x ./gradlew
 ./gradlew build
-cd build/libs
-```
-
-### Windows
-
-```cmd
-git clone https://github.com/Kir-Antipov/cubes-without-borders.git
-cd cubes-without-borders
-
-gradlew build
 cd build/libs
 ```
 
