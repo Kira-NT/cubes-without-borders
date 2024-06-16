@@ -9,6 +9,7 @@
     "WindowSettingsMixin",
     "MainMixin",
     "MinecraftClientMixin",
+    "KeyboardMixin",
     "GameOptionsMixin"
   ],
   "injectors": {
