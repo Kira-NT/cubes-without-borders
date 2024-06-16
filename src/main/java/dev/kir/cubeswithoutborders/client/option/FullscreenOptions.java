@@ -7,4 +7,6 @@ import net.minecraft.client.option.SimpleOption;
 @Environment(EnvType.CLIENT)
 public interface FullscreenOptions {
     SimpleOption<FullscreenMode> getFullscreenMode();
+
+    SimpleOption<FullscreenMode> getPreferredFullscreenMode();
 }

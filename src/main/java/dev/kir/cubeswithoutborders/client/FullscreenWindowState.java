@@ -9,4 +9,18 @@ public interface FullscreenWindowState {
     FullscreenMode getFullscreenMode();
 
     void setFullscreenMode(FullscreenMode mode);
+
+    FullscreenMode getPreferredFullscreenMode();
+
+    void setPreferredFullscreenMode(FullscreenMode mode);
+
+    default FullscreenMode toggleFullscreenMode() {
+        if (this.getFullscreenMode() != FullscreenMode.OFF) {
+            this.setFullscreenMode(FullscreenMode.OFF);
+            return this.getFullscreenMode();
+        }
+
+        this.setFullscreenMode(this.getPreferredFullscreenMode());
+        return this.getFullscreenMode();
+    }
 }

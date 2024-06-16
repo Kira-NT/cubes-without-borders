@@ -24,6 +24,8 @@ import java.util.Arrays;
 abstract class GameOptionsMixin implements FullscreenOptions {
     private SimpleOption<FullscreenMode> fullscreenMode;
 
+    private SimpleOption<FullscreenMode> preferredFullscreenMode;
+
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions;load()V", shift = At.Shift.BEFORE))
     private void init(MinecraftClient client, File optionsFile, CallbackInfo ci) {
         this.fullscreenMode = new SimpleOption<>(
@@ -41,9 +43,31 @@ abstract class GameOptionsMixin implements FullscreenOptions {
 
                 borderlessWindow.setFullscreenMode(value);
                 FullscreenMode fullscreenMode = borderlessWindow.getFullscreenMode();
+                FullscreenMode preferredFullscreenMode = borderlessWindow.getPreferredFullscreenMode();
 
                 this.getFullscreenMode().setValue(fullscreenMode);
+                this.getPreferredFullscreenMode().setValue(preferredFullscreenMode);
                 this.getFullscreen().setValue(fullscreenMode == FullscreenMode.ON);
+            }
+        );
+
+        this.preferredFullscreenMode = new SimpleOption<>(
+            "options.preferredFullscreenMode",
+            SimpleOption.emptyTooltip(),
+            SimpleOption.enumValueText(),
+            new SimpleOption.PotentialValuesBasedCallbacks<>(Arrays.asList(FullscreenMode.values()), Codec.INT.xmap(FullscreenMode::get, FullscreenMode::getId)),
+            FullscreenMode.ON,
+            value -> {
+                Window window = MinecraftClient.getInstance().getWindow();
+                FullscreenWindowState borderlessWindow = (FullscreenWindowState)(Object)window;
+                if (window == null || value == borderlessWindow.getPreferredFullscreenMode()) {
+                    return;
+                }
+
+                borderlessWindow.setPreferredFullscreenMode(value);
+                FullscreenMode preferredFullscreenMode = borderlessWindow.getPreferredFullscreenMode();
+
+                this.getPreferredFullscreenMode().setValue(preferredFullscreenMode);
             }
         );
     }
@@ -51,6 +75,7 @@ abstract class GameOptionsMixin implements FullscreenOptions {
     @Inject(method = "accept", at = @At("HEAD"))
     private void accept(GameOptions.Visitor visitor, CallbackInfo ci) {
         visitor.accept("fullscreenMode", this.fullscreenMode);
+        visitor.accept("preferredFullscreenMode", this.preferredFullscreenMode);
     }
 
     @Shadow
@@ -59,5 +84,10 @@ abstract class GameOptionsMixin implements FullscreenOptions {
     @Override
     public SimpleOption<FullscreenMode> getFullscreenMode() {
         return this.fullscreenMode;
+    }
+
+    @Override
+    public SimpleOption<FullscreenMode> getPreferredFullscreenMode() {
+        return this.preferredFullscreenMode;
     }
 }

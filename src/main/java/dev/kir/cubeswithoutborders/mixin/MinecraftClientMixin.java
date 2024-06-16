@@ -37,9 +37,12 @@ abstract class MinecraftClientMixin {
             settings.getFullscreenMode(),
             options.getFullscreenMode().getValue()
         );
+        FullscreenMode preferredFullscreenMode = options.getPreferredFullscreenMode().getValue();
 
+        window.setPreferredFullscreenMode(preferredFullscreenMode);
         window.setFullscreenMode(fullscreenMode);
 
         options.getFullscreenMode().setValue(window.getFullscreenMode());
+        options.getPreferredFullscreenMode().setValue(window.getPreferredFullscreenMode());
     }
 }

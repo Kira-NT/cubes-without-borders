@@ -23,6 +23,17 @@ abstract class KeyboardMixin {
     @Shadow
     private @Final MinecraftClient client;
 
+    @WrapOperation(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;toggleFullscreen()V", ordinal = 0))
+    private void toggleFullscreen(@NotNull Window window, Operation<Void> _toggleFullscreen) {
+        FullscreenWindowState borderlessWindow = (FullscreenWindowState)(Object)window;
+        FullscreenOptions options = (FullscreenOptions)this.client.options;
+        SimpleOption<FullscreenMode> fullscreenMode = options.getFullscreenMode();
+        SimpleOption<FullscreenMode> preferredFullscreenMode = options.getPreferredFullscreenMode();
+
+        fullscreenMode.setValue(borderlessWindow.toggleFullscreenMode());
+        preferredFullscreenMode.setValue(borderlessWindow.getPreferredFullscreenMode());
+    }
+
     @WrapOperation(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/SimpleOption;setValue(Ljava/lang/Object;)V"))
     private <T> void saveOptions(SimpleOption<T> option, T value, Operation<Void> setValue) {
         // Minecraft doesn't save options when they are changed during a key press.
