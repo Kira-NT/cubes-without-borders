@@ -3,7 +3,8 @@ package dev.kir.cubeswithoutborders.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
+import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.util.SystemUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = Window.class)
-abstract class WindowMixin implements BorderlessWindowState {
+abstract class WindowMixin implements FullscreenWindowState {
     @Shadow
     private static @Final Logger LOGGER;
 
@@ -64,14 +65,14 @@ abstract class WindowMixin implements BorderlessWindowState {
     protected abstract void updateWindowRegion();
 
     @Override
-    public boolean isBorderless() {
-        return this.borderless;
+    public FullscreenMode getFullscreenMode() {
+        return FullscreenMode.get(this.fullscreen, this.borderless);
     }
 
     @Override
-    public void setBorderless(boolean borderless) {
-        this.borderless = borderless;
-        this.fullscreen = this.fullscreen & !borderless;
+    public void setFullscreenMode(FullscreenMode mode) {
+        this.borderless = mode == FullscreenMode.BORDERLESS;
+        this.fullscreen = mode == FullscreenMode.ON;
     }
 
     @Inject(method = "setWindowedSize", at = @At("HEAD"))

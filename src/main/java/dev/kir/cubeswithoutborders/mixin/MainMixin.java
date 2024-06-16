@@ -2,7 +2,8 @@ package dev.kir.cubeswithoutborders.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
+import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import net.fabricmc.api.EnvType;
@@ -26,8 +27,11 @@ abstract class MainMixin {
     @Inject(method = "main", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;beginInitialization()V", ordinal = 0), require = 0)
     private static void readBorderlessOption(String[] args, CallbackInfo ci, @Local(ordinal = 0) OptionSet options, @Local(ordinal = 0) RunArgs runArgs) {
         boolean isBorderless = options.has("borderless");
-        BorderlessWindowState windowSettings = (BorderlessWindowState)runArgs.windowSettings;
+        if (!isBorderless) {
+            return;
+        }
 
-        windowSettings.setBorderless(isBorderless);
+        FullscreenWindowState windowSettings = (FullscreenWindowState)runArgs.windowSettings;
+        windowSettings.setFullscreenMode(FullscreenMode.BORDERLESS);
     }
 }

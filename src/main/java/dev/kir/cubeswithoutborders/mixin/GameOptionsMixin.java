@@ -1,7 +1,7 @@
 package dev.kir.cubeswithoutborders.mixin;
 
 import com.mojang.serialization.Codec;
-import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
+import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import net.fabricmc.api.EnvType;
@@ -34,14 +34,16 @@ abstract class GameOptionsMixin implements FullscreenOptions {
             FullscreenMode.OFF,
             value -> {
                 Window window = MinecraftClient.getInstance().getWindow();
-                BorderlessWindowState borderlessWindow = (BorderlessWindowState)(Object)window;
-                if (window == null || value == FullscreenMode.of(window)) {
+                FullscreenWindowState borderlessWindow = (FullscreenWindowState)(Object)window;
+                if (window == null || value == borderlessWindow.getFullscreenMode()) {
                     return;
                 }
 
-                this.getFullscreen().setValue(value == FullscreenMode.ON);
-                borderlessWindow.setBorderless(value == FullscreenMode.BORDERLESS);
-                this.getFullscreenMode().setValue(FullscreenMode.of(window));
+                borderlessWindow.setFullscreenMode(value);
+                FullscreenMode fullscreenMode = borderlessWindow.getFullscreenMode();
+
+                this.getFullscreenMode().setValue(fullscreenMode);
+                this.getFullscreen().setValue(fullscreenMode == FullscreenMode.ON);
             }
         );
     }

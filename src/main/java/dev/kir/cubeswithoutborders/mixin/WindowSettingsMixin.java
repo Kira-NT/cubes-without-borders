@@ -1,6 +1,7 @@
 package dev.kir.cubeswithoutborders.mixin;
 
-import dev.kir.cubeswithoutborders.client.BorderlessWindowState;
+import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.WindowSettings;
@@ -11,20 +12,20 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WindowSettings.class)
-abstract class WindowSettingsMixin implements BorderlessWindowState {
+abstract class WindowSettingsMixin implements FullscreenWindowState {
     @Shadow
     public @Final @Mutable boolean fullscreen;
 
     private boolean borderless;
 
     @Override
-    public boolean isBorderless() {
-        return this.borderless;
+    public FullscreenMode getFullscreenMode() {
+        return FullscreenMode.get(this.fullscreen, this.borderless);
     }
 
     @Override
-    public void setBorderless(boolean borderless) {
-        this.borderless = borderless;
-        this.fullscreen = this.fullscreen && !borderless;
+    public void setFullscreenMode(FullscreenMode mode) {
+        this.borderless = mode == FullscreenMode.BORDERLESS;
+        this.fullscreen = mode == FullscreenMode.ON;
     }
 }
