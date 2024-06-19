@@ -133,6 +133,7 @@ abstract class WindowMixin implements FullscreenWindowState {
         // This call triggers the `onWindowSizeChanged` callback,
         // which resets values of `width` and `height`.
         GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
+        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
 
         // There's a bug that causes a fullscreen window to flicker when it loses focus.
         // As far as I know, this is relevant for Windows and X11 desktops.
@@ -143,11 +144,18 @@ abstract class WindowMixin implements FullscreenWindowState {
         // but rather stretching it 1 pixel beyond the screen's supported resolution.
         int heightOffset = SystemUtil.isWindows() ? 1 : 0;
 
+        // If the current environment properly supports windowed fullscreen mode,
+        // prefer it (i.e., just don't bind the window to a specific monitor).
+        // For example, macOS won't hesitate to display a taskbar over your game,
+        // which is clearly not what we want.
+        long monitorHandle = SystemUtil.supportsWindowedFullscreen() ? 0L : monitor.getHandle();
+
         this.x = 0;
         this.y = 0;
         this.width = videoMode.getWidth();
         this.height = videoMode.getHeight() + heightOffset;
-        GLFW.glfwSetWindowMonitor(this.handle, 0L, this.x, this.y, this.width, this.height, -1);
+        int refreshRate = videoMode.getRefreshRate();
+        GLFW.glfwSetWindowMonitor(this.handle, monitorHandle, this.x, this.y, this.width, this.height, refreshRate);
 
         this.currentBorderless = true;
         ci.cancel();
@@ -156,6 +164,11 @@ abstract class WindowMixin implements FullscreenWindowState {
     @Inject(method = "updateWindowRegion", at = @At(value = "FIELD", target = "Lnet/minecraft/client/util/Window;windowedX:I", ordinal = 1, shift = At.Shift.BEFORE))
     private void restoreWindowDecorations(CallbackInfo ci) {
         GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+    }
+
+    @Inject(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;", ordinal = 0, shift = At.Shift.BEFORE))
+    private void restoreWindowAutoIconifyAttribute(CallbackInfo ci) {
+        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
     }
 
     @Inject(method = "updateWindowRegion", at = @At("RETURN"))

@@ -9,5 +9,9 @@ public final class SystemUtil {
         return SystemUtil.getSystemName().contains("Windows");
     }
 
+    public static boolean supportsWindowedFullscreen() {
+        return SystemUtil.isWindows();
+    }
+
     private SystemUtil() { }
 }
