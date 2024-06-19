@@ -150,8 +150,8 @@ abstract class WindowMixin implements FullscreenWindowState {
         // which is clearly not what we want.
         long monitorHandle = SystemUtil.supportsWindowedFullscreen() ? 0L : monitor.getHandle();
 
-        this.x = 0;
-        this.y = 0;
+        this.x = monitor.getViewportX();
+        this.y = monitor.getViewportY();
         this.width = videoMode.getWidth();
         this.height = videoMode.getHeight() + heightOffset;
         int refreshRate = videoMode.getRefreshRate();
