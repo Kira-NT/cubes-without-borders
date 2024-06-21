@@ -26,6 +26,11 @@ abstract class WindowSettingsMixin implements FullscreenWindowState {
     @Override
     public void setFullscreenMode(FullscreenMode mode) {
         this.borderless = mode == FullscreenMode.BORDERLESS;
-        this.fullscreen = mode == FullscreenMode.ON;
+
+        // We want `WindowSettings` to report that fullscreen is requested,
+        // even if we ultimately want borderless fullscreen in the end.
+        // This prevents the game from appearing as a small window on startup,
+        // resulting in a smoother transition.
+        this.fullscreen = this.borderless || mode == FullscreenMode.ON;
     }
 }

@@ -1,22 +1,21 @@
 package dev.kir.cubeswithoutborders.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.RunArgs;
+import net.minecraft.client.WindowSettings;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.util.Window;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.util.WindowProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(MinecraftClient.class)
@@ -24,14 +23,10 @@ abstract class MinecraftClientMixin {
     @Shadow
     public @Final GameOptions options;
 
-    @Shadow
-    private @Final @NotNull Window window;
-
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setVsync(Z)V", ordinal = 0))
-    private void init(RunArgs args, CallbackInfo ci) {
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/WindowProvider;createWindow(Lnet/minecraft/client/WindowSettings;Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/client/util/Window;", ordinal = 0))
+    private Window createWindow(WindowProvider windowProvider, WindowSettings windowSettings, String videoMode, String title, Operation<Window> createWindow) {
         FullscreenOptions options = (FullscreenOptions)this.options;
-        FullscreenWindowState window = (FullscreenWindowState)(Object)this.window;
-        FullscreenWindowState settings = (FullscreenWindowState)args.windowSettings;
+        FullscreenWindowState settings = (FullscreenWindowState)windowSettings;
 
         FullscreenMode fullscreenMode = FullscreenMode.combine(
             settings.getFullscreenMode(),
@@ -39,10 +34,18 @@ abstract class MinecraftClientMixin {
         );
         FullscreenMode preferredFullscreenMode = options.getPreferredFullscreenMode().getValue();
 
-        window.setPreferredFullscreenMode(preferredFullscreenMode);
-        window.setFullscreenMode(fullscreenMode);
+        settings.setPreferredFullscreenMode(preferredFullscreenMode);
+        settings.setFullscreenMode(fullscreenMode);
 
-        options.getFullscreenMode().setValue(window.getFullscreenMode());
-        options.getPreferredFullscreenMode().setValue(window.getPreferredFullscreenMode());
+        Window window = createWindow.call(windowProvider, windowSettings, videoMode, title);
+        FullscreenWindowState fullscreenWindow = (FullscreenWindowState)(Object)window;
+
+        fullscreenWindow.setPreferredFullscreenMode(preferredFullscreenMode);
+        fullscreenWindow.setFullscreenMode(fullscreenMode);
+
+        options.getFullscreenMode().setValue(fullscreenWindow.getFullscreenMode());
+        options.getPreferredFullscreenMode().setValue(fullscreenWindow.getPreferredFullscreenMode());
+
+        return window;
     }
 }
