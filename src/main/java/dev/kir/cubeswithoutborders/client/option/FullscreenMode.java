@@ -42,12 +42,12 @@ public enum FullscreenMode implements TranslatableOption {
     }
 
     public static FullscreenMode get(boolean isFullscreen, boolean isBorderless) {
-        if (isFullscreen) {
-            return ON;
-        }
-
         if (isBorderless) {
             return BORDERLESS;
+        }
+
+        if (isFullscreen) {
+            return ON;
         }
 
         return OFF;
