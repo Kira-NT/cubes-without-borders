@@ -10,9 +10,13 @@ public interface FullscreenWindowState {
 
     void setFullscreenMode(FullscreenMode mode);
 
-    FullscreenMode getPreferredFullscreenMode();
+    default FullscreenMode getPreferredFullscreenMode() {
+        return FullscreenMode.ON;
+    }
 
-    void setPreferredFullscreenMode(FullscreenMode mode);
+    default void setPreferredFullscreenMode(FullscreenMode mode) {
+
+    }
 
     default FullscreenMode toggleFullscreenMode() {
         if (this.getFullscreenMode() != FullscreenMode.OFF) {
