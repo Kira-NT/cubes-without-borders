@@ -2,3 +2,4 @@ accessWidener v2 named
 
 accessible class net/minecraft/client/option/GameOptions$Visitor
 accessible class net/minecraft/client/option/SimpleOption$Callbacks
+accessible field net/minecraft/client/util/MonitorTracker pointerToMonitorMap Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
