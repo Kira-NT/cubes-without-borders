@@ -5,9 +5,17 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
+import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
+import dev.kir.cubeswithoutborders.client.util.MonitorInfo;
+import dev.kir.cubeswithoutborders.client.util.MonitorInfoContainer;
+import dev.kir.cubeswithoutborders.client.util.MonitorLookup;
 import dev.kir.cubeswithoutborders.util.SystemUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.WindowEventHandler;
+import net.minecraft.client.WindowSettings;
+import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.*;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -86,6 +94,13 @@ abstract class WindowMixin implements FullscreenWindowState {
     @Override
     public void setPreferredFullscreenMode(FullscreenMode mode) {
         this.prefersBorderless = mode == FullscreenMode.BORDERLESS;
+    }
+
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(J)Lnet/minecraft/client/util/Monitor;", ordinal = 0))
+    private Monitor getMonitor(MonitorTracker monitorTracker, long pointer, Operation<Monitor> getMonitor, WindowEventHandler _arg0, MonitorTracker _arg1, WindowSettings settings) {
+        Monitor defaultMonitor = getMonitor.call(monitorTracker, pointer);
+        MonitorInfo monitorInfo = ((MonitorInfoContainer)settings).getMonitorInfo();
+        return MonitorLookup.findMonitor(monitorTracker, monitorInfo).orElse(defaultMonitor);
     }
 
     @Inject(method = "setWindowedSize", at = @At("HEAD"))
@@ -183,5 +198,18 @@ abstract class WindowMixin implements FullscreenWindowState {
         }
 
         return getWindowMonitor.call(handle);
+    }
+
+    @Inject(method = "close", at = @At("HEAD"))
+    private void saveSelectedMonitor(CallbackInfo ci) {
+        Monitor monitor = this.monitorTracker.getMonitor((Window)(Object)this);
+        if (monitor == null) {
+            return;
+        }
+
+        MonitorInfo monitorInfo = MonitorInfo.of(monitor);
+        GameOptions options = MinecraftClient.getInstance().options;
+        ((FullscreenOptions)options).getFullscreenMonitor().setValue(monitorInfo);
+        options.write();
     }
 }

@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
+import dev.kir.cubeswithoutborders.client.util.MonitorInfo;
+import dev.kir.cubeswithoutborders.client.util.MonitorInfoContainer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -28,6 +30,7 @@ abstract class MinecraftClientMixin {
         FullscreenOptions options = (FullscreenOptions)this.options;
         FullscreenWindowState settings = (FullscreenWindowState)windowSettings;
 
+        MonitorInfo fullscreenMonitor = options.getFullscreenMonitor().getValue();
         FullscreenMode fullscreenMode = FullscreenMode.combine(
             settings.getFullscreenMode(),
             options.getFullscreenMode().getValue()
@@ -36,6 +39,7 @@ abstract class MinecraftClientMixin {
 
         settings.setPreferredFullscreenMode(preferredFullscreenMode);
         settings.setFullscreenMode(fullscreenMode);
+        ((MonitorInfoContainer)settings).setMonitorInfo(fullscreenMonitor);
 
         Window window = createWindow.call(windowProvider, windowSettings, videoMode, title);
         FullscreenWindowState fullscreenWindow = (FullscreenWindowState)(Object)window;
