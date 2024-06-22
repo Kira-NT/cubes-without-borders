@@ -10,6 +10,15 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public final class MonitorLookup {
+    public static Optional<Monitor> findMonitor(MonitorTracker monitorTracker, MonitorInfo monitorInfo) {
+        int x = monitorInfo.getViewportX();
+        int y = monitorInfo.getViewportY();
+        int width = monitorInfo.getWidth();
+        int height = monitorInfo.getHeight();
+
+        return MonitorLookup.findMonitor(monitorTracker, x, y, width, height);
+    }
+
     public static Optional<Monitor> findMonitor(MonitorTracker monitorTracker, int x, int y, int width, int height) {
         for (Monitor monitor : monitorTracker.pointerToMonitorMap.values()) {
             if (monitor.getViewportX() != x || monitor.getViewportY() != y) {
