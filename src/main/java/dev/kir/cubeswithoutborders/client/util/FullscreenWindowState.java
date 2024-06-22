@@ -1,4 +1,4 @@
-package dev.kir.cubeswithoutborders.client;
+package dev.kir.cubeswithoutborders.client.util;
 
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import net.fabricmc.api.EnvType;

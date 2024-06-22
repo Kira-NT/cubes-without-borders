@@ -1,4 +1,4 @@
-package dev.kir.cubeswithoutborders.compat.sodium;
+package dev.kir.cubeswithoutborders.client.compat.sodium;
 
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;

@@ -1,8 +1,8 @@
-package dev.kir.cubeswithoutborders.mixin;
+package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
 import net.fabricmc.api.EnvType;

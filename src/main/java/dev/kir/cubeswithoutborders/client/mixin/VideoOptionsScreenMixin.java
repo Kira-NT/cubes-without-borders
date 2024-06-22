@@ -1,4 +1,4 @@
-package dev.kir.cubeswithoutborders.mixin;
+package dev.kir.cubeswithoutborders.client.mixin;
 
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;

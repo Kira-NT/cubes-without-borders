@@ -1,8 +1,8 @@
-package dev.kir.cubeswithoutborders.mixin;
+package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;

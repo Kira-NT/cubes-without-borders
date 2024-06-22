@@ -1,15 +1,15 @@
-package dev.kir.cubeswithoutborders.mixin;
+package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
 import dev.kir.cubeswithoutborders.client.util.MonitorInfo;
 import dev.kir.cubeswithoutborders.client.util.MonitorInfoContainer;
 import dev.kir.cubeswithoutborders.client.util.MonitorLookup;
-import dev.kir.cubeswithoutborders.util.SystemUtil;
+import dev.kir.cubeswithoutborders.client.util.SystemUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

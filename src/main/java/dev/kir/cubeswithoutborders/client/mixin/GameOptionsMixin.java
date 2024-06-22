@@ -1,7 +1,7 @@
-package dev.kir.cubeswithoutborders.mixin;
+package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.mojang.serialization.Codec;
-import dev.kir.cubeswithoutborders.client.FullscreenWindowState;
+import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.SimpleOptionCallbacks;

@@ -1,9 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.kir.cubeswithoutborders.compat.sodium.mixin",
+  "package": "dev.kir.cubeswithoutborders.client.compat.sodium.mixin",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "dev.kir.cubeswithoutborders.compat.sodium.SodiumMixinPlugin",
+  "plugin": "dev.kir.cubeswithoutborders.client.compat.sodium.SodiumMixinPlugin",
   "client": [
     "SodiumGameOptionPagesMixin"
   ],
