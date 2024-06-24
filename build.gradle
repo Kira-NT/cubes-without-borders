@@ -7,6 +7,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 String minecraftDependencyVersion = project.minecraft_version.split(/[+ -]/)[0]
+String loaderVersion = project.loader_version;
 
 group = project.maven_group
 archivesBaseName = project.archives_base_name
@@ -40,6 +41,7 @@ processResources {
     filesMatching("fabric.mod.json") {
         expand([
             "version": version,
+            "loader": loaderVersion,
             "minecraft": minecraftDependencyVersion,
         ])
     }
