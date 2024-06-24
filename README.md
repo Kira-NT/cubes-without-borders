@@ -8,7 +8,7 @@
 
 <img alt="Cubes Without Borders Icon" src="https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/icon.png" width="128">
 
-A mod that allows you to play Minecraft in a borderless fullscreen window. This way, you can have the game open on one monitor, while interacting with other applications on a different monitor, without consistently causing Minecraft to minimize.
+A mod that allows you to play Minecraft in a borderless fullscreen window. Whether you're using Linux, macOS, or Windows, you can have the game open on one monitor, while interacting with other applications on a different monitor, without consistently causing Minecraft to minimize.
 
 ----
 
