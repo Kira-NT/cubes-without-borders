@@ -3,9 +3,10 @@ plugins {
     id "org.ajoberstar.grgit" version "4.1.0"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.toVersion(project.java_version)
+targetCompatibility = sourceCompatibility
 
+Integer javaVersion = targetCompatibility.ordinal() + 1
 String minecraftDependencyVersion = project.minecraft_version.split(/[+ -]/)[0]
 String loaderVersion = project.loader_version;
 
@@ -38,11 +39,12 @@ dependencies {
 }
 
 processResources {
-    filesMatching("fabric.mod.json") {
+    filesMatching(["fabric.mod.json", "*.mixins.json"]) {
         expand([
             "version": version,
             "loader": loaderVersion,
             "minecraft": minecraftDependencyVersion,
+            "java": javaVersion,
         ])
     }
 }
@@ -53,7 +55,7 @@ tasks.withType(JavaCompile).configureEach {
     // If Javadoc is generated, this must be specified in that task too.
     // See http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
     it.options.encoding = "UTF-8"
-    it.options.release.set(17)
+    it.options.release.set(javaVersion)
 }
 
 java {
