@@ -45,8 +45,8 @@ However, you can define a simple window rule to change the PiP's layer to someth
 
 Requirements:
 
- - Minecraft `1.20.x`
- - Fabric Loader `>=0.15.0`
+ - Minecraft `1.21.x`
+ - Fabric Loader `>=0.15.11`
 
 You can download the mod from:
 
@@ -61,7 +61,7 @@ You can download the mod from:
 
 Requirements:
 
- - JDK `17`
+ - JDK `21`
 
 ```bash
 git clone https://github.com/Kir-Antipov/cubes-without-borders
