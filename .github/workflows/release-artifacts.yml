@@ -24,6 +24,7 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           name: ""
+          game-version-filter: releases | min-major | min-minor
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
