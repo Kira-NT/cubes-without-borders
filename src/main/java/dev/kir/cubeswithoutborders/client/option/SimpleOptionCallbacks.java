@@ -8,6 +8,7 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
@@ -26,7 +27,7 @@ public final class SimpleOptionCallbacks<T> implements SimpleOption.Callbacks<T>
     }
 
     @Override
-    public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width) {
+    public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
         throw new UnsupportedOperationException();
     }
 
