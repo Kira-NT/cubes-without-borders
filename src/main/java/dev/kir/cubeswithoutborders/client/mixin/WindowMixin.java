@@ -2,7 +2,6 @@ package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
@@ -126,7 +125,6 @@ abstract class WindowMixin implements FullscreenWindowState {
             return;
         }
 
-        RenderSystem.assertInInitPhase();
         Monitor monitor = this.monitorTracker.getMonitor((Window)(Object)this);
         if (monitor == null) {
             LOGGER.warn("Failed to find suitable monitor for fullscreen mode");
