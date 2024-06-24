@@ -27,6 +27,20 @@ Additionally, the mod introduces a `--borderless` startup flag for those interes
 
 ----
 
+## Notes
+
+### KDE Plasma
+
+In case you want to open a Picture-in-Picture video on top of your Minecraft gameplay, while you painstakingly mine obsidian pillars in The End for a new mega-project, you may notice that it doesn't quite work as you would expect on KDE Plasma - Minecraft simply renders on top of the supposedly always-on-top window.
+
+Unfortunately, there's nothing I can do on my side, since a borderless fullscreen window is still a fullscreen window, and this behavior is explicitly defined by [the FreeDesktop spec](https://specifications.freedesktop.org/wm-spec/wm-spec-1.3.html#STACKINGORDER), which was written long before it became common for people to display PiP windows on top of their fullscreen games. GNOME users don't suffer from this problem, because GNOME simply broke the specification without even attempting to start a discussion around it and change it for everyone's benefit, which is a very GNOME thing to do.
+
+However, you can define a simple window rule to change the PiP's layer to something that renders on top of fullscreen windows, such as `OSD` or `Overlay`. With this in place, you will be able to put PiP windows on top of Minecraft, other games, and any other fullscreen apps for that matter. Here's an example for Firefox users:
+
+<img alt="KDE Plasma - Window Rules" width="886" src="https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/kde-plasma-window-rules.png">
+
+----
+
 ## Installation
 
 Requirements:
