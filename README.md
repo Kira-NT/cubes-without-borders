@@ -2,8 +2,8 @@
 
 [![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/Kir-Antipov/cubes-without-borders/build-artifacts.yml?style=flat&logo=github&cacheSeconds=3600)](https://github.com/Kir-Antipov/cubes-without-borders/actions/workflows/build-artifacts.yml)
 [![Version](https://img.shields.io/github/v/release/Kir-Antipov/cubes-without-borders?sort=date&style=flat&label=version&cacheSeconds=3600)](https://github.com/Kir-Antipov/cubes-without-borders/releases/latest)
-[![Modrinth](https://img.shields.io/badge/dynamic/json?color=00AF5C&label=Modrinth&query=title&url=https://api.modrinth.com/v2/project/cubes-without-borders&style=flat&cacheSeconds=3600&logo=modrinth)](https://modrinth.com/mod/cubes-without-borders)
-[![CurseForge](https://img.shields.io/badge/dynamic/json?color=F16436&label=CurseForge&query=title&url=https://api.cfwidget.com/975120&cacheSeconds=3600&logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/cubes-without-borders)
+[![Modrinth](https://img.shields.io/modrinth/dt/cubes-without-borders?color=00AF5C&logo=modrinth)](https://modrinth.com/mod/cubes-without-borders)
+[![CurseForge](https://img.shields.io/curseforge/dt/975120?color=F16436&logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/cubes-without-borders)
 [![License](https://img.shields.io/github/license/Kir-Antipov/cubes-without-borders?style=flat&cacheSeconds=36000)](https://github.com/Kir-Antipov/cubes-without-borders/blob/HEAD/LICENSE.md)
 
 <img alt="Cubes Without Borders Icon" src="https://raw.githubusercontent.com/Kir-Antipov/cubes-without-borders/HEAD/media/icon.png" width="128">
