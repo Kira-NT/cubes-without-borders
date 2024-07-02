@@ -22,8 +22,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-
 @Environment(EnvType.CLIENT)
 @Mixin(value = Window.class)
 abstract class WindowMixin implements FullscreenWindowState {
@@ -72,9 +70,6 @@ abstract class WindowMixin implements FullscreenWindowState {
     @Shadow
     protected abstract void updateWindowRegion();
 
-    @Shadow
-    private Optional<VideoMode> videoMode;
-
     @Override
     public FullscreenMode getFullscreenMode() {
         return FullscreenMode.get(this.fullscreen, this.borderless);
@@ -102,21 +97,6 @@ abstract class WindowMixin implements FullscreenWindowState {
         Monitor defaultMonitor = getMonitor.call(monitorTracker, pointer);
         MonitorInfo monitorInfo = ((MonitorInfoContainer)settings).getMonitorInfo();
         return MonitorLookup.findMonitor(monitorTracker, monitorInfo).orElse(defaultMonitor);
-    }
-
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J", ordinal = 0))
-    private long createWindow(int width, int height, CharSequence title, long monitorHandle, long share, Operation<Long> createWindow, WindowEventHandler eventHandler, MonitorTracker monitorTracker, WindowSettings settings) {
-        // Minecraft tries to set its windowed dimensions (e.g., the usual 854x480)
-        // as the desired fullscreen resolution. Thanks, Mojang.
-        Monitor monitor = monitorHandle == 0 ? null : monitorTracker.getMonitor(monitorHandle);
-        if (monitor != null) {
-            boolean isBorderless = ((FullscreenWindowState)settings).getFullscreenMode() == FullscreenMode.BORDERLESS;
-            VideoMode videoMode = monitor.findClosestVideoMode(isBorderless ? Optional.empty() : this.videoMode);
-            this.width = width = videoMode.getWidth();
-            this.height = height = videoMode.getHeight();
-        }
-
-        return createWindow.call(width, height, title, monitorHandle, share);
     }
 
     @Inject(method = "setWindowedSize", at = @At("HEAD"))
