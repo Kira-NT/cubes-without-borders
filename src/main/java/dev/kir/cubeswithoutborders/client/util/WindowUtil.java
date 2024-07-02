@@ -43,7 +43,7 @@ public final class WindowUtil {
 
     private static boolean setWindowStyle_Windows(Window window, long hWndInsertAfter, long style, long exStyle) {
         long hWnd = GLFWNativeWin32.glfwGetWin32Window(window.getHandle());
-        if (hWnd <= 0) {
+        if (hWnd == 0) {
             // This should never happen since the underlying
             // window is created in the `Window` constructor.
             return false;
@@ -59,10 +59,7 @@ public final class WindowUtil {
         int width = window.getWidth();
         int height = window.getHeight();
         int flags = User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOSENDCHANGING;
-        boolean isUpdated = User32.SetWindowPos(hWnd, hWndInsertAfter, x, y, width, height, flags);
-        if (isUpdated) {
-            return false;
-        }
+        User32.SetWindowPos(hWnd, hWndInsertAfter, x, y, width, height, flags);
 
         // Finally, update the style of the window (including "extended styles").
         User32.SetWindowLongPtr(hWnd, User32.GWL_STYLE, style);
