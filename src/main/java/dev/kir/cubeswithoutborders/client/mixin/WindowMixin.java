@@ -2,13 +2,10 @@ package dev.kir.cubeswithoutborders.client.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.kir.cubeswithoutborders.client.util.FullscreenWindowState;
+import com.mojang.blaze3d.systems.RenderSystem;
+import dev.kir.cubeswithoutborders.client.util.*;
 import dev.kir.cubeswithoutborders.client.option.FullscreenMode;
 import dev.kir.cubeswithoutborders.client.option.FullscreenOptions;
-import dev.kir.cubeswithoutborders.client.util.MonitorInfo;
-import dev.kir.cubeswithoutborders.client.util.MonitorInfoContainer;
-import dev.kir.cubeswithoutborders.client.util.MonitorLookup;
-import dev.kir.cubeswithoutborders.client.util.SystemUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -162,60 +159,27 @@ abstract class WindowMixin implements FullscreenWindowState {
             this.windowedHeight = this.height;
         }
 
-        // Do NOT move this line.
-        // This call triggers the `onWindowSizeChanged` callback,
-        // which resets values of `width` and `height`.
-        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
-        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
-
-        // There's a bug that causes a fullscreen window to flicker when it loses focus.
-        // As far as I know, this is relevant for Windows and X11 desktops.
-        // Fuck X11 - it's a perpetually broken piece of legacy.
-        // However, we do need to implement a fix for Windows desktops, as they
-        // are not going anywhere in the foreseeable future (sadly enough).
-        // This "fix" involves not bringing a window into a "proper" fullscreen mode,
-        // but rather stretching it 1 pixel beyond the screen's supported resolution.
-        int heightOffset = SystemUtil.isWindows() ? 1 : 0;
-
-        // If the current environment properly supports windowed fullscreen mode,
-        // prefer it (i.e., just don't bind the window to a specific monitor).
-        // For example, macOS won't hesitate to display a taskbar over your game,
-        // which is clearly not what we want.
-        long monitorHandle = SystemUtil.supportsWindowedFullscreen() ? 0L : monitor.getHandle();
-
+        long monitorHandle = monitor.getHandle();
         this.x = monitor.getViewportX();
         this.y = monitor.getViewportY();
         this.width = videoMode.getWidth();
-        this.height = videoMode.getHeight() + heightOffset;
+        this.height = videoMode.getHeight();
         int refreshRate = videoMode.getRefreshRate();
         GLFW.glfwSetWindowMonitor(this.handle, monitorHandle, this.x, this.y, this.width, this.height, refreshRate);
+        WindowUtil.disableExclusiveFullscreen((Window)(Object)this);
 
         this.currentBorderless = true;
         ci.cancel();
     }
 
-    @Inject(method = "updateWindowRegion", at = @At(value = "FIELD", target = "Lnet/minecraft/client/util/Window;windowedX:I", ordinal = 1, shift = At.Shift.BEFORE))
-    private void restoreWindowDecorations(CallbackInfo ci) {
-        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
-    }
-
-    @Inject(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;", ordinal = 0, shift = At.Shift.BEFORE))
-    private void restoreWindowAutoIconifyAttribute(CallbackInfo ci) {
-        GLFW.glfwSetWindowAttrib(this.handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+    @Inject(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V", ordinal = 0, shift = At.Shift.AFTER))
+    private void restoreExclusiveFullscreen(CallbackInfo ci) {
+        WindowUtil.enableExclusiveFullscreen((Window)(Object)this);
     }
 
     @Inject(method = "updateWindowRegion", at = @At("RETURN"))
     private void updateBorderlessStatus(CallbackInfo ci) {
         this.currentBorderless = this.borderless;
-    }
-
-    @WrapOperation(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwGetWindowMonitor(J)J", ordinal = 0))
-    private long getWindowMonitorIfNotBorderless(long handle, Operation<Long> getWindowMonitor) {
-        if (this.currentBorderless) {
-            return -1;
-        }
-
-        return getWindowMonitor.call(handle);
     }
 
     @Inject(method = "close", at = @At("HEAD"))
