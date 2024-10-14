@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://files.minecraftforge.net/maven/" }
+        maven { url "https://ajoberstar.org/bintray-backup/" }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "cubes-without-borders"
+
+include "common"
+include "fabric"
+include "forge"
+
+project(":common").projectDir = file("src/common")
+project(":fabric").projectDir = file("src/fabric")
+project(":forge").projectDir = file("src/forge")
+

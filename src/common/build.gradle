@@ -1,0 +1,30 @@
+architectury {
+    common rootProject.enabled_platforms.split(",")
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/cubes-without-borders.accesswidener")
+}
+
+repositories {
+    mavenCentral() {
+        content { includeGroup "ca.weblite" }
+    }
+}
+
+dependencies {
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modCompileOnly "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+    modCompileOnly "me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}"
+
+    // I need access to `MacWindowUtil`, which requires `NSObject` to be defined.
+    // Since the mod isn't being built on macOS, the library that provides
+    // it is missing. Therefore, we specify it in our dependency list manually
+    // to ensure that the compilation is able to succeed.
+    // However, this could (and likely will) cause issues if someone tries
+    // to build the mod on macOS. But honestly, who cares?
+    compileOnly "ca.weblite:java-objc-bridge:1.2"
+}
