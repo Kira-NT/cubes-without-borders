@@ -1,0 +1,53 @@
+name: release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get required Java version
+        id: gradle-properties
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: gradle.properties
+          properties: java_version
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.gradle-properties.outputs.java_version }}
+
+      - name: Build artifacts
+        run: ./gradlew clean build --no-daemon
+
+      - name: Upload Fabric assets to GitHub, Modrinth, and CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          name: ""
+          files: |
+            src/fabric/build/libs/!(*-@(dev|shadow|sources|javadoc).jar)
+            src/fabric/build/libs/*-@(dev|sources|javadoc).jar
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Forge assets to GitHub, Modrinth, and CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          name: ""
+          files: |
+            src/forge/build/libs/!(*-@(dev|shadow|sources|javadoc).jar)
+            src/forge/build/libs/*-@(dev|sources|javadoc).jar
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
