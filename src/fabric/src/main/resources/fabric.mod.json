@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "cubes-without-borders",
+  "version": "${version}",
+  "name": "Cubes Without Borders",
+  "description": "Allows you to play Minecraft in a borderless fullscreen window.",
+  "authors": [
+    "Kir_Antipov"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Kir-Antipov/cubes-without-borders",
+    "sources": "https://github.com/Kir-Antipov/cubes-without-borders",
+    "issues": "https://github.com/Kir-Antipov/cubes-without-borders/issues/new/choose"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "modmenu": [
+      "dev.kir.cubeswithoutborders.client.compat.modmenu.ModMenuCompat"
+    ]
+  },
+  "mixins": [
+    "cubes-without-borders.sodium.mixins.json",
+    "cubes-without-borders.mixins.json"
+  ],
+  "custom": {
+    "mc-publish": {
+      "loaders": ["fabric", "quilt"],
+      "modrinth": "ETlrkaYF",
+      "curseforge": 975120
+    }
+  },
+  "depends": {
+    "fabricloader": "${fabricloader}",
+    "minecraft": "${minecraft}",
+    "java": "${java}"
+  },
+  "suggests": {
+    "cloth-config": "*",
+    "modmenu": "*"
+  }
+}
