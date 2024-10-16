@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Maakt het mogelijk om Minecraft in een randloos fullscreen venster te spelen.",
+
+  "options.borderlessFullscreen": "Randloos",
+  "options.pauseOnLostFocus": "Pauzeren bij verlies van focus",
+  "options.fullscreenType": "Type schermvullend",
+  "options.borderlessFullscreenType": "Randloos schermvullend type"
+}

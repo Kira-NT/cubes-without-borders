@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "يتيح لك لعب ماينكرافت في نافذة ملء الشاشة بدون حدود.",
+
+  "options.borderlessFullscreen": "بدون حدود",
+  "options.pauseOnLostFocus": "إيقاف مؤقت عند فقدان التركيز",
+  "options.fullscreenType": "نوع ملء الشاشة",
+  "options.borderlessFullscreenType": "نوع ملء الشاشة بدون حدود"
+}

@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Ermöglicht das Spielen von Minecraft im randlosen Vollbildmodus.",
+
+  "options.borderlessFullscreen": "Randlos",
+  "options.pauseOnLostFocus": "Pause bei Fokusverlust",
+  "options.fullscreenType": "Vollbildmodus-Typ",
+  "options.borderlessFullscreenType": "Randloser Vollbildmodus-Typ"
+}

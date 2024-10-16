@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Дазваляе гуляць у Minecraft у поўнаэкранным акне без межаў.",
+
+  "options.borderlessFullscreen": "Безрамачны",
+  "options.pauseOnLostFocus": "Паўза пры страце фокуса",
+  "options.fullscreenType": "Тып поўнаэкраннага рэжыму",
+  "options.borderlessFullscreenType": "Тып поўнаэкраннага рэжыму без межаў"
+}

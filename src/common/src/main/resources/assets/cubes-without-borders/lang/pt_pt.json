@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Permite jogar Minecraft numa janela de ecrã completo sem bordas.",
+
+  "options.borderlessFullscreen": "Sem bordas",
+  "options.pauseOnLostFocus": "Pausar ao perder o foco",
+  "options.fullscreenType": "Tipo de ecrã completo",
+  "options.borderlessFullscreenType": "Tipo de ecrã completo sem bordas"
+}

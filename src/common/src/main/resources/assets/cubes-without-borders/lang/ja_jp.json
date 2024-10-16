@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Minecraftをフチなしの全画面ウィンドウでプレイできます。",
+
+  "options.borderlessFullscreen": "フチなし",
+  "options.pauseOnLostFocus": "フォーカスが外れたときに一時停止",
+  "options.fullscreenType": "全画面タイプ",
+  "options.borderlessFullscreenType": "フチなし全画面タイプ"
+}
