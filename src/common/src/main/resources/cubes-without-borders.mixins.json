@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "dev.kir.cubeswithoutborders.client.mixin",
+  "compatibilityLevel": "JAVA_${java}",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
