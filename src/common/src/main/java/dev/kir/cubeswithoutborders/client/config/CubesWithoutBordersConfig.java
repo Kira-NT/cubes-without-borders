@@ -8,6 +8,11 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public interface CubesWithoutBordersConfig {
+    static CubesWithoutBordersConfig getInstance() {
+        return CubesWithoutBordersConfigImpl.INSTANCE;
+    }
+
+
     FullscreenMode getFullscreenMode();
 
     void setFullscreenMode(FullscreenMode fullscreenMode);
