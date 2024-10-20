@@ -1,1 +1,7 @@
 accessWidener v2 named
+
+accessible field net/minecraft/client/util/Window x I
+accessible field net/minecraft/client/util/Window y I
+accessible field net/minecraft/client/util/Window width I
+accessible field net/minecraft/client/util/Window height I
+accessible field net/minecraft/client/util/MonitorTracker pointerToMonitorMap Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
