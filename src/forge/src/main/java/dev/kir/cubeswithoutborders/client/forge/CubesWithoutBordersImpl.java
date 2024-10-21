@@ -14,5 +14,21 @@ import net.minecraftforge.fml.common.Mod;
 @Mod(ModLoaderUtilImpl.MOD_ID)
 public final class CubesWithoutBordersImpl {
     public CubesWithoutBordersImpl() {
+        CubesWithoutBordersImpl.registerConfigScreen();
+    }
+
+    private static void registerConfigScreen() {
+        if (!ModList.get().isLoaded("cloth_config")) {
+            return;
+        }
+
+        ModLoadingContext.get().registerExtensionPoint(
+            ConfigScreenHandler.ConfigScreenFactory.class,
+            () -> new ConfigScreenHandler.ConfigScreenFactory((__, parent) -> ClothConfigScreen.create(
+                CubesWithoutBordersConfig.getInstance(),
+                ModLoaderUtilImpl.MOD_ID.replace("_", "-"),
+                parent
+            ))
+        );
     }
 }
