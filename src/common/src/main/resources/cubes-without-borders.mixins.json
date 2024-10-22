@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_${java}",
   "minVersion": "0.8",
   "client": [
+    "WindowMixin"
   ],
   "injectors": {
     "defaultRequire": 1
