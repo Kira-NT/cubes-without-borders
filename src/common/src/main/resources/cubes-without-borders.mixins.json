@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "MainMixin",
+    "VideoOptionsScreenMixin",
     "WindowMixin"
   ],
   "injectors": {
