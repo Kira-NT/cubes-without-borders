@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_${java}",
   "minVersion": "0.8",
   "client": [
+    "FramebufferMixin",
     "MainMixin",
     "VideoOptionsScreenMixin",
     "WindowMixin"
