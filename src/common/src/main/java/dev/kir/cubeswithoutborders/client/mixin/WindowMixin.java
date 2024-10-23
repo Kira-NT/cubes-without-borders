@@ -158,10 +158,25 @@ abstract class WindowMixin implements FullscreenManager {
             this.windowedHeight = window.height;
         } else {
             this.previousFullscreenType.disable(window);
+            ResizableGameRenderer.getInstance().disable();
         }
 
         VideoMode videoMode = monitor.findClosestVideoMode(this.videoMode);
         this.currentFullscreenType.enable(window, monitor, videoMode);
+
+        // If the current fullscreen type could not switch
+        // the video mode, fall back to software scaling.
+        int targetWidth = videoMode.getWidth();
+        int targetHeight = videoMode.getHeight();
+        int deltaWidth = Math.abs(window.width - targetWidth);
+        int deltaHeight = Math.abs(window.height - targetHeight);
+        if (deltaWidth > 1 || deltaHeight > 1) {
+            float targetScale = Math.min((float)targetWidth / window.width, (float)targetHeight / window.height);
+            int scaledWidth = Math.round(window.width * targetScale);
+            int scaledHeight = Math.round(window.height * targetScale);
+            ResizableGameRenderer.getInstance().resize(scaledWidth, scaledHeight);
+        }
+
         ci.cancel();
     }
 
@@ -175,6 +190,7 @@ abstract class WindowMixin implements FullscreenManager {
         }
 
         this.previousFullscreenType.disable((Window)(Object)this);
+        ResizableGameRenderer.getInstance().disable();
     }
 
     @WrapOperation(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwGetWindowMonitor(J)J", ordinal = 0))
