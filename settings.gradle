@@ -13,8 +13,9 @@ rootProject.name = "cubes-without-borders"
 include "common"
 include "fabric"
 include "forge"
+include "neoforge"
 
 project(":common").projectDir = file("src/common")
 project(":fabric").projectDir = file("src/fabric")
 project(":forge").projectDir = file("src/forge")
-
+project(":neoforge").projectDir = file("src/neoforge")

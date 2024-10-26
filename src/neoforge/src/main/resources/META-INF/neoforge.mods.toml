@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "*"
+issueTrackerURL = "https://github.com/Kir-Antipov/cubes-without-borders/issues/new/choose"
+license = "MIT"
+
+[[mods]]
+modId = "cubes_without_borders"
+version = "${version}"
+displayName = "Cubes Without Borders"
+description = '''
+Allows you to play Minecraft in a borderless fullscreen window.
+'''
+authors = "Kir_Antipov"
+logoFile = "icon.png"
+displayURL = "https://github.com/Kir-Antipov/cubes-without-borders"
+
+[[mixins]]
+config = "cubes-without-borders.mixins.json"
+
+[[dependencies.cubes_without_borders]]
+modId = "neoforge"
+type = "required"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cubes_without_borders]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft}"
+ordering = "NONE"
+side = "BOTH"
+
+[mc-publish]
+modrinth = "ETlrkaYF"
+curseforge = 975120
+dependencies = ["cloth-config(optional)"]
