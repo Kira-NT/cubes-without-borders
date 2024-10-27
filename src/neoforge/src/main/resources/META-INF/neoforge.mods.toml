@@ -15,6 +15,9 @@ logoFile = "icon.png"
 displayURL = "https://github.com/Kir-Antipov/cubes-without-borders"
 
 [[mixins]]
+config = "cubes-without-borders.sodium.mixins.json"
+
+[[mixins]]
 config = "cubes-without-borders.mixins.json"
 
 [[dependencies.cubes_without_borders]]

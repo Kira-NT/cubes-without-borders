@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_${java}",
   "plugin": "dev.kir.cubeswithoutborders.client.compat.sodium.SodiumMixinPlugin",
   "client": [
+    "ControlValueFormatterMixin",
     "SodiumGameOptionPagesMixin"
   ],
   "injectors": {

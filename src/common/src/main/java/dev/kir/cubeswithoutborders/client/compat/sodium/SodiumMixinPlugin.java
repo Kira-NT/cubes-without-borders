@@ -1,6 +1,6 @@
 package dev.kir.cubeswithoutborders.client.compat.sodium;
 
-import net.fabricmc.loader.api.FabricLoader;
+import dev.kir.cubeswithoutborders.client.util.ModLoaderUtil;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,7 +11,7 @@ import java.util.Set;
 public final class SodiumMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return FabricLoader.getInstance().isModLoaded("sodium");
+        return ModLoaderUtil.isModLoaded("sodium", "0.6.0-alpha.0");
     }
 
     @Override
