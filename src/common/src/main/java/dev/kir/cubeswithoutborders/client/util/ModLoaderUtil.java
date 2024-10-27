@@ -18,5 +18,14 @@ public final class ModLoaderUtil {
         throw new NoSuchMethodError();
     }
 
+    public static boolean isModLoaded(String modId) {
+        return ModLoaderUtil.isModLoaded(modId, "0.0.0");
+    }
+
+    @ExpectPlatform
+    public static boolean isModLoaded(String modId, String minVersion) {
+        throw new NoSuchMethodError();
+    }
+
     private ModLoaderUtil() { }
 }

@@ -2,7 +2,13 @@ package dev.kir.cubeswithoutborders.client.util.forge;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.LoadingModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
+import org.apache.maven.artifact.versioning.ArtifactVersion;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 import java.nio.file.Path;
 
@@ -16,6 +22,22 @@ public final class ModLoaderUtilImpl {
 
     public static Path getConfigFolder() {
         return FMLPaths.CONFIGDIR.get();
+    }
+
+    public static boolean isModLoaded(String modId, String minVersion) {
+        ArtifactVersion modVersion;
+        if (ModList.get() != null) {
+            ModContainer mod = ModList.get().getModContainerById(modId).orElse(null);
+            modVersion = mod == null ? null : mod.getModInfo().getVersion();
+        } else if (LoadingModList.get() != null) {
+            ModFileInfo mod = LoadingModList.get().getModFileById(modId);
+            modVersion = mod == null ? null : new DefaultArtifactVersion(mod.versionString());
+        } else {
+            modVersion = null;
+        }
+
+        ArtifactVersion version = new DefaultArtifactVersion(minVersion);
+        return modVersion != null && modVersion.compareTo(version) >= 0;
     }
 
     private ModLoaderUtilImpl() { }
