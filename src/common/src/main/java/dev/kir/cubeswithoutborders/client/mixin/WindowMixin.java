@@ -30,7 +30,7 @@ abstract class WindowMixin implements FullscreenManager {
     private @Final MonitorTracker monitorTracker;
 
     @Shadow
-    private Optional<VideoMode> videoMode;
+    private Optional<VideoMode> fullscreenVideoMode;
 
     @Shadow
     private int windowedX;
@@ -161,7 +161,7 @@ abstract class WindowMixin implements FullscreenManager {
             ResizableGameRenderer.getInstance().disable();
         }
 
-        VideoMode videoMode = monitor.findClosestVideoMode(this.videoMode);
+        VideoMode videoMode = monitor.findClosestVideoMode(this.fullscreenVideoMode);
         this.currentFullscreenType.enable(window, monitor, videoMode);
 
         // If the current fullscreen type could not switch

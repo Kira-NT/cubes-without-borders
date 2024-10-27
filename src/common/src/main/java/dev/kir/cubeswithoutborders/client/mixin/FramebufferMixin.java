@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Environment(EnvType.CLIENT)
 @Mixin(value = Framebuffer.class, priority = 0)
 abstract class FramebufferMixin {
-    @ModifyArg(method = { "initFbo", "setTexFilter" }, at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texParameter(III)V"), index = 2)
+    @ModifyArg(method = "*", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texParameter(III)V"), index = 2)
     private int setTexFilter(int target, int pname, int param) {
         if (pname == GL12.GL_TEXTURE_MAG_FILTER) {
             return GL12.GL_LINEAR;
