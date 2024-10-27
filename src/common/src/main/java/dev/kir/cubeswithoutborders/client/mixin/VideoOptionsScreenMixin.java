@@ -29,19 +29,6 @@ abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
         super(parent, gameOptions, title);
     }
 
-    @Inject(method = "removed", at = @At("HEAD"))
-    private void applyVideoMode(CallbackInfo ci) {
-        // In cases where a user presses ESC to close this screen without
-        // clicking on "Done" first, video mode changes won't be applied.
-        //
-        // See:
-        //  - https://bugs.mojang.com/browse/MC-175437
-        Window window = this.client == null ? null : this.client.getWindow();
-        if (window != null) {
-            window.applyVideoMode();
-        }
-    }
-
     @Inject(method = "getOptions", at = @At("RETURN"))
     private static void patchFullscreenOption(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
         CubesWithoutBordersConfig config = CubesWithoutBordersConfig.getInstance();
