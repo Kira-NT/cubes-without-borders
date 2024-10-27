@@ -43,6 +43,10 @@ public final class ResizableGameRenderer {
         return this.framebufferWidth > 0 && this.framebufferHeight > 0;
     }
 
+    public boolean isRendering() {
+        return this.clientFramebuffer != null;
+    }
+
     public void resize(int width, int height) {
         this.framebufferWidth = width;
         this.framebufferHeight = height;
@@ -92,6 +96,10 @@ public final class ResizableGameRenderer {
 
         if (this.framebuffer == null) {
             this.framebuffer = new WindowFramebuffer(width, height);
+
+            // We need to manually trigger `initFbo` for
+            // `FramebufferMixin` to do its thing.
+            this.framebuffer.resize(width, height, MinecraftClient.IS_SYSTEM_MAC);
             this.resizeWorldRendererFramebuffers();
         }
 
@@ -121,10 +129,9 @@ public final class ResizableGameRenderer {
         this.windowFramebufferHeight = -1;
 
         this.client.framebuffer = this.clientFramebuffer;
-        this.clientFramebuffer = null;
-
         this.client.getFramebuffer().beginWrite(true);
         this.framebuffer.draw(window.getFramebufferWidth(), window.getFramebufferHeight());
+        this.clientFramebuffer = null;
     }
 
     private void resizeWorldRendererFramebuffers() {
