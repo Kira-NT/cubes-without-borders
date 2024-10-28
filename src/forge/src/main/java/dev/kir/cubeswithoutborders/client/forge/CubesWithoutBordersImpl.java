@@ -5,9 +5,8 @@ import dev.kir.cubeswithoutborders.client.config.CubesWithoutBordersConfig;
 import dev.kir.cubeswithoutborders.client.util.forge.ModLoaderUtilImpl;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
@@ -22,13 +21,10 @@ public final class CubesWithoutBordersImpl {
             return;
         }
 
-        ModLoadingContext.get().registerExtensionPoint(
-            ConfigScreenHandler.ConfigScreenFactory.class,
-            () -> new ConfigScreenHandler.ConfigScreenFactory((__, parent) -> ClothConfigScreen.create(
-                CubesWithoutBordersConfig.getInstance(),
-                ModLoaderUtilImpl.MOD_ID.replace("_", "-"),
-                parent
-            ))
-        );
+        MinecraftForge.registerConfigScreen(parent -> ClothConfigScreen.create(
+            CubesWithoutBordersConfig.getInstance(),
+            ModLoaderUtilImpl.MOD_ID.replace("_", "-"),
+            parent
+        ));
     }
 }
