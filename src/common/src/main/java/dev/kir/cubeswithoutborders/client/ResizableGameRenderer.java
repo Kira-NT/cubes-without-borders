@@ -99,7 +99,7 @@ public final class ResizableGameRenderer {
 
             // We need to manually trigger `initFbo` for
             // `FramebufferMixin` to do its thing.
-            this.framebuffer.resize(width, height, MinecraftClient.IS_SYSTEM_MAC);
+            this.framebuffer.resize(width, height);
             this.resizeWorldRendererFramebuffers();
         }
 
@@ -143,12 +143,7 @@ public final class ResizableGameRenderer {
             return;
         }
 
-        FramebufferUtil.resize(worldRenderer.getCloudsFramebuffer(), width, height);
-        FramebufferUtil.resize(worldRenderer.getEntityFramebuffer(), width, height);
-        FramebufferUtil.resize(worldRenderer.getEntityOutlinesFramebuffer(), width, height);
-        FramebufferUtil.resize(worldRenderer.getParticlesFramebuffer(), width, height);
-        FramebufferUtil.resize(worldRenderer.getTranslucentFramebuffer(), width, height);
-        FramebufferUtil.resize(worldRenderer.getWeatherFramebuffer(), width, height);
+        FramebufferUtil.resize(worldRenderer.entityOutlineFramebuffer, width, height);
     }
 
     static {
