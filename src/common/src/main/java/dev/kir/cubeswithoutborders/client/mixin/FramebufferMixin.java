@@ -1,26 +1,20 @@
 package dev.kir.cubeswithoutborders.client.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.blaze3d.textures.GpuTexture;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gl.Framebuffer;
-import org.lwjgl.opengl.GL12;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = Framebuffer.class, priority = 0)
 abstract class FramebufferMixin {
-    @ModifyArg(method = "*", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texParameter(III)V"), index = 2)
-    private int setTexFilter(int target, int pname, int param) {
-        if (pname == GL12.GL_TEXTURE_MAG_FILTER) {
-            return GL12.GL_LINEAR;
-        }
-
-        if (pname == GL12.GL_TEXTURE_WRAP_S || pname == GL12.GL_TEXTURE_WRAP_T) {
-            return GL12.GL_CLAMP_TO_EDGE;
-        }
-
-        return param;
+    @WrapOperation(method = "*", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/textures/GpuTexture;setTextureFilter(Lcom/mojang/blaze3d/textures/FilterMode;Z)V"))
+    private void setTextureFilter(GpuTexture texture, FilterMode filter, boolean useMipmaps, Operation<Void> __) {
+        texture.setTextureFilter(filter, FilterMode.LINEAR, useMipmaps);
     }
 }

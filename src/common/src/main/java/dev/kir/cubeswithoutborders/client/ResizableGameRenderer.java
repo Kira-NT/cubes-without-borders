@@ -76,7 +76,7 @@ public final class ResizableGameRenderer {
 
         if (this.clientFramebuffer != null) {
             this.client.framebuffer = this.clientFramebuffer;
-            this.client.getFramebuffer().beginWrite(true);
+            FramebufferUtil.beginWrite(this.clientFramebuffer, true);
         }
         this.clientFramebuffer = null;
 
@@ -110,7 +110,7 @@ public final class ResizableGameRenderer {
 
         this.clientFramebuffer = this.client.getFramebuffer();
         this.client.framebuffer = this.framebuffer;
-        this.framebuffer.beginWrite(true);
+        FramebufferUtil.beginWrite(this.framebuffer, true);
     }
 
     public void endRender() {
@@ -129,8 +129,8 @@ public final class ResizableGameRenderer {
         this.windowFramebufferHeight = -1;
 
         this.client.framebuffer = this.clientFramebuffer;
-        this.client.getFramebuffer().beginWrite(true);
-        this.framebuffer.draw(window.getFramebufferWidth(), window.getFramebufferHeight());
+        FramebufferUtil.beginWrite(this.clientFramebuffer, true);
+        FramebufferUtil.draw(this.framebuffer, this.clientFramebuffer);
         this.clientFramebuffer = null;
     }
 

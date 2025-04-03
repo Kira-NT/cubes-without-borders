@@ -24,7 +24,7 @@ abstract class MainMixin {
         return parser;
     }
 
-    @Inject(method = { "main" }, at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;beginInitialization()V", ordinal = 0), require = 0)
+    @Inject(method = { "main" }, at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;initRenderThread()V", ordinal = 0), require = 0)
     private static void readBorderlessOption(CallbackInfo ci, @Local(ordinal = 0) OptionSet options) {
         boolean isBorderless = options.has("borderless");
         if (!isBorderless) {
