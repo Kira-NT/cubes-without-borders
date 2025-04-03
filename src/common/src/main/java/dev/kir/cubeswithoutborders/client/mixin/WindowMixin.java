@@ -91,9 +91,8 @@ abstract class WindowMixin implements FullscreenManager {
         return SystemUtil.isWindows() ? preferredMonitor.orElse(monitor) : monitor;
     }
 
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwMakeContextCurrent(J)V"))
-    private void init(long handle, Operation<Void> glfwMakeContextCurrent) {
-        Window window = (Window)(Object)this;
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;updateWindowRegion()V"))
+    private void init(Window window, Operation<Void> updateWindowRegion) {
         CubesWithoutBordersConfig config = CubesWithoutBordersConfig.getInstance();
         this.fullscreen = this.currentFullscreen = config.getFullscreenMode() != FullscreenMode.OFF;
         this.borderless = config.getPreferredFullscreenMode() == FullscreenMode.BORDERLESS;
@@ -111,13 +110,13 @@ abstract class WindowMixin implements FullscreenManager {
             VideoMode videoMode = preferredMonitor.getCurrentVideoMode();
             this.windowedX = window.x = preferredMonitor.getViewportX() + (videoMode.getWidth() - window.width) / 2;
             this.windowedY = window.y = preferredMonitor.getViewportY() + (videoMode.getHeight() - window.height) / 2;
-            GLFW.glfwSetWindowMonitor(handle, 0, window.x, window.y, window.width, window.height, -1);
+            GLFW.glfwSetWindowMonitor(window.getHandle(), 0, window.x, window.y, window.width, window.height, -1);
         }
 
         // Honestly, this method should have been an `@Inject`, however
         // unpatched mixins don't allow injecting into constructors at all.
         // Thanks to LlamaLad7 for saving the day!
-        glfwMakeContextCurrent.call(handle);
+        updateWindowRegion.call(window);
     }
 
     @Inject(method = "updateWindowRegion", at = @At("HEAD"), cancellable = true)
