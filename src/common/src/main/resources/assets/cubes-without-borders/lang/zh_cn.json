@@ -1,0 +1,9 @@
+{
+  "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cubes-without-borders": "允许您在无边框全屏窗口中运行 Minecraft",
+
+  "options.borderlessFullscreen": "无边框",
+  "options.pauseOnLostFocus": "失去焦点时暂停",
+  "options.fullscreenType": "全屏类型",
+  "options.borderlessFullscreenType": "无边框全屏类型"
+}
