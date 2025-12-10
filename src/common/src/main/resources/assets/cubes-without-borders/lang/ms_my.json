@@ -1,9 +1,9 @@
 {
   "modmenu.nameTranslation.cubes-without-borders": "Cubes Without Borders",
-  "modmenu.descriptionTranslation.cubes-without-borders": "Membolehkan anda bermain Minecraft dalam tetingkap skrin penuh tanpa sempadan.",
+  "modmenu.descriptionTranslation.cubes-without-borders": "Membenarkan anda bermain Minecraft dalam tetingkap skrin penuh tanpa sempadan.",
 
   "options.borderlessFullscreen": "Tanpa Sempadan",
-  "options.pauseOnLostFocus": "Jeda Apabila Fokus Hilang",
+  "options.pauseOnLostFocus": "Jeda Bila Hilang Fokus",
   "options.fullscreenType": "Jenis Skrin Penuh",
   "options.borderlessFullscreenType": "Jenis Skrin Penuh Tanpa Sempadan"
 }
