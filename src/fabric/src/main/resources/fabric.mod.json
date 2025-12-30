@@ -20,7 +20,7 @@
       "dev.kir.cubeswithoutborders.client.compat.modmenu.ModMenuCompat"
     ],
     "sodium:config_api_user": [
-      "dev.kir.cubeswithoutborders.client.compat.sodium.SodiumCompatEntrypoint"
+      "dev.kir.cubeswithoutborders.client.compat.sodium.SodiumCompat"
     ]
   },
   "mixins": [

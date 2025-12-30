@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @ConfigEntryPointForge("cubes_without_borders")
-public class SodiumCompatEntrypoint implements ConfigEntryPoint {
+public class SodiumCompat implements ConfigEntryPoint {
     private static final Identifier SODIUM_FULLSCREEN_ID = Identifier.of("sodium", "general.fullscreen");
     private static final Identifier SODIUM_FULLSCREEN_RESOLUTION_ID = Identifier.of("sodium", "general.fullscreen_resolution");
 
