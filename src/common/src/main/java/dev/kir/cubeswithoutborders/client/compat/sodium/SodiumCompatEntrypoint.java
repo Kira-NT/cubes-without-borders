@@ -6,10 +6,15 @@ import dev.kir.cubeswithoutborders.client.config.CubesWithoutBordersConfig;
 import net.caffeinemc.mods.sodium.api.config.ConfigEntryPoint;
 import net.caffeinemc.mods.sodium.api.config.ConfigEntryPointForge;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
+import net.caffeinemc.mods.sodium.client.gui.FullscreenResolutionRange;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Monitor;
+import net.minecraft.client.util.VideoMode;
+import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.Optional;
 import java.util.Set;
 
 @ConfigEntryPointForge("cubes_without_borders")
@@ -27,16 +32,53 @@ public class SodiumCompatEntrypoint implements ConfigEntryPoint {
         builder.registerOwnModOptions()
             .registerOptionOverlay(SODIUM_FULLSCREEN_RESOLUTION_ID,
                 builder.createIntegerOption(SODIUM_FULLSCREEN_RESOLUTION_ID)
-                    // We provide a custom scaling solution for our fullscreen modes
-                    // that works on any OS. Thus, always keep the option enabled.
-                    .setEnabledProvider(state -> {
-                        var window = MinecraftClient.getInstance().getWindow();
+                    .setStorageHandler(() -> MinecraftClient.getInstance().options.write())
+                    .setName(Text.translatable("options.fullscreen.resolution"))
+                    .setTooltip(Text.translatable("sodium.options.fullscreen_resolution.tooltip"))
+                    .setValueFormatter(value -> {
+                        Monitor monitor = MinecraftClient.getInstance().getWindow().getMonitor();
+                        if (monitor == null || value == 0) {
+                            return Text.translatable("options.fullscreen.current");
+                        }
+                        return Text.literal(monitor.getVideoMode(Math.min(value - 1, monitor.getVideoModeCount() - 1)).toString().replace(" (24bit)", ""));
+                    })
+                    .setValidator(new FullscreenResolutionRange())
+                    .setDefaultValue(0)
+                    .setBinding(value -> {
+                        Window window = MinecraftClient.getInstance().getWindow();
+                        if (window == null) {
+                            return;
+                        }
 
+                        Monitor monitor = window.getMonitor();
+                        if (monitor == null) {
+                            return;
+                        }
+
+                        window.setFullscreenVideoMode(value == 0 ? Optional.empty() : Optional.of(monitor.getVideoMode(value - 1)));
+                    }, () -> {
+                        Window window = MinecraftClient.getInstance().getWindow();
+                        if (window == null) {
+                            return 0;
+                        }
+
+                        Monitor monitor = window.getMonitor();
+                        if (monitor == null) {
+                            return 0;
+                        }
+
+                        Optional<VideoMode> optional = window.getFullscreenVideoMode();
+                        return optional.map(v -> monitor.findClosestVideoModeIndex(v) + 1).orElse(0);
+                    })
+                    .setEnabledProvider(state -> {
+                        // We provide a custom scaling solution for our fullscreen modes
+                        // that works on any OS. Thus, always keep the option enabled.
+                        Window window = MinecraftClient.getInstance().getWindow();
                         if (window == null) {
                             return false;
                         }
 
-                        var monitor = window.getMonitor();
+                        Monitor monitor = window.getMonitor();
                         return monitor != null && monitor.getVideoModeCount() > 0;
                     }, CWB_FULLSCREEN_ID)
             )
