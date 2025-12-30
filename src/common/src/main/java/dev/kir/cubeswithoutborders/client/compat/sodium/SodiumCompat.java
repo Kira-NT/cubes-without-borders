@@ -56,6 +56,7 @@ public class SodiumCompat implements ConfigEntryPoint {
                         }
 
                         window.setFullscreenVideoMode(value == 0 ? Optional.empty() : Optional.of(monitor.getVideoMode(value - 1)));
+                        window.applyFullscreenVideoMode();
                     }, () -> {
                         Window window = MinecraftClient.getInstance().getWindow();
                         if (window == null) {
