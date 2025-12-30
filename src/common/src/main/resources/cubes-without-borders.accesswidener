@@ -12,7 +12,7 @@ mutable field net/minecraft/client/MinecraftClient framebuffer Lnet/minecraft/cl
 accessible field net/minecraft/client/MinecraftClient framebuffer Lnet/minecraft/client/gl/Framebuffer;
 accessible field net/minecraft/client/render/WorldRenderer entityOutlineFramebuffer Lnet/minecraft/client/gl/Framebuffer;
 
-accessible field net/minecraft/client/gl/GlResourceManager temporaryFb1 I
-accessible field net/minecraft/client/gl/GlResourceManager temporaryFb2 I
-accessible method net/minecraft/client/gl/FramebufferManager setupFramebuffer (IIIII)V
-accessible method net/minecraft/client/gl/FramebufferManager setupBlitFramebuffer (IIIIIIIIIIII)V
+accessible field net/minecraft/client/gl/GlCommandEncoder temporaryFb1 I
+accessible field net/minecraft/client/gl/GlCommandEncoder temporaryFb2 I
+accessible method net/minecraft/client/gl/BufferManager setupFramebuffer (IIIII)V
+accessible method net/minecraft/client/gl/BufferManager setupBlitFramebuffer (IIIIIIIIIIII)V

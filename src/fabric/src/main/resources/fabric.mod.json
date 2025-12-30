@@ -18,10 +18,12 @@
   "entrypoints": {
     "modmenu": [
       "dev.kir.cubeswithoutborders.client.compat.modmenu.ModMenuCompat"
+    ],
+    "sodium:config_api_user": [
+      "dev.kir.cubeswithoutborders.client.compat.sodium.SodiumCompatEntrypoint"
     ]
   },
   "mixins": [
-    "cubes-without-borders.sodium.mixins.json",
     "cubes-without-borders.mixins.json"
   ],
   "custom": {

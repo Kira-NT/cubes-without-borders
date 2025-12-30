@@ -29,7 +29,7 @@ abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
         super(parent, gameOptions, title);
     }
 
-    @Inject(method = "getOptions", at = @At("RETURN"))
+    @Inject(method = "getDisplayOptions", at = @At("RETURN"))
     private static void patchFullscreenOption(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
         CubesWithoutBordersConfig config = CubesWithoutBordersConfig.getInstance();
         if (config.getBorderlessFullscreenType() == config.getFullscreenType()) {
