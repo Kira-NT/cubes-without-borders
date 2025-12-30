@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_${java}",
   "minVersion": "0.8",
   "client": [
-    "FramebufferMixin",
     "GameRendererMixin",
     "WorldRendererMixin",
     "MainMixin",
