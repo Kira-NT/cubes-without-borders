@@ -38,6 +38,12 @@ abstract class VideoSettingsScreenMixin {
     private static net.minecraft.client.OptionInstance<?>[] patchDisplayOptions(net.minecraft.client.OptionInstance<?>[] displayOptions) {
         VideoSettingsScreenMixin.patchFullscreenOption(displayOptions);
 
+        //? if >=26.1 {
+        List<net.minecraft.client.OptionInstance<?>> displayOptionList = new ArrayList<>(Arrays.asList(displayOptions));
+        displayOptionList.remove(Minecraft.getInstance().options.exclusiveFullscreen());
+        displayOptions = displayOptionList.toArray(Arrays.copyOf(displayOptions, displayOptionList.size()));
+        //?}
+
         return displayOptions;
     }
 
