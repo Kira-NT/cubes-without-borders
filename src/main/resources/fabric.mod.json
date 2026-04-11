@@ -14,6 +14,9 @@
   "icon": "icon.png",
   "environment": "${environment}",
   "entrypoints": {
+    "modmenu": [
+      "${group}.compat.modmenu.ModMenuScreenProvider"
+    ]
   },
   "mixins": [
     "${id}.mixins.json"
@@ -32,6 +35,7 @@
     "java": ">=${java}"
   },
   "suggests": {
+    "modmenu": "*",
     "yacl": "*",
     "cloth-config": "*"
   }
