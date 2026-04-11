@@ -4,6 +4,7 @@
   "client": [
     "MainMixin",
     "MinecraftMixin",
+    "VideoSettingsScreenMixin",
     "WindowMixin"
   ],
   "injectors": {
