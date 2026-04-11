@@ -25,6 +25,7 @@ dependencies {
     use("dependencies.minecraft") { minecraft("com.mojang:minecraft:$it") }
     use("dependencies.fabric-loader") { implementation("net.fabricmc:fabric-loader:$it") }
 
+    use("dependencies.yacl") { compileOnly("maven.modrinth:yacl:$it") }
     use("dependencies.cloth-config") { compileOnly("maven.modrinth:cloth-config:$it") }
 
     compileOnly("ca.weblite:java-objc-bridge:1.1")
