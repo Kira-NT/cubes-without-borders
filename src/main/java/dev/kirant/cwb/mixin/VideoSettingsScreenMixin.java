@@ -17,6 +17,21 @@ import java.util.List;
 
 @Mixin(VideoSettingsScreen.class)
 abstract class VideoSettingsScreenMixin {
+    //? if <1.21 {
+    /*@Inject(method = "removed", at = @At("HEAD"))
+    private void applyFullscreenVideoMode(CallbackInfo ci) {
+        // In cases where a user presses ESC to close this screen without
+        // clicking on "Done" first, video mode changes won't be applied.
+        //
+        // See:
+        //  - https://bugs.mojang.com/browse/MC-175437
+        Window window = MinecraftWindow.getInstance();
+        if (window != null) {
+            window.changeFullscreenVideoMode();
+        }
+    }
+    *///?}
+
     private static boolean patchFullscreenOption(Object[] options) {
         if (CWB.CONFIG.getBorderlessFullscreenType() == CWB.CONFIG.getFullscreenType()) {
             return false;
