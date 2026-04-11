@@ -67,12 +67,36 @@ public abstract class ModLoader {
         //?}
     }
 
+    private static class ForgeModLoader extends ModLoader {
+        //? if forge {
+        @Override
+        public Path getConfigFolder() {
+            return net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get();
+        }
+
+        @Override
+        public boolean isModLoaded(String modId) {
+            return net.minecraftforge.fml.ModList.getModFileById(modId) != null;
+        }
+
+        @Override
+        public boolean isModLoaded(String modId, String minVersion) {
+            net.minecraftforge.forgespi.language.IModFileInfo mod = net.minecraftforge.fml.ModList.getModFileById(modId);
+            org.apache.maven.artifact.versioning.DefaultArtifactVersion modVersion = mod == null ? null : new org.apache.maven.artifact.versioning.DefaultArtifactVersion(mod.versionString());
+            org.apache.maven.artifact.versioning.DefaultArtifactVersion targetVersion = new org.apache.maven.artifact.versioning.DefaultArtifactVersion(minVersion);
+            return modVersion != null && modVersion.compareTo(targetVersion) >= 0;
+        }
+        //?}
+    }
+
     static {
         String branding = net.minecraft.client.ClientBrandRetriever.getClientModName();
         if (branding.contains("fabric")) {
             INSTANCE = new FabricModLoader();
         } else if (branding.contains("neoforge")) {
             INSTANCE = new NeoForgeModLoader();
+        } else if (branding.contains("forge")) {
+            INSTANCE = new ForgeModLoader();
         } else {
             INSTANCE = new ModLoader() { };
         }

@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "*"
+issueTrackerURL = "${issues}"
+license = "${license}"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+description = '''
+${description}
+'''
+authors = "${author}"
+logoFile = "icon.png"
+displayURL = "${homepage}"
+
+[[dependencies.${id}]]
+modId = "forge"
+mandatory = true
+versionRange = "[${forge},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraft},)"
+ordering = "NONE"
+side = "BOTH"
+
+[mc-publish]
+modrinth = "${modrinth}"
+curseforge = "${curseforge}"
+dependencies = ["cloth-config(optional)"]

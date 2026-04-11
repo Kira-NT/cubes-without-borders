@@ -28,6 +28,13 @@ dependencies {
     use("dependencies.neoforge") { compileOnly("net.neoforged:neoforge:$it") }
     use("dependencies.fancymodloader") { compileOnly("net.neoforged.fancymodloader:loader:$it") }
 
+    use("dependencies.forge") {
+        compileOnly("net.minecraftforge:forge:$it:universal")
+        compileOnly("net.minecraftforge:javafmllanguage:$it")
+        compileOnly("net.minecraftforge:fmlloader:$it")
+        compileOnly("net.minecraftforge:fmlcore:$it")
+    }
+
     use("dependencies.sodium") { compileOnly("maven.modrinth:sodium:$it") }
     use("dependencies.modmenu") { compileOnly("maven.modrinth:modmenu:$it") }
     use("dependencies.yacl") { compileOnly("maven.modrinth:yacl:$it") }
@@ -63,6 +70,7 @@ tasks.processResources {
 
 tasks.jar {
     from(".") { include("LICENSE*") }
+    manifest.attributes("MixinConfigs" to "$modId.mixins.json")
 }
 
 tasks.withType<JavaCompile>().configureEach {

@@ -37,5 +37,19 @@ public final class CWB {
     }
     //?}
 
+    //? if forge {
+    @net.minecraftforge.fml.common.Mod(CWB.MOD_ID)
+    @net.minecraftforge.api.distmarker.OnlyIn(net.minecraftforge.api.distmarker.Dist.CLIENT)
+    public static class Forge {
+        @SuppressWarnings("removal")
+        public Forge() {
+            CWB.registerConfigScreen(f -> net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
+                net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory((_, x) -> f.apply(x))
+            ));
+        }
+    }
+    //?}
+
     private CWB() { }
 }
