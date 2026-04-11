@@ -2,6 +2,7 @@
   "required": true,
   "package": "dev.kirant.cwb.mixin",
   "client": [
+    "WindowMixin"
   ],
   "injectors": {
     "defaultRequire": 1
