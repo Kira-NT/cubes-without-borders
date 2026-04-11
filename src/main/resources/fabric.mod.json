@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "${description}",
+  "authors": ["${author}"],
+  "contact": {
+    "homepage": "${homepage}",
+    "sources": "${sources}",
+    "issues": "${issues}"
+  },
+  "license": "${license}",
+  "icon": "icon.png",
+  "environment": "${environment}",
+  "entrypoints": {
+  },
+  "mixins": [
+    "${id}.mixins.json"
+  ],
+  "accessWidener": "${id}.accesswidener",
+  "custom": {
+    "mc-publish": {
+      "loaders": ["fabric", "quilt", "neoforge", "forge"],
+      "modrinth": "${modrinth}",
+      "curseforge": "${curseforge}"
+    }
+  },
+  "depends": {
+    "fabricloader": ">=${fabric_loader}",
+    "minecraft": ">=${minecraft}",
+    "java": ">=${java}"
+  },
+  "suggests": {
+  }
+}
