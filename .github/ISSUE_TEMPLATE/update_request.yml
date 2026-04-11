@@ -1,0 +1,22 @@
+name: Update request
+description: Request an update for a currently unsupported version of Minecraft
+title: Add support for Minecraft ?.?.?
+labels: [enhancement]
+body:
+  - type: checkboxes
+    validations:
+      required: true
+    attributes:
+      label: Have you verified that no one has asked for this before?
+      options:
+        - label: I have checked other [open issues](https://github.com/Kira-NT/cubes-without-borders/issues).
+          required: true
+
+  - type: checkboxes
+    validations:
+      required: true
+    attributes:
+      label: Have you verified that an update is actually warranted?
+      options:
+        - label: The latest version of the mod causes the game to crash.
+          required: true

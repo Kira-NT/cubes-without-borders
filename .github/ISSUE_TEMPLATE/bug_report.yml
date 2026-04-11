@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a bug or crash
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      description: >-
+        Describe the issue you are experiencing in as much depth as possible.
+
+  - type: textarea
+    id: reproduction-steps
+    validations:
+      required: true
+    attributes:
+      label: Reproduction Steps
+      description: >-
+        Provide as much information as possible on how to reproduce this bug.
+
+  - type: textarea
+    id: log-file
+    validations:
+      required: true
+    attributes:
+      label: Log File
+      description: >-
+        **Hint:** The latest log file is usually located at `.minecraft/logs/latest.log`.
+      placeholder: >-
+        Drag-and-drop the log file here.
+
+  - type: textarea
+    id: crash-report-file
+    attributes:
+      label: Crash Report
+      description: >-
+        **Hint:** The latest crash report can usually be found in the `.minecraft/crash-reports/` folder.
+      placeholder: >-
+        Drag-and-drop the crash report file here.
+
+  - type: checkboxes
+    id: known-issue
+    validations:
+      required: true
+    attributes:
+      label: Have you verified that your problem is not a known issue?
+      options:
+        - label: I have read the [FAQ](https://github.com/Kira-NT/cubes-without-borders#faq).
+          required: true
+
+        - label: I have checked other [open issues](https://github.com/Kira-NT/cubes-without-borders/issues).
+          required: true
