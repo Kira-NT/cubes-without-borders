@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule: [cron: 4 5 1 * *]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Get Java version
+        id: gradle-properties
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: gradle.properties
+          properties: dependencies.java
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ steps.gradle-properties.outputs.dependencies-java }}
+
+      - name: Build artifacts
+        run: ./gradlew clean build --no-daemon
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts
+          path: build/libs/
