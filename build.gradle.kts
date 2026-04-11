@@ -25,6 +25,9 @@ dependencies {
     use("dependencies.minecraft") { minecraft("com.mojang:minecraft:$it") }
     use("dependencies.fabric-loader") { implementation("net.fabricmc:fabric-loader:$it") }
 
+    use("dependencies.neoforge") { compileOnly("net.neoforged:neoforge:$it") }
+    use("dependencies.fancymodloader") { compileOnly("net.neoforged.fancymodloader:loader:$it") }
+
     use("dependencies.sodium") { compileOnly("maven.modrinth:sodium:$it") }
     use("dependencies.modmenu") { compileOnly("maven.modrinth:modmenu:$it") }
     use("dependencies.yacl") { compileOnly("maven.modrinth:yacl:$it") }

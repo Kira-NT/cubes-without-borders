@@ -24,5 +24,18 @@ public final class CWB {
         }
     }
 
+    //? if neoforge {
+    @net.neoforged.fml.common.Mod(CWB.MOD_ID)
+    @net.neoforged.api.distmarker.OnlyIn(net.neoforged.api.distmarker.Dist.CLIENT)
+    public static class NeoForge {
+        public NeoForge(net.neoforged.fml.ModContainer mod) {
+            CWB.registerConfigScreen(f -> mod.registerExtensionPoint(
+                net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
+                (_, x) -> f.apply(x)
+            ));
+        }
+    }
+    //?}
+
     private CWB() { }
 }

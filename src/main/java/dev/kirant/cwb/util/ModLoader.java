@@ -45,10 +45,34 @@ public abstract class ModLoader {
         //?}
     }
 
+    private static class NeoForgeModLoader extends ModLoader {
+        //? if neoforge {
+        @Override
+        public Path getConfigFolder() {
+            return net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get();
+        }
+
+        @Override
+        public boolean isModLoaded(String modId) {
+            return net.neoforged.fml.loading.FMLLoader.getCurrent().getLoadingModList().getModFileById(modId) != null;
+        }
+
+        @Override
+        public boolean isModLoaded(String modId, String minVersion) {
+            net.neoforged.fml.loading.moddiscovery.ModFileInfo mod = net.neoforged.fml.loading.FMLLoader.getCurrent().getLoadingModList().getModFileById(modId);
+            org.apache.maven.artifact.versioning.DefaultArtifactVersion modVersion = mod == null ? null : new org.apache.maven.artifact.versioning.DefaultArtifactVersion(mod.versionString());
+            org.apache.maven.artifact.versioning.DefaultArtifactVersion targetVersion = new org.apache.maven.artifact.versioning.DefaultArtifactVersion(minVersion);
+            return modVersion != null && modVersion.compareTo(targetVersion) >= 0;
+        }
+        //?}
+    }
+
     static {
         String branding = net.minecraft.client.ClientBrandRetriever.getClientModName();
         if (branding.contains("fabric")) {
             INSTANCE = new FabricModLoader();
+        } else if (branding.contains("neoforge")) {
+            INSTANCE = new NeoForgeModLoader();
         } else {
             INSTANCE = new ModLoader() { };
         }

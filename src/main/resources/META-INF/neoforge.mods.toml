@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "*"
+issueTrackerURL = "${issues}"
+license = "${license}"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+description = '''
+${description}
+'''
+authors = "${author}"
+logoFile = "icon.png"
+displayURL = "${homepage}"
+
+[[dependencies.${id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config="${id}.mixins.json"
+
+[mc-publish]
+modrinth = "${modrinth}"
+curseforge = "${curseforge}"
+dependencies = ["cloth-config(optional)", "yacl(optional)"]
