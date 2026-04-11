@@ -1,0 +1,11 @@
+{
+  "modmenu.descriptionTranslation.cwb": "讓你可以在無邊框全螢幕視窗中遊玩 Minecraft。",
+
+  "cwb.options.borderless": "無邊框",
+
+  "cwb.options.fullscreenType": "全螢幕類型",
+
+  "cwb.options.borderlessFullscreenType": "無邊框全螢幕類型",
+
+  "cwb.options.pauseOnLostFocus": "失去焦點時暫停"
+}

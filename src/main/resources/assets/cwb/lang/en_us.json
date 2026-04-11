@@ -1,0 +1,28 @@
+{
+  "modmenu.nameTranslation.cwb": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cwb": "Allows you to play Minecraft in a borderless fullscreen window.",
+
+  "cwb.options.borderless": "Borderless",
+
+  "cwb.options.fullscreenType": "Fullscreen Type",
+  "cwb.options.fullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oON§r in §oVideo Settings§r.",
+
+  "cwb.options.borderlessFullscreenType": "Borderless Fullscreen Type",
+  "cwb.options.borderlessFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oBorderless§r in §oVideo Settings§r.",
+
+  "cwb.options.useScaledFramebuffer": "Use Scaled Framebuffer",
+  "cwb.options.useScaledFramebuffer.tooltip": "Specifies whether to use a full-resolution framebuffer on platforms where screen coordinates can be scaled relative to pixel coordinates, such as §omacOS§r and §oWayland (Linux)§r.\n\nDisabling this option may lead to a significant performance boost at the cost of image quality.",
+
+  "cwb.options.pauseOnLostFocus": "Pause on Lost Focus",
+  "cwb.options.pauseOnLostFocus.tooltip": "Specifies whether the game should be automatically paused when its window loses focus.",
+
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "Pause on Lost Focus (Multiplayer)",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "When §oPause on Lost Focus§r is enabled, specifies whether its effect should also apply to multiplayer sessions, where the game cannot be truly paused.",
+
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "A windowed fullscreen mode with performance and UX characteristics that vary depending on the platform.\n\nOn §lWindows§r, this mode is generally the best way to play the game, as it provides the benefits typical of a borderless fullscreen experience with zero to none performance and latency penalties; however, some users may experience annoying blinking each time the game window gains or loses focus.\n\nOn §lother platforms§r, this mode may cause significant performance degradation and/or usability issues, such as your system's dock remaining visible or even being rendered on top of the game.",
+  "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecraft's default exclusive fullscreen mode.\n\nProvides great performance with minimal latency at the cost of usability - the game is automatically minimized each time its window loses focus.",
+  "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecraft's default non-exclusive fullscreen mode.\n\nThis is a middle ground between exclusive fullscreen and borderless fullscreen, and is mainly intended for users who don't need a true borderless experience, but want to use overlays and/or rely on IME or similar technologies.",
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "The default borderless fullscreen mode for Linux.\n\nProvides great performance with minimal latency and has no known downsides.",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "The default borderless fullscreen mode for macOS.\n\nProvides decent performance, but has slightly higher latency than that of the default exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS.",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "The true windowed fullscreen mode for Windows.\n\nUnlike §ominecraft:windowed§r, it does not suffer from the blinking issues, but it also lacks the performance benefits of the said mode.\n\nIts latency is higher than that of the default exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS. Additionally, some users may experience severe performance degradation, as Windows sometimes discards frames provided by windowed applications instead of rendering them, especially when performing background tasks it deems more important than that, such as downloading updates or indexing screenshots of your activity captured by Windows Recall."
+}
