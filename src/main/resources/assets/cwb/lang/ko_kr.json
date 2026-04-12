@@ -1,3 +1,28 @@
 {
-  "cwb.options.borderless": "테두리 없음"
+  "modmenu.nameTranslation.cwb": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cwb": "Minecraft를 테두리 없는 전체 화면 모드로 플레이할 수 있게 해줍니다.",
+
+  "cwb.options.borderless": "테두리 없음",
+
+  "cwb.options.fullscreenType": "전체 화면 유형",
+  "cwb.options.fullscreenType.tooltip": "§o비디오 설정§r에서 §o전체 화면§r이 §o켜짐§r으로 설정되었을 때 활성화될 전체 화면 모드를 제어합니다.",
+
+  "cwb.options.borderlessFullscreenType": "테두리 없는 전체 화면 유형",
+  "cwb.options.borderlessFullscreenType.tooltip": "§o비디오 설정§r에서 §o전체 화면§r이 §o테두리 없음§r으로 설정되었을 때 활성화될 전체 화면 모드를 제어합니다.",
+
+  "cwb.options.useScaledFramebuffer": "스케일된 프레임버퍼 사용",
+  "cwb.options.useScaledFramebuffer.tooltip": "§omacOS§r 및 §oWayland (Linux)§r와 같이 화면 좌표가 픽셀 좌표에 비해 스케일링될 수 있는 플랫폼에서 전체 해상도 프레임버퍼를 사용할지 여부를 지정합니다.\n\n이 옵션을 비활성화하면 이미지 품질이 저하되는 대신 성능이 크게 향상될 수 있습니다.",
+
+  "cwb.options.pauseOnLostFocus": "포커스 해제 시 일시 정지",
+  "cwb.options.pauseOnLostFocus.tooltip": "게임 창이 포커스를 잃었을 때 게임을 자동으로 일시 정지할지 여부를 지정합니다.",
+
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "포커스 해제 시 일시 정지 (멀티플레이어)",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "§o포커스 해제 시 일시 정지§r 옵션이 활성화되었을 때, 게임을 실제로 멈출 수 없는 멀티플레이어 세션에도 이 효과를 적용할지 여부를 지정합니다.",
+
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "플랫폼에 따라 성능 및 사용자 경험(UX) 특성이 달라지는 창 모드 기반의 전체 화면 모드입니다.\n\n§lWindows§r에서는 성능 및 지연 시간 손실이 거의 없으면서도 테두리 없는 전체 화면의 이점을 제공하므로 일반적으로 게임을 플레이하기 가장 좋은 모드입니다. 하지만 일부 사용자는 창이 포커스를 얻거나 잃을 때마다 짜증 나는 깜빡임 현상을 겪을 수 있습니다.\n\n§l기타 플랫폼§r에서는 이 모드가 심각한 성능 저하를 일으키거나, 시스템 독(Dock)이 계속 보이거나 게임 위에 렌더링 되는 등의 사용성 문제를 일으킬 수 있습니다.",
+  "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecraft의 기본 독점 전체 화면 모드입니다.\n\n지연 시간을 최소화하여 뛰어난 성능을 제공하지만, 창이 포커스를 잃을 때마다 게임이 자동으로 최소화되어 사용성이 떨어집니다.",
+  "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecraft의 기본 비독점 전체 화면 모드입니다.\n\n독점 전체 화면과 테두리 없는 전체 화면의 중간 단계이며, 주로 완전한 테두리 없는 환경은 필요하지 않지만 오버레이를 사용하거나 IME(입력기) 등의 기술을 활용하려는 사용자를 위한 모드입니다.",
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 용 기본 테두리 없는 전체 화면 모드입니다.\n\n최소한의 지연 시간으로 뛰어난 성능을 제공하며 알려진 단점이 없습니다.",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 용 기본 테두리 없는 전체 화면 모드입니다.\n\n준수한 성능을 제공하지만, OS가 모든 창 모드 애플리케이션에 강제하는 V-Sync(수직 동기화)로 인해 기본 독점 전체 화면 모드보다는 지연 시간이 약간 더 높습니다.",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "Windows 용 실제 창 모드 기반 전체 화면 모드입니다.\n\n§ominecraft:windowed§r와 달리 깜빡임 문제가 발생하지 않지만, 해당 모드가 가진 성능상의 이점도 없습니다.\n\nOS가 모든 창 모드 애플리케이션에 강제하는 V-Sync로 인해 지연 시간이 기본 독점 전체 화면 모드보다 높습니다. 또한, Windows가 업데이트 다운로드나 Windows Recall의 활동 스크린샷 인덱싱처럼 게임보다 중요하다고 판단하는 백그라운드 작업을 수행할 때 창 모드 애플리케이션의 프레임을 누락시키는 경우가 있어 일부 사용자는 심각한 성능 저하를 경험할 수 있습니다."
 }
