@@ -256,9 +256,9 @@ public final class FullscreenTypes {
 
         @Override
         public void disable(Window window) {
+            MinecraftWindow.Windows.restoreStyle(window);
             GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
             GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
-            MinecraftWindow.Windows.restoreStyle(window);
         }
     }
 
