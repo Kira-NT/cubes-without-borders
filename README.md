@@ -10,7 +10,7 @@
 
 A mod that allows you to play Minecraft in a borderless fullscreen window. This means you can keep the game open while interacting with other applications on a different monitor, or even directly on top of Minecraft itself, without the game being minimized.
 
-Unlike other "borderless fullscreen" mods, **Cubes Without Borders** is highly configurable, and it explicitly supports all major platforms - Linux, macOS, and even Windows - instead of providing a passable experience for only one group of players while making it seem as though others do not exist.
+Unlike other "borderless fullscreen" mods, **Cubes Without Borders** is highly configurable, does not hinder your input latency, and explicitly supports all major platforms - Linux, macOS, and even Windows - instead of providing a passable experience for only one group of players while making it seem as though others do not exist.
 
 ----
 
@@ -29,11 +29,13 @@ Additionally, the mod introduces a `--borderless` startup flag that forces the g
 
 ## FAQ
 
-> On Windows, when I tab out of the game, its window blinks. Is there a way to disable this behavior?
+> I'm a Windows user and...
 
-This is a common issue with OpenGL applications on Windows. It has existed since Microsoft introduced the "directflip" feature in Windows 8 *(i.e., somewhere around 2012-2015)*, which forcefully changes the compositing mode for windows that occupy the entire screen, even if they opt-out of exclusive fullscreen. You can politely ask Microsoft to finally address this problem, and I'm sure they'll prioritize fixing a bug that's been plaguing their system for more than a decade over doing something really silly - which they'd never do - like shoving Copilot into Notepad.
+That is a problem indeed, my friend! In all seriousness, though, if you are having issues with the default borderless fullscreen mode used by **CWB**, you can switch to a different one in the mod's settings.
 
-In the meantime, you can switch the borderless fullscreen mode used by **CWB** to `windows:windowed` in the mod's settings. Be aware, however, that this *may* cause significant performance degradation, especially on more powerful systems.
+Check whether `minecraft:windowed` *(the default, low-latency borderless fullscreen mode)* or `windows:windowed` *(the true windowed fullscreen mode)* works better for you.
+
+Additionally, it's generally recommended to use **CWB** alongside [Sodium](https://modrinth.com/mod/sodium), as it fixes many hardware- and driver-specific issues that might otherwise hinder your experience.
 
 <br>
 
