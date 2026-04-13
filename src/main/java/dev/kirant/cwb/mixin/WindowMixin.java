@@ -7,6 +7,7 @@ import com.mojang.blaze3d.platform.ScreenManager;
 import com.mojang.blaze3d.platform.VideoMode;
 import com.mojang.blaze3d.platform.Window;
 import dev.kirant.cwb.*;
+import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import org.objectweb.asm.Opcodes;
@@ -69,12 +70,21 @@ abstract class WindowMixin implements FullscreenManager {
         Minecraft.getInstance().options.exclusiveFullscreen().set(true);
         //?}
 
+        // Hide Minecraft from broken Nvidia drivers on Windows.
+        if (OS.isWindows()) {
+            MinecraftWindow.Windows.concealCommandLine();
+        }
+
         GLFW.glfwWindowHint(GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER, CWB.CONFIG.getUseScaledFramebuffer() ? GLFW.GLFW_TRUE : GLFW.GLFW_FALSE);
         return getMonitor.call(screenManager, monitor);
     }
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setMode()V"))
     private void init(Window window, Operation<Void> setMode) {
+        if (OS.isWindows()) {
+            MinecraftWindow.Windows.restoreCommandLine();
+        }
+
         CWBConfig config = CWB.CONFIG;
         this.fullscreen = this.actuallyFullscreen = config.getFullscreenMode() != FullscreenMode.OFF;
         this.borderless = config.getPreferredFullscreenMode() == FullscreenMode.BORDERLESS;

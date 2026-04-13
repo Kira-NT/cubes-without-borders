@@ -7,8 +7,10 @@ import com.sun.jna.Pointer;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFWNativeCocoa;
 import org.lwjgl.glfw.GLFWNativeWin32;
+import org.lwjgl.system.*;
 import org.lwjgl.system.windows.User32;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 
 public final class MinecraftWindow {
@@ -28,6 +30,68 @@ public final class MinecraftWindow {
 
     public static final class Windows {
         private static final WeakHashMap<Window, Map.Entry<Long, Long>> WINDOW_STYLES = new WeakHashMap<>();
+
+        private static final String FAKE_CMD = "do.not.touch.this.process.please / net.minecraft.client.main.Main / ";
+
+        private static String utf16Cmd;
+
+        private static String asciiCmd;
+
+        private static ByteBuffer utf16Buffer;
+
+        private static ByteBuffer asciiBuffer;
+
+        public static void concealCommandLine() {
+            if (asciiBuffer != null) {
+                // We've already concealed the original command line.
+                return;
+            }
+
+            try (SharedLibrary kernel32 = APIUtil.apiCreateLibrary("kernel32")) {
+                long utf16CmdPtr = JNI.callP(kernel32.getFunctionAddress("GetCommandLineW"));
+                long asciiCmdPtr = JNI.callP(kernel32.getFunctionAddress("GetCommandLineA"));
+                if (utf16CmdPtr == 0 || asciiCmdPtr == 0) {
+                    // This should not be possible.
+                    return;
+                }
+
+                utf16Cmd = MemoryUtil.memUTF16(utf16CmdPtr);
+                asciiCmd = MemoryUtil.memASCII(asciiCmdPtr);
+                if (!utf16Cmd.contains("java") || !asciiCmd.contains("java")) {
+                    // Somebody has already modified the command line arguments.
+                    return;
+                }
+
+                int utf16CmdLength = MemoryUtil.memLengthUTF16(utf16Cmd, true);
+                int asciiCmdLength = MemoryUtil.memLengthASCII(asciiCmd, true);
+                int utf16FakeCmdLength = MemoryUtil.memLengthUTF16(FAKE_CMD, true);
+                int asciiFakeCmdLength = MemoryUtil.memLengthASCII(FAKE_CMD, true);
+                if (utf16FakeCmdLength > utf16CmdLength || asciiFakeCmdLength > asciiCmdLength) {
+                    // We don't want to write out of bounds.
+                    return;
+                }
+
+                // Hide Minecraft from broken Nvidia drivers on Windows by
+                // overwriting its command line arguments with some nonsense.
+                utf16Buffer = MemoryUtil.memByteBuffer(utf16CmdPtr, utf16CmdLength);
+                asciiBuffer = MemoryUtil.memByteBuffer(asciiCmdPtr, asciiCmdLength);
+                MemoryUtil.memUTF16(FAKE_CMD, true, utf16Buffer);
+                MemoryUtil.memASCII(FAKE_CMD, true, asciiBuffer);
+            }
+        }
+
+        public static void restoreCommandLine() {
+            if (utf16Cmd != null && utf16Buffer != null && FAKE_CMD.length() <= utf16Buffer.remaining() && FAKE_CMD.equals(MemoryUtil.memUTF16(utf16Buffer, FAKE_CMD.length()))) {
+                MemoryUtil.memUTF16(utf16Cmd, true, utf16Buffer);
+            }
+
+            if (asciiCmd != null && asciiBuffer != null && FAKE_CMD.length() <= asciiBuffer.remaining() && FAKE_CMD.equals(MemoryUtil.memASCII(asciiBuffer, FAKE_CMD.length()))) {
+                MemoryUtil.memASCII(asciiCmd, true, asciiBuffer);
+            }
+
+            utf16Cmd = asciiCmd = null;
+            utf16Buffer = asciiBuffer = null;
+        }
 
         public static void pleaseStopDiscardingFuckingFramesThankYou(Window window) {
             // Windows LOVES discarding frames provided by windowed applications when it thinks
