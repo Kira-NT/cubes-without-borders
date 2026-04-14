@@ -91,7 +91,7 @@ public abstract class ModLoader {
 
     static {
         String branding = net.minecraft.client.ClientBrandRetriever.getClientModName();
-        if (branding.contains("fabric")) {
+        if (branding.contains("fabric") || branding.contains("quilt")) {
             INSTANCE = new FabricModLoader();
         } else if (branding.contains("neoforge")) {
             INSTANCE = new NeoForgeModLoader();
