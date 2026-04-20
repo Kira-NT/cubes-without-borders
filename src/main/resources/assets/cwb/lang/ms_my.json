@@ -1,23 +1,17 @@
 {
+  "modmenu.nameTranslation.cwb": "Cubes Without Borders",
   "modmenu.descriptionTranslation.cwb": "Membolehkan anda bermain Minecraft dalam tetingkap skrin penuh tanpa sempadan.",
-
   "cwb.options.borderless": "Tanpa Sempadan",
-
   "cwb.options.fullscreenType": "Jenis Skrin Penuh",
   "cwb.options.fullscreenType.tooltip": "Mengawal mod skrin penuh yang didayakan apabila §oSkrin Penuh§r ditetapkan kepada §oBUKA§r dalam §oTetapan Video§r.",
-
   "cwb.options.borderlessFullscreenType": "Jenis Skrin Penuh Tanpa Sempadan",
   "cwb.options.borderlessFullscreenType.tooltip": "Mengawal mod skrin penuh yang didayakan apabila §oSkrin Penuh§r ditetapkan kepada §oTanpa Sempadan§r dalam §oTetapan Video§r.",
-
   "cwb.options.useScaledFramebuffer": "Gunakan Penimbal Bingkai Berskala",
   "cwb.options.useScaledFramebuffer.tooltip": "Menentukan sama ada untuk menggunakan penimbal bingka beresolusi penuh pada platform di mana koordinat skrin boleh diskalakan relatif kepada koordinat piksel, seperti §omacOS§r dan §oWayland (Linux)§r.\n\nMenyahdayakan tetapan ini boleh memberikan peningkatan prestasi yang ketara, tetapi dengan pengorbanan kualiti imej.",
-
   "cwb.options.pauseOnLostFocus": "Jeda Bila Hilang Fokus",
   "cwb.options.pauseOnLostFocus.tooltip": "Menentukan sama ada permainan harus dijeda secara automatik apabila tetingkapnya kehilangan fokus.",
-
   "cwb.options.pauseOnLostFocusDuringMultiplayer": "Jeda Bila Hilang Fokus (Multipemain)",
   "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "Apabila §oJeda Bila Hilang Fokus§r didayakan, menentukan sama ada kesannya juga harus diterapkan pada sesi multipemain, di mana permainan tidak boleh dijeda sepenuhnya.",
-
   "cwb.fullscreenTypes.minecraft:windowed.tooltip": "Mod skrin penuh bertetingkap dengan ciri prestasi dan pengalaman pengguna yang berbeza bergantung pada platform.\n\nPada §lWindows§r, mod ini secara umumnya merupakan cara terbaik untuk bermain, kerana ia memberikan kelebihan biasa pengalaman skrin penuh tanpa sempadan dengan hampir tiada penalti prestasi atau kependaman; namun, sesetengah pengguna mungkin mengalami kelipan yang menjengkelkan setiap kali tetingkap permainan mendapat atau kehilangan fokus.\n\nPada §lplatform lain§r, mod ini boleh menyebabkan kemerosotan prestasi yang ketara dan/atau isu kebolehgunaan, seperti dok sistem anda kekal kelihatan atau bahkan dipaparkan di atas permainan.",
   "cwb.fullscreenTypes.minecraft:default.tooltip": "Mod skrin penuh eksklusif lalai Minecraft.\n\nMemberikan prestasi yang sangat baik dengan kependaman minimum, tetapi dengan pengorbanan dari segi kebolehgunaan - permainan akan diminimumkan secara automatik setiap kali tetingkapnya kehilangan fokus.",
   "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Mod skrin penuh bukan eksklusif lalai Minecraft.\n\nIni merupakan titik tengah antara skrin penuh eksklusif dan skrin penuh tanpa sempadan, dan terutamanya ditujukan untuk pengguna yang tidak memerlukan pengalaman tanpa sempadan sebenar, tetapi ingin menggunakan tindanan dan/atau bergantung pada IME atau teknologi seumpamanya.",
