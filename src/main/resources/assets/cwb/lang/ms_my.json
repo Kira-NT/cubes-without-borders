@@ -10,7 +10,7 @@
   "cwb.options.borderlessFullscreenType.tooltip": "Mengawal mod skrin penuh yang didayakan apabila §oSkrin Penuh§r ditetapkan kepada §oTanpa Sempadan§r dalam §oTetapan Video§r.",
 
   "cwb.options.useScaledFramebuffer": "Gunakan Penimbal Bingkai Berskala",
-  "cwb.options.useScaledFramebuffer.tooltip": "Menentukan sama ada untuk menggunakan penimbal bingka beresolusi penuh pada platform di mana koordinat skrin boleh diskalakan relatif kepada koordinat piksel, seperti §omacOS§r dan §oWayland (Linux)§r.\n\nMenyahdayakan tetapan ini boleh memberikan peningkatan prestasi yang ketara, tetapi dengan pengorbanan kualiti imej.",
+  "cwb.options.useScaledFramebuffer.tooltip": "Menentukan sama ada untuk menggunakan penimbal bingkai beresolusi penuh pada platform di mana koordinat skrin boleh diskalakan relatif kepada koordinat piksel, seperti §omacOS§r dan §oWayland (Linux)§r.\n\nMenyahdayakan tetapan ini boleh memberikan peningkatan prestasi yang ketara, tetapi dengan pengorbanan kualiti imej.",
 
   "cwb.options.pauseOnLostFocus": "Jeda Bila Hilang Fokus",
   "cwb.options.pauseOnLostFocus.tooltip": "Menentukan sama ada permainan harus dijeda secara automatik apabila tetingkapnya kehilangan fokus.",
