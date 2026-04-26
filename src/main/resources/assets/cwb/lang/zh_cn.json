@@ -1,11 +1,24 @@
 {
-  "modmenu.descriptionTranslation.cwb": "允许您在无边框全屏窗口中运行 Minecraft",
+  "modmenu.descriptionTranslation.cwb": "允许你在无边框全屏窗口模式下游玩 Minecraft。",
 
   "cwb.options.borderless": "无边框",
 
   "cwb.options.fullscreenType": "全屏类型",
+  "cwb.options.fullscreenType.tooltip": "当在§o视频设置§r中将§o全屏§r设置为§o开§r时，控制启用哪种全屏模式。",
 
   "cwb.options.borderlessFullscreenType": "无边框全屏类型",
+  "cwb.options.borderlessFullscreenType.tooltip": "当§o视频设置§r中的§o全屏§r设置为§o无边框§r时，控制启用哪种全屏模式。",
 
-  "cwb.options.pauseOnLostFocus": "失去焦点时暂停"
+  "cwb.options.pauseOnLostFocus": "失去焦点时暂停",
+  "cwb.options.pauseOnLostFocus.tooltip": "当游戏窗口失去焦点时控制是否自动暂停游戏。",
+
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "失去焦点时暂停（多人游戏）",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "当§o失去焦点时暂停§r启用时，可以设置效果是否也适用于多人游戏场景，在这些场景中不暂停游戏。",
+
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "一种带窗口的全屏模式，性能和用户体验特征会根据平台而有所不同。\n\n在 §lWindows§r 上，这种模式通常是游玩游戏的最佳方式，因为它提供了无边框全屏体验的许多好处，而且几乎没有性能或延迟损失；然而，游戏在游戏窗口获得或失去焦点时可能会遇到烦人的闪烁现象。\n\n在§l其他平台§r上，这种模式可能会导致显著的性能下降或可用性问题，例如系统的 Dock 栏仍然可见，还可能会被渲染在游戏之上。",
+  "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecraft 的默认独占全屏模式。\n\n以可用性为代价提供出色的性能和最小的延迟——每当游戏窗口失去焦点时，游戏都会自动最小化。",
+  "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecraft 的默认非独占全屏模式。\n\n这是独占全屏和无边框全屏之间的一种折中方案，主要适用于不需要真正无边框体验但希望使用覆盖层、依赖输入法或类似技术的用户。",
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 的默认无边框全屏模式。\n\n提供极佳的性能和最小的延迟，目前没有已知缺点。",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 的默认无边框全屏模式。\n\n提供较好的性能，但由于操作系统对所有窗口应用程序强制使用的隐式垂直同步，本模式的延迟比默认的独占全屏模式略高。",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "适用于 Windows 的真正的窗口化全屏模式。\n\n与 §ominecraft:windowed§r 不同，它不会出现闪烁问题，但也缺乏该模式的性能优势。\n\n由于操作系统对所有窗口化应用程序强制使用了隐式垂直同步，其延迟高于默认的独占全屏模式。不过，一些用户可能会遇到严重的性能下降，因为 Windows 有时会丢弃窗口化应用提供的帧，而不会渲染它们，尤其是在执行操作系统认为比该任务更重要的后台任务时，例如下载更新或索引 Windows 录制的你活动截图。"
 }
