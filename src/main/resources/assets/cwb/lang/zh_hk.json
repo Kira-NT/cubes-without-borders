@@ -15,7 +15,7 @@
   "cwb.options.pauseOnLostFocus": "失去焦點時暫停",
   "cwb.options.pauseOnLostFocus.tooltip": "當遊戲視窗失去焦點時控制是否自動暫停遊戲。",
 
-  "cwb.options.pauseOnLostFocusDuringMultiplayer": "失去焦点时暂停（多人遊戲）",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "失去焦點時暫停（多人遊戲）",
   "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "當§o失去焦點時暫停§r啟用時，可以設定效果是否也適用於多人遊戲場景，在這些場景中不暫停遊戲。",
 
   "cwb.fullscreenTypes.minecraft:windowed.tooltip": "一種帶視窗的全螢幕模式，效能和用戶體驗特徵會根據平台而有所不同。\n\n在 §lWindows§r 上，這種模式通常是遊玩遊戲的最佳方式，因為它提供了無邊框全螢幕體驗的許多好處，而且幾乎沒有效能或延遲損失；然而，遊戲在遊戲視窗獲得或失去焦點時可能會遇到煩人的閃爍現象。\n\n在§l其他平台§r上，這種模式可能會導致顯著的效能下降或可用性問題，例如系統的 Dock 仍然可見，還可能會被渲染在遊戲之上。",
