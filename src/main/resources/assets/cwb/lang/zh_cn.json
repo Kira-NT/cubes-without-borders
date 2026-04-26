@@ -9,6 +9,9 @@
   "cwb.options.borderlessFullscreenType": "无边框全屏类型",
   "cwb.options.borderlessFullscreenType.tooltip": "当§o视频设置§r中的§o全屏§r设置为§o无边框§r时，控制启用哪种全屏模式。",
 
+  "cwb.options.useScaledFramebuffer": "使用缩放帧缓冲",
+  "cwb.options.useScaledFramebuffer.tooltip": "当屏幕坐标可相对于像素坐标缩放的平台（例如 §omacOS§r 和 §oWayland (Linux)§r）时控制是否使用全分辨率帧缓冲。\n\n禁用此选项可能会显著提升性能，但会降低图像质量。",
+
   "cwb.options.pauseOnLostFocus": "失去焦点时暂停",
   "cwb.options.pauseOnLostFocus.tooltip": "当游戏窗口失去焦点时控制是否自动暂停游戏。",
 
