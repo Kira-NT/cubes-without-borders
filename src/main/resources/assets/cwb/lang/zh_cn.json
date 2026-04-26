@@ -20,5 +20,5 @@
   "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecraft 的默认非独占全屏模式。\n\n这是独占全屏和无边框全屏之间的一种折中方案，主要适用于不需要真正无边框体验但希望使用覆盖层、依赖输入法或类似技术的用户。",
   "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 的默认无边框全屏模式。\n\n提供极佳的性能和最小的延迟，目前没有已知缺点。",
   "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 的默认无边框全屏模式。\n\n提供较好的性能，但由于操作系统对所有窗口应用程序强制使用的隐式垂直同步，本模式的延迟比默认的独占全屏模式略高。",
-  "cwb.fullscreenTypes.windows:windowed.tooltip": "适用于 Windows 的真正的窗口化全屏模式。\n\n与 §ominecraft:windowed§r 不同，它不会出现闪烁问题，但也缺乏该模式的性能优势。\n\n由于操作系统对所有窗口化应用程序强制使用了隐式垂直同步，其延迟高于默认的独占全屏模式。不过，一些用户可能会遇到严重的性能下降，因为 Windows 有时会丢弃窗口化应用提供的帧，而不会渲染它们，尤其是在执行操作系统认为比该任务更重要的后台任务时，例如下载更新或索引 Windows 录制的你活动截图。"
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "适用于 Windows 的真正的窗口化全屏模式。\n\n与 §ominecraft:windowed§r 不同，它不会出现闪烁问题，但也缺乏该模式的性能优势。\n\n由于操作系统对所有窗口化应用程序强制使用了隐式垂直同步，其延迟高于默认的独占全屏模式。不过，一些用户可能会遇到严重的性能下降，因为 Windows 有时会丢弃窗口化应用程序提供的帧，而不会渲染它们，尤其是在执行操作系统认为比该任务更重要的后台任务时，例如下载更新或索引 Windows 录制的活动截图。"
 }
