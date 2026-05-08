@@ -1,11 +1,27 @@
 {
-  "modmenu.descriptionTranslation.cwb": "讓你可以在無邊框全螢幕視窗中遊玩 Minecraft。",
+  "modmenu.descriptionTranslation.cwb": "允許你在無邊框全螢幕視窗模式下遊玩 Minecraft。",
 
   "cwb.options.borderless": "無邊框",
 
   "cwb.options.fullscreenType": "全螢幕類型",
+  "cwb.options.fullscreenType.tooltip": "當在§o顯示設定§r中將§o全螢幕§r設定為§o開啟§r時，控制啟用哪種全螢幕模式。",
 
   "cwb.options.borderlessFullscreenType": "無邊框全螢幕類型",
+  "cwb.options.borderlessFullscreenType.tooltip": "當§o顯示設定§r中的§o全螢幕§r設定為§o無邊框§r時，控制啟用哪種全螢幕模式。",
 
-  "cwb.options.pauseOnLostFocus": "失去焦點時暫停"
+  "cwb.options.useScaledFramebuffer": "使用縮放幀緩衝",
+  "cwb.options.useScaledFramebuffer.tooltip": "當螢幕座標可相對於像素座標縮放的平台（例如 §omacOS§r 和 §oWayland (Linux)§r）時控制是否使用全解析度幀緩衝。\n\n停用此選項可能顯著提升效能，但會降低影像品質。",
+
+  "cwb.options.pauseOnLostFocus": "失去焦點時暫停",
+  "cwb.options.pauseOnLostFocus.tooltip": "當遊戲視窗失去焦點時控制是否自動暫停遊戲。",
+
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "失去焦點時暫停（多人遊戲）",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "當§o失去焦點時暫停§r啟用時，可以設定效果是否也適用於多人遊戲場景，在這些場景中不暫停遊戲。",
+
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "一種帶視窗的全螢幕模式，效能和用戶體驗特徵會因平台而異。\n\n在 §lWindows§r 上，此模式通常是遊玩遊戲的最佳方式，既能提供無邊框全螢幕體驗的多數優點，又幾乎不會有效能或延遲損失；然而，當遊戲視窗獲得或失去焦點時，可能會出現令人困擾的閃爍現象。\n\n在 §l其他平台§r 上，此模式可能導致明顯的效能下降或可用性問題，例如系統的 Dock 仍會顯示，甚至可能覆蓋在遊戲畫面上。",
+  "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecraft 預設的獨佔全螢幕模式。\n\n以犧牲部分可用性為代價，提供出色的效能與最低延遲——每當遊戲視窗失去焦點時，遊戲會自動最小化。",
+  "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecraft 預設的非獨佔全螢幕模式。\n\n這是獨佔全螢幕與無邊框全螢幕之間的折衷方案，主要適合不需要真正的無邊框體驗，但希望使用疊加層、依賴輸入法或類似技術的用戶。",
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 預設的無邊框全螢幕模式。\n\n提供極佳的效能與最低延遲，目前尚未發現已知缺點。",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 預設的無邊框全螢幕模式。\n\n能提供良好的效能，但由於作業系統對所有視窗應用程式強制啟用隱性垂直同步，此模式的延遲略高於預設的獨佔全螢幕模式。",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "適用於 Windows 的真正視窗化全螢幕模式。\n\n與 §ominecraft:windowed§r 不同，此模式不會出現閃爍問題，但也缺少該模式的效能優勢。\n\n由於作業系統對所有視窗化應用程式強制啟用隱性垂直同步，其延遲高於預設的獨佔全螢幕模式。然而，部分用戶可能會遇到嚴重的效能下降，因為 Windows 有時會丟棄視窗化應用程式提供的影格而不予渲染，尤其在執行作業系統認為比當前任務更重要的背景工作時，例如下載更新或索引 Windows 錄製的活動畫面。"
 }
