@@ -15,5 +15,11 @@ public final class OS {
         return OS.isUnix() && System.getProperty("os.name").contains("Mac");
     }
 
+    public static int getMajorVersion() {
+        String version = System.getProperty("os.version");
+        int i = version.indexOf('.');
+        return Integer.parseInt(i >= 0 ? version.substring(0, i) : version);
+    }
+
     private OS() { }
 }

@@ -196,7 +196,9 @@ public final class FullscreenTypes {
             // on macOS 10.15 (Catalina) and earlier, if the resizable bit in NSWindowStyleMask
             // is not cleared in fullscreen mode, a window affected by this may end up being
             // automatically minimized when the user clicks anywhere in the content area.
-            MinecraftWindow.MacOS.setResizable(window, false);
+            if (OS.getMajorVersion() <= 14) {
+                MinecraftWindow.MacOS.setResizable(window, false);
+            }
         }
 
         @Override
@@ -204,8 +206,11 @@ public final class FullscreenTypes {
             GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
             GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
             MinecraftWindow.MacOS.setHasShadow(window, true);
-            MinecraftWindow.MacOS.setResizable(window, true);
             MinecraftWindow.MacOS.showGlobalUI();
+
+            if (OS.getMajorVersion() <= 14) {
+                MinecraftWindow.MacOS.setResizable(window, true);
+            }
         }
     }
 
