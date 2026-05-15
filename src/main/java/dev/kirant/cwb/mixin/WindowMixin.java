@@ -91,13 +91,20 @@ abstract class WindowMixin implements FullscreenManager {
         this.borderless = this.borderless || config.getFullscreenMode() == FullscreenMode.BORDERLESS;
         this.previousFullscreenType = this.currentFullscreenType = null;
         this.syncCurrentFullscreenState();
+
         setMode.call(window);
+
+        // Make sure the window dimensions are up to date, as they may differ from those passed to glfwSetWindowMonitor.
+        // This is mainly relevant on platforms where glfwGetVideoMode may return an invalid value, like on macOS.
+        GLFW.glfwPollEvents();
+        this.refreshWindowSize();
     }
 
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;refreshFramebufferSize()V"))
-    private void fixupFramebufferSize(Window window, Operation<Void> refreshFramebufferSize) {
-        GLFW.glfwPollEvents();
-        refreshFramebufferSize.call(window);
+    @Inject(method = "changeFullscreenVideoMode", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setMode()V", shift = At.Shift.AFTER))
+    private void onChangeFullscreenVideoMode(CallbackInfo ci) {
+        // Make sure that window dimensions are up to date before
+        // resizing the GUI based on potentially stale values.
+        this.refreshWindowSize();
     }
 
     @Inject(method = "setMode", at = @At("HEAD"), cancellable = true)
@@ -165,6 +172,15 @@ abstract class WindowMixin implements FullscreenManager {
         config.setFullscreenMode(this.getFullscreenMode());
         config.setPreferredFullscreenMode(this.borderless ? FullscreenMode.BORDERLESS : FullscreenMode.ON);
         config.save();
+    }
+
+    private void refreshWindowSize() {
+        Window window = (Window)(Object)this;
+        int[] outWindowWidth = new int[1];
+        int[] outWindowHeight = new int[1];
+        GLFW.glfwGetWindowSize(MinecraftWindow.getHandle(window), outWindowWidth, outWindowHeight);
+        window.width = outWindowWidth[0] > 0 ? outWindowWidth[0] : 1;
+        window.height = outWindowHeight[0] > 0 ? outWindowHeight[0] : 1;
     }
 
     private void syncCurrentFullscreenState() {
