@@ -90,15 +90,38 @@ public abstract class ModLoader {
     }
 
     static {
-        String branding = net.minecraft.client.ClientBrandRetriever.getClientModName();
-        if (branding.contains("fabric") || branding.contains("quilt")) {
+        if (safeCheakFabric()) {
             INSTANCE = new FabricModLoader();
-        } else if (branding.contains("neoforge")) {
+        } else if (safeCheakNeoForge()) {
             INSTANCE = new NeoForgeModLoader();
-        } else if (branding.contains("forge")) {
+        } else if (safeCheakForge()) {
             INSTANCE = new ForgeModLoader();
         } else {
             INSTANCE = new ModLoader() { };
+        }
+    }
+
+    private static boolean safeCheakFabric() {
+        try {
+            return net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir() != null;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
+
+    private static boolean safeCheakNeoForge() {
+        try {
+            return net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get() != null;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
+
+    private static boolean safeCheakForge() {
+        try {
+            return net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get() != null;
+        } catch (Throwable e) {
+            return false;
         }
     }
 
