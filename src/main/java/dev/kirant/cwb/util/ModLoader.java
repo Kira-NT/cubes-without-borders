@@ -1,9 +1,28 @@
 package dev.kirant.cwb.util;
 
 import java.nio.file.Path;
+import java.util.function.Supplier;
 
 public abstract class ModLoader {
-    private static final ModLoader INSTANCE;
+    @SuppressWarnings("Convert2MethodRef")
+    private static final ModLoader INSTANCE = ModLoader.create(
+        () -> new FabricModLoader(),
+        () -> new NeoForgeModLoader(),
+        () -> new ForgeModLoader()
+    );
+
+    @SafeVarargs
+    private static ModLoader create(Supplier<ModLoader>... factories) {
+        for (Supplier<ModLoader> factory : factories) {
+            try {
+                ModLoader modLoader = factory.get();
+                if (modLoader.getConfigFolder() != null) {
+                    return modLoader;
+                }
+            } catch (Throwable _) { }
+        }
+        return new ModLoader() { };
+    }
 
     public static ModLoader getInstance() {
         return ModLoader.INSTANCE;
@@ -87,19 +106,6 @@ public abstract class ModLoader {
             return modVersion != null && modVersion.compareTo(targetVersion) >= 0;
         }
         //?}
-    }
-
-    static {
-        String branding = net.minecraft.client.ClientBrandRetriever.getClientModName();
-        if (branding.contains("fabric") || branding.contains("quilt")) {
-            INSTANCE = new FabricModLoader();
-        } else if (branding.contains("neoforge")) {
-            INSTANCE = new NeoForgeModLoader();
-        } else if (branding.contains("forge")) {
-            INSTANCE = new ForgeModLoader();
-        } else {
-            INSTANCE = new ModLoader() { };
-        }
     }
 
     private ModLoader() { }
