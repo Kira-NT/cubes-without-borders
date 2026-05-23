@@ -201,11 +201,18 @@ public final class FullscreenTypes {
 
         @Override
         public void disable(Window window) {
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
-            MinecraftWindow.MacOS.setHasShadow(window, true);
-            MinecraftWindow.MacOS.setResizable(window, true);
+            MinecraftWindow.MacOS.registerWindowWillReturnFieldEditorStub(window);
             MinecraftWindow.MacOS.showGlobalUI();
+            MinecraftWindow.MacOS.setHasShadow(window, true);
+            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+
+            // macOS 26.3+ (Tahoe) seems to leave a re-decorated window in a weird state
+            // where it stops receiving keyboard and mouse inputs.
+            // Thankfully, manually re-focusing it via `[window makeKeyAndOrderFront:nil]` helps,
+            // which is exactly what `glfwFocusWindow` does under the hood.
+            GLFW.glfwFocusWindow(MinecraftWindow.getHandle(window));
         }
     }
 

@@ -3,11 +3,14 @@ package dev.kirant.cwb.util;
 import ca.weblite.objc.Client;
 import ca.weblite.objc.Proxy;
 import com.mojang.blaze3d.platform.Window;
+import com.sun.jna.Callback;
+import com.sun.jna.CallbackReference;
 import com.sun.jna.Pointer;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFWNativeCocoa;
 import org.lwjgl.glfw.GLFWNativeWin32;
 import org.lwjgl.system.*;
+import org.lwjgl.system.macosx.ObjCRuntime;
 import org.lwjgl.system.windows.User32;
 
 import java.nio.ByteBuffer;
@@ -131,6 +134,8 @@ public final class MinecraftWindow {
     }
 
     public static final class MacOS {
+        private static final WeakHashMap<Window, Callback> WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS = new WeakHashMap<>();
+
         public static void showGlobalUI() {
             final long NSApplicationPresentationDefault = 0L;
 
@@ -163,6 +168,47 @@ public final class MinecraftWindow {
             long styleMask = ((Number)nsWindow.send("styleMask")).longValue();
             long newStyleMask = (styleMask & ~NSWindowStyleMaskResizable) | (resizable ? NSWindowStyleMaskResizable : 0);
             nsWindow.send("setStyleMask:", newStyleMask);
+        }
+
+        public static boolean registerWindowWillReturnFieldEditorStub(Window window) {
+            // [NSWindowDelegate windowWillReturnFieldEditor:toObject:] is supposed to be an optional method,
+            // like any other method on NSWindowDelegate, which is why GLFWWindowDelegate does not implement it.
+            //
+            // However, starting with macOS 26.3 (Tahoe), AppKit began unconditionally calling it
+            // whenever the styleMask changes on undecorated windows. For some reason. And since
+            // the method does not exist, the game just immediately crashes when that happens.
+            //
+            // Thankfully (or maybe not), Objective-C is basically JavaScript, so we can define
+            // the missing method on the window's delegate at runtime. A simple `return nil` is
+            // more than enough, as it preserves the default behavior. Which is what we wanted
+            // in the first place, but got a funny and hard to debug crash instead.
+            if (WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS.containsKey(window)) {
+                return false;
+            }
+
+            Proxy nsWindow = new Proxy(new Pointer(GLFWNativeCocoa.glfwGetCocoaWindow(MinecraftWindow.getHandle(window))));
+            Proxy nsWindowDelegate = nsWindow.sendProxy("delegate");
+            if (nsWindowDelegate == null || nsWindowDelegate.sendBoolean("respondsToSelector:", "windowWillReturnFieldEditor:toObject:")) {
+                return false;
+            }
+
+            Callback windowWillReturnFieldEditorCallback = new Callback() {
+                @SuppressWarnings("unused")
+                public Pointer windowWillReturnFieldEditor(Pointer self, Pointer sel, Pointer sender, Pointer client) {
+                    return null;
+                }
+            };
+            boolean success = ObjCRuntime.class_addMethod(
+                ObjCRuntime.object_getClass(Pointer.nativeValue(nsWindowDelegate.getPeer())),
+                ObjCRuntime.sel_registerName("windowWillReturnFieldEditor:toObject:"),
+                Pointer.nativeValue(CallbackReference.getFunctionPointer(windowWillReturnFieldEditorCallback)),
+                "@@:@@"
+            );
+
+            if (success) {
+                WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS.put(window, windowWillReturnFieldEditorCallback);
+            }
+            return success;
         }
 
         private MacOS() { }
