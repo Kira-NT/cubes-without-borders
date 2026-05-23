@@ -1,0 +1,28 @@
+{
+  "modmenu.nameTranslation.cwb": "Cubes Without Borders",
+  "modmenu.descriptionTranslation.cwb": "Võimaldab Minecrafti mängida täisekraanil, piirideta aknas.",
+
+  "cwb.options.borderless": "piirideta",
+
+  "cwb.options.fullscreenType": "Täisekraani liik",
+  "cwb.options.fullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §oSEES§r.",
+
+  "cwb.options.borderlessFullscreenType": "Piirideta täisekraani liik",
+  "cwb.options.borderlessFullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §opiirideta§r.",
+
+  "cwb.options.useScaledFramebuffer": "Mastaapne kaadripuhver",
+  "cwb.options.useScaledFramebuffer.tooltip": "Määrab, kas kasutada täisresolutsiooniga kaadripuhvrit platvormidel, kus ekraanikoordinaate saab mastaapida pikselikoordinaatide suhtes, näiteks §omacOS§r ja §oWayland (Linux)§r.\n\nSelle valiku keelamine võib tuua kaasa märkimisväärse jõudluse kasvu, kuid halvendada pildi kvaliteeti.",
+
+  "cwb.options.pauseOnLostFocus": "Fookuse kaotamisel pausi mäng",
+  "cwb.options.pauseOnLostFocus.tooltip": "Määrab, kas mäng tuleks automaatselt pausile panna, kui selle aken kaotab fookuse.",
+
+  "cwb.options.pauseOnLostFocusDuringMultiplayer": "Fookuse kaotamisel pausi mäng (mitmikmäng)",
+  "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "§oFookuse kaotamisel pausi mäng§r lubamisel määrab, kas selle mõju peaks rakenduma ka mitmikmängu seanssidele, kus mängu täielikult pausida ei saa.",
+
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "Aknal põhinev täisekraanirežiim, mille jõudlus ja kasutajakogemus sõltuvad platvormist.\n\n§lWindowsis§r on see režiim üldjuhul parim viis mängu mängimiseks, kuna pakub piirideta täisekraanikogemusele omaseid eeliseid ilma jõudluse ja viiteaja halvenemiseta; siiski võivad mõned kasutajad kogeda häirivat vilkumist iga kord, kui mänguaken fookuse saab või kaotab.\n\n§lTeistel platvormidel§r võib see režiim põhjustada märkimisväärset jõudluse langust ja/või kasutatavuse probleeme, näiteks võib süsteemi dokk jääda nähtavaks või isegi olla kuvatud mängu peal.",
+  "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecrafti eksklusiivne vaikimisi täisekraanirežiim.\n\nTagab suurepärase jõudluse minimaalse viiteajaga, ent mäng minimeeritakse automaatselt iga kord, kui selle aken kaotab fookuse.",
+  "cwb.fullscreenTypes.minecraft:hybrid.tooltip": "Minecrafti mitte-eksklusiivne vaikimisi täisekraanirežiim.\n\nSee on kompromiss eksklusiivse täisekraani ja piirideta täisekraani vahel ning on mõeldud peamiselt kasutajatele, kes ei vaja tõelist piirideta kasutuskogemust, kuid soovivad kasutada ülekatteid ja/või IME-d või sarnaseid tehnoloogiaid.",
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linuxi vaikimisi kasutatav piirideta täisekraanirežiim.\n\nTagab suurepärase jõudluse minimaalse viiteajaga, ei oma teadaolevaid puudusi.",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS-i vaikimisi kasutatav piirideta täisekraanirežiim.\n\nPakub rahuldavat jõudlust, kuid selle viiteaeg on veidi suurem kui eksklusiivsel vaikimisi täisekraanirežiimil, kuna operatsioonisüsteem rakendab kõigile aknarežiimis töötavatele rakendustele V-Sync'i.",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "Tõeline aknapõhine täisekraanirežiim Windowsile.\n\nErinevalt §ominecraft:windowed§r-ist ei esine selles vilkumisprobleeme, ent samas puuduvad sellel ka nimetatud režiimi jõudluse eelised.\n\nSelle viiteaeg on suurem, kui eksklusiivsel vaikimisi täisekraanirežiimil, kuna operatsioonisüsteem rakendab kõigile aknarežiimis töötavatele rakendustele vaikimisi V-Sync'i. Lisaks võivad mõned kasutajad kogeda olulist jõudluse langust, kuna Windows jätab mõnikord aknarežiimis rakenduste kaadrid renderdamata, eriti kui täidetakse olulisemaks peetavaid taustaülesandeid, näiteks uuenduste allalaadimine või Windows Recalliga salvestatud kuvatõmmiste indekseerimine."
+}
