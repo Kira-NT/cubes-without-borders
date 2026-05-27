@@ -11,6 +11,7 @@ import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import org.objectweb.asm.Opcodes;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,6 +23,8 @@ import java.util.Optional;
 
 @Mixin(Window.class)
 abstract class WindowMixin implements FullscreenManager {
+    private static @Shadow @Final Logger LOGGER;
+
     private @Shadow @Final ScreenManager screenManager;
 
     private @Shadow Optional<VideoMode> preferredFullscreenVideoMode;
@@ -149,6 +152,16 @@ abstract class WindowMixin implements FullscreenManager {
 
         this.currentFullscreenType.enable(window, monitor, monitor.getPreferredVidMode(this.preferredFullscreenVideoMode));
         ci.cancel();
+    }
+
+    @WrapOperation(method = "setMode", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V", ordinal = 0))
+    private void enableExclusiveFullscreenWithBorderlessFallback(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate, Operation<Void> glfwSetWindowMonitor) {
+        try {
+            glfwSetWindowMonitor.call(window, monitor, xpos, ypos, width, height, refreshRate);
+        } catch (Throwable e) {
+            LOGGER.error("Failed to enable exclusive fullscreen mode. There may be an issue with your graphics drivers. Falling back to borderless mode.", e);
+            this.setFullscreenMode(FullscreenMode.BORDERLESS);
+        }
     }
 
     @Inject(method = "setMode", at = {
