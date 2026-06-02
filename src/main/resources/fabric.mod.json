@@ -32,6 +32,21 @@
       "curseforge": "${curseforge}"
     }
   },
+  "breaks": {
+    "borderlessmining": "*",
+    "fullscreenfix": "*",
+    "borderless_windowed_vulkan": "*",
+    "borderless-windowed": "*",
+    "borderlesswindow": "*",
+    "fullscreenborderless": "*",
+    "concentration": "*",
+    "framevoid": "*",
+    "windowstitlebardelete": "*",
+    "deborder": "*",
+    "gyo": "*",
+    "perfect_presentation": "*",
+    "borderless-fullscreen": "*"
+  },
   "depends": {
     "fabricloader": ">=${fabric_loader}",
     "minecraft": ">=${minecraft}",

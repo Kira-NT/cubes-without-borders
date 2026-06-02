@@ -28,6 +28,21 @@ versionRange = "[${minecraft},)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.${id}]]
+modId = "borderlessmining"
+type = "incompatible"
+reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"borderlessmining\"."
+
+[[dependencies.${id}]]
+modId = "borderlesswindow"
+type = "incompatible"
+reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"borderlesswindow\"."
+
+[[dependencies.${id}]]
+modId = "concentration"
+type = "incompatible"
+reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"concentration\"."
+
 [[mixins]]
 config="${id}.mixins.json"
 
