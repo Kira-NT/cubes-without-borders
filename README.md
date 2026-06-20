@@ -29,33 +29,64 @@ Additionally, the mod introduces a `--borderless` startup flag that forces the g
 
 ## FAQ
 
-> I'm a Windows user and...
+<details>
+<summary>I'm a Windows user and...</summary>
+<br>
 
-That is a problem indeed, my friend! In all seriousness, though, if you are having issues with the default borderless fullscreen mode used by **CWB**, you can switch to a different one in the mod's settings.
+That is a problem indeed, my friend! In all seriousness, though, if you are having issues with the default borderless fullscreen mode used by CWB, you can switch to a different one in the mod's settings.
 
 Check whether `minecraft:windowed` *(the default, low-latency borderless fullscreen mode)* or `windows:windowed` *(the true windowed fullscreen mode)* works better for you.
 
-Additionally, it's generally recommended to use **CWB** alongside [Sodium](https://modrinth.com/mod/sodium), as it fixes many hardware- and driver-specific issues that might otherwise hinder your experience.
+Additionally, it's generally recommended to use CWB alongside [Sodium](https://modrinth.com/mod/sodium), as it fixes many hardware- and driver-specific issues that might otherwise hinder your experience.
 
 <br>
+</details>
 
-> When I open Video Settings, the Fullscreen setting doesn't include a Borderless option - it's just a toggle!
+<details>
+<summary>On Windows, my cursor becomes invisible in inventories when fullscreen is enabled.</summary>
+<br>
 
-You are probably using a rebranded fork of Sodium, or a version of Sodium that **CWB** doesn't support yet/already. Don't worry, though! You can access vanilla Video Settings from Sodium's custom screen by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> - there you'll be able to find the modified Fullscreen setting.
+Once again, you can switch to `windows:windowed` in the mod's settings to force the game to run in windowed mode, as proper fullscreen mode does not seem to work correctly on your system.
+
+It's worth noting, however, that what you are experiencing is not a problem with the mod, but rather an issue with your system that you might be able to fix. People commonly report their cursor becoming invisible in games on Windows in the following scenarios:
+
+- When using [Medal](https://support.medal.tv/support/solutions/articles/48001258678-troubleshooting-missing-mouse-cursors-in-medal-tv)
+- When using OBS on Windows 11 with the ["Windows 10+ Capturing Method"](https://github.com/obsproject/obs-studio/issues/10782) enabled for the source
+- When the ["Display pointer trails"](https://learn.microsoft.com/en-us/answers/questions/2617725/invisible-mouse-cursor-in-full-screen-games) option is enabled in the Control Panel
+- Due to your usual causes, such as broken and/or outdated drivers
+
+<br>
+</details>
+
+<details>
+<summary>When I open Video Settings, the Fullscreen setting doesn't include a Borderless option - it's just a toggle!</summary>
+<br>
+
+You are probably using a rebranded fork of Sodium, or a version of Sodium that CWB doesn't support yet/already. Don't worry, though! You can access vanilla Video Settings from Sodium's custom screen by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> - there you'll be able to find the modified Fullscreen setting.
 
 In fact, if you simply toggle fullscreen by pressing <kbd>F11</kbd>, for example, you should immediately jump straight into the borderless mode, as it's set as your preferred fullscreen mode by default.
 
 <br>
+</details>
 
-> When I set Fullscreen Mode to Borderless in Video Settings, nothing really changes compared to when it is set to Exclusive - the game window continues to be automatically minimized whenever it loses focus.
-
-**CWB** does not label its setting as "Fullscreen Mode", it is simply called "Fullscreen". It also does not require you to restart the game when switching from one fullscreen mode to another. What you are seeing is a very misleadingly named option provided by Sodium. To enable real borderless fullscreen provided by **CWB**, please see the workaround for unsupported versions of Sodium and its forks described above.
-
+<details>
+<summary>When I set Fullscreen Mode to Borderless in Video Settings, nothing really changes compared to when it is set to Exclusive - the game window continues to be automatically minimized whenever it loses focus.</summary>
 <br>
 
-> On Linux, I want to keep a Picture-in-Picture window opened by my browser on top of the game. However, it always goes behind the game window when I switch my focus back to Minecraft.
+This mod does not label its setting as "Fullscreen Mode", it is simply called "Fullscreen". It also does not require you to restart the game when switching from one fullscreen mode to another. What you are seeing is a very misleadingly named option provided by Sodium. To enable real borderless fullscreen provided by CWB, please see the workaround for unsupported versions of Sodium and its forks described above.
 
-Due to the stacking order defined by the [FreeDesktop specification](https://specifications.freedesktop.org/wm/latest/), conforming desktop environments like KDE Plasma *(rare GNOME W)* place PiP windows behind focused fullscreen applications. However, you can always change the layer assigned to the window you want to keep above your game by using window rules. Here's [an example](media/kde-plasma-window-rules.webp) of how to do this for Firefox.
+<br>
+</details>
+
+<details>
+<summary>On Linux, I want to keep a Picture-in-Picture window opened by my browser on top of the game. However, it always goes behind the game window when I switch my focus back to Minecraft.</summary>
+<br>
+
+Due to the stacking order defined by the [FreeDesktop specification](https://specifications.freedesktop.org/wm/latest/), conforming desktop environments like KDE Plasma *(rare GNOME W)* place PiP windows behind focused fullscreen applications. Thankfully, you can always change the layer assigned to the window you want to keep above your game by using window rules. Here's an example of how to do this for Firefox:
+
+![KDE Plasma window rule example](media/kde-plasma-window-rules.webp)
+
+</details>
 
 ----
 
@@ -80,6 +111,13 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
     //
     // Should be either "ON", or "BORDERLESS".
     "preferredFullscreenMode": "BORDERLESS",
+
+    // Specifies whether to postpone entering fullscreen mode until Minecraft is fully loaded.
+    //
+    // Enabling this option may result in a smoother startup sequence and can fix rare issues
+    // on systems with faulty drivers that do not immediately allow certain windows to enter
+    // fullscreen mode at a resolution that differs from the default one.
+    "useDelayedFullscreen": true,
 
     // Specifies whether to use a full-resolution framebuffer on platforms where
     // screen coordinates can be scaled relative to pixel coordinates, such as
