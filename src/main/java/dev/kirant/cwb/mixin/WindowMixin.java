@@ -89,7 +89,7 @@ abstract class WindowMixin implements FullscreenManager {
         }
 
         CWBConfig config = CWB.CONFIG;
-        this.fullscreen = this.actuallyFullscreen = config.getFullscreenMode() != FullscreenMode.OFF;
+        this.fullscreen = this.actuallyFullscreen = !config.getUseDelayedFullscreen() && config.getFullscreenMode() != FullscreenMode.OFF;
         this.borderless = config.getPreferredFullscreenMode() == FullscreenMode.BORDERLESS;
         this.borderless = this.borderless || config.getFullscreenMode() == FullscreenMode.BORDERLESS;
         this.previousFullscreenType = this.currentFullscreenType = null;

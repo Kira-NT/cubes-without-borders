@@ -22,6 +22,8 @@ public class CWBConfig {
 
     private @Expose FullscreenType borderlessFullscreenType;
 
+    private @Expose Boolean useDelayedFullscreen;
+
     private @Expose Boolean useScaledFramebuffer;
 
     private @Expose Boolean pauseOnLostFocusDuringMultiplayer;
@@ -90,6 +92,14 @@ public class CWBConfig {
         this.setValue(c -> c.borderlessFullscreenType, (c, x) -> c.borderlessFullscreenType = x, fullscreenType);
     }
 
+    public boolean getUseDelayedFullscreen() {
+        return this.getValue(c -> c.useDelayedFullscreen);
+    }
+
+    public void setUseDelayedFullscreen(boolean useDelayedFullscreen) {
+        this.setValue(c -> c.useDelayedFullscreen, (c, x) -> c.useDelayedFullscreen = x, useDelayedFullscreen);
+    }
+
     public boolean getUseScaledFramebuffer() {
         return this.getValue(c -> c.useScaledFramebuffer);
     }
@@ -155,6 +165,7 @@ public class CWBConfig {
         this.preferredFullscreenMode = this.preferredFullscreenMode != null ? this.preferredFullscreenMode : FullscreenMode.BORDERLESS;
         this.fullscreenType = this.fullscreenType != null ? this.fullscreenType : FullscreenTypes.exclusive();
         this.borderlessFullscreenType = this.borderlessFullscreenType != null ? this.borderlessFullscreenType : FullscreenTypes.borderless();
+        this.useDelayedFullscreen = this.useDelayedFullscreen != null ? this.useDelayedFullscreen : true;
         this.useScaledFramebuffer = this.useScaledFramebuffer != null ? this.useScaledFramebuffer : true;
         this.pauseOnLostFocusDuringMultiplayer = this.pauseOnLostFocusDuringMultiplayer != null ? this.pauseOnLostFocusDuringMultiplayer : true;
     }

@@ -17,6 +17,7 @@ final class ClothConfigScreenImpl {
         Component title = Components.translatable("modmenu.nameTranslation." + modId);
         Component fullscreenTypeText = Components.translatable(modId + ".options.fullscreenType");
         Component borderlessFullscreenTypeText = Components.translatable(modId + ".options.borderlessFullscreenType");
+        Component useDelayedFullscreenText = Components.translatable(modId + ".options.useDelayedFullscreen");
         Component useScaledFramebufferText = Components.translatable(modId + ".options.useScaledFramebuffer");
         Component pauseOnLostFocusText = Components.translatable(modId + ".options.pauseOnLostFocus");
         Component pauseOnLostFocusDuringMultiplayerText = Components.translatable(modId + ".options.pauseOnLostFocusDuringMultiplayer");
@@ -24,6 +25,7 @@ final class ClothConfigScreenImpl {
         /*String title = Components.translatable("modmenu.nameTranslation." + modId).getString();
         String fullscreenTypeText = Components.translatable(modId + ".options.fullscreenType").getString();
         String borderlessFullscreenTypeText = Components.translatable(modId + ".options.borderlessFullscreenType").getString();
+        String useDelayedFullscreenText = Components.translatable(modId + ".options.useDelayedFullscreen").getString();
         String useScaledFramebufferText = Components.translatable(modId + ".options.useScaledFramebuffer").getString();
         String pauseOnLostFocusText = Components.translatable(modId + ".options.pauseOnLostFocus").getString();
         String pauseOnLostFocusDuringMultiplayerText = Components.translatable(modId + ".options.pauseOnLostFocusDuringMultiplayer").getString();
@@ -57,6 +59,14 @@ final class ClothConfigScreenImpl {
             .setDefaultValue(defaultBorderlessFullscreenType.getId())
             .requireRestart() // This is a lie
             /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
+            .build());
+
+        // Use Delayed Fullscreen
+        category.addEntry(entries
+            .startBooleanToggle(useDelayedFullscreenText, config.getUseDelayedFullscreen())
+            .setSaveConsumer(config::setUseDelayedFullscreen)
+            .setDefaultValue(true)
+            .requireRestart()
             .build());
 
         // Use Scaled Framebuffer

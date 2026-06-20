@@ -10,6 +10,9 @@
   "cwb.options.borderlessFullscreenType": "Borderless Fullscreen Type",
   "cwb.options.borderlessFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oBorderless§r in §oVideo Settings§r.",
 
+  "cwb.options.useDelayedFullscreen": "Use Delayed Fullscreen",
+  "cwb.options.useDelayedFullscreen.tooltip": "Specifies whether to postpone entering fullscreen mode until Minecraft is fully loaded.\n\nEnabling this option may result in a smoother startup sequence and can fix rare issues on systems with faulty drivers that do not immediately allow certain windows to enter fullscreen mode at a resolution that differs from the default one.",
+
   "cwb.options.useScaledFramebuffer": "Use Scaled Framebuffer",
   "cwb.options.useScaledFramebuffer.tooltip": "Specifies whether to use a full-resolution framebuffer on platforms where screen coordinates can be scaled relative to pixel coordinates, such as §omacOS§r and §oWayland (Linux)§r.\n\nDisabling this option may lead to a significant performance boost at the cost of image quality.",
 
