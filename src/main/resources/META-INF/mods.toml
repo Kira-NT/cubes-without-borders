@@ -31,4 +31,13 @@ side = "BOTH"
 [mc-publish]
 modrinth = "${modrinth}"
 curseforge = "${curseforge}"
-dependencies = ["cloth-config(optional)"]
+dependencies = [
+  "cloth-config(optional)",
+  "borderlessmining(incompatible){modrinth:kYq5qkSL}{curseforge:310205}",
+  "borderlesswindow(incompatible){modrinth:CnalMsa0}{curseforge:378979}",
+  "borderlesswindowed(incompatible){modrinth:2ydKrmkL}{curseforge:1487940}",
+  "borderlessfullscreen(incompatible){modrinth:T0A01nz3}#(ignore:curseforge)",
+  "concentration(incompatible){modrinth:QyvWSZ5S}{curseforge:1120678}",
+  "windowstitlebardelete(incompatible){modrinth:QRT35UEn}#(ignore:curseforge)",
+  "fw(incompatible){curseforge:227441}#(ignore:modrinth)"
+]
