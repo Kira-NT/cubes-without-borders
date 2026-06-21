@@ -2,8 +2,8 @@
   "required": true,
   "package": "dev.kirant.cwb.mixin",
   "client": [
+    "GuiMixin",
     "MainMixin",
-    "MinecraftMixin",
     "VideoSettingsScreenMixin",
     "WindowMixin"
   ],

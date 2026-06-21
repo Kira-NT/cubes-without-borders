@@ -3,7 +3,7 @@ package dev.kirant.cwb.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.platform.Monitor;
-import com.mojang.blaze3d.platform.ScreenManager;
+import com.mojang.blaze3d.platform.MonitorManager;
 import com.mojang.blaze3d.platform.VideoMode;
 import com.mojang.blaze3d.platform.Window;
 import dev.kirant.cwb.*;
@@ -25,7 +25,7 @@ import java.util.Optional;
 abstract class WindowMixin implements FullscreenManager {
     private static @Shadow @Final Logger LOGGER;
 
-    private @Shadow @Final ScreenManager screenManager;
+    private @Shadow @Final MonitorManager monitorManager;
 
     private @Shadow Optional<VideoMode> preferredFullscreenVideoMode;
 
@@ -61,8 +61,8 @@ abstract class WindowMixin implements FullscreenManager {
         this.syncCurrentFullscreenState();
     }
 
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/ScreenManager;getMonitor(J)Lcom/mojang/blaze3d/platform/Monitor;"))
-    private Monitor patchInitialFullscreenMode(ScreenManager screenManager, long monitor, Operation<Monitor> getMonitor) {
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/MonitorManager;getMonitor(J)Lcom/mojang/blaze3d/platform/Monitor;"))
+    private Monitor patchInitialFullscreenMode(MonitorManager screenManager, long monitor, Operation<Monitor> getMonitor) {
         // Do not create a fullscreen window right away, as it would steal the user's focus.
         // We will handle the transition later.
         this.fullscreen = this.actuallyFullscreen = false;
@@ -126,7 +126,7 @@ abstract class WindowMixin implements FullscreenManager {
             return;
         }
 
-        Monitor monitor = this.screenManager.findBestMonitor(window);
+        Monitor monitor = this.monitorManager.findBestMonitor(window);
         if (monitor == null) {
             // We couldn't detect a monitor to attach this window to.
             // Let the original method deal with this problem.
@@ -191,7 +191,7 @@ abstract class WindowMixin implements FullscreenManager {
         Window window = (Window)(Object)this;
         int[] outWindowWidth = new int[1];
         int[] outWindowHeight = new int[1];
-        GLFW.glfwGetWindowSize(MinecraftWindow.getHandle(window), outWindowWidth, outWindowHeight);
+        GLFW.glfwGetWindowSize(window.handle(), outWindowWidth, outWindowHeight);
         window.width = outWindowWidth[0] > 0 ? outWindowWidth[0] : 1;
         window.height = outWindowHeight[0] > 0 ? outWindowHeight[0] : 1;
     }

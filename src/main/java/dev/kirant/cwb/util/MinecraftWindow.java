@@ -24,13 +24,6 @@ public final class MinecraftWindow {
         /*return Minecraft.getInstance().window;*/
     }
 
-    public static long getHandle(Window window) {
-        //? if >=1.21.9 {
-        return window.handle();
-        //?} else
-        /*return window.getWindow();*/
-    }
-
     public static final class Windows {
         private static final WeakHashMap<Window, Map.Entry<Long, Long>> WINDOW_STYLES = new WeakHashMap<>();
 
@@ -108,7 +101,7 @@ public final class MinecraftWindow {
         }
 
         public static void setStyle(Window window, long style, long exStyle) {
-            long hWnd = GLFWNativeWin32.glfwGetWin32Window(MinecraftWindow.getHandle(window));
+            long hWnd = GLFWNativeWin32.glfwGetWin32Window(window.handle());
             long currentStyle = User32.GetWindowLongPtr(null, hWnd, User32.GWL_STYLE);
             long currentExStyle = User32.GetWindowLongPtr(null, hWnd, User32.GWL_EXSTYLE);
             WINDOW_STYLES.put(window, new AbstractMap.SimpleEntry<>(currentStyle, currentExStyle));
@@ -125,7 +118,7 @@ public final class MinecraftWindow {
                 return;
             }
 
-            long hWnd = GLFWNativeWin32.glfwGetWin32Window(MinecraftWindow.getHandle(window));
+            long hWnd = GLFWNativeWin32.glfwGetWin32Window(window.handle());
             User32.SetWindowLongPtr(null, hWnd, User32.GWL_STYLE, styles.getKey());
             User32.SetWindowLongPtr(null, hWnd, User32.GWL_EXSTYLE, styles.getValue());
         }
@@ -155,7 +148,7 @@ public final class MinecraftWindow {
         }
 
         public static void setHasShadow(Window window, boolean hasShadow) {
-            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(MinecraftWindow.getHandle(window));
+            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
             Proxy nsWindow = new Proxy(new Pointer(nsWindowPtr));
             nsWindow.send("setHasShadow:", hasShadow);
         }
@@ -163,7 +156,7 @@ public final class MinecraftWindow {
         public static void setResizable(Window window, boolean resizable) {
             final long NSWindowStyleMaskResizable = 1L << 3;
 
-            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(MinecraftWindow.getHandle(window));
+            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
             Proxy nsWindow = new Proxy(new Pointer(nsWindowPtr));
             long styleMask = ((Number)nsWindow.send("styleMask")).longValue();
             long newStyleMask = (styleMask & ~NSWindowStyleMaskResizable) | (resizable ? NSWindowStyleMaskResizable : 0);
@@ -186,7 +179,7 @@ public final class MinecraftWindow {
                 return false;
             }
 
-            Proxy nsWindow = new Proxy(new Pointer(GLFWNativeCocoa.glfwGetCocoaWindow(MinecraftWindow.getHandle(window))));
+            Proxy nsWindow = new Proxy(new Pointer(GLFWNativeCocoa.glfwGetCocoaWindow(window.handle())));
             Proxy nsWindowDelegate = nsWindow.sendProxy("delegate");
             if (nsWindowDelegate == null || nsWindowDelegate.sendBoolean("respondsToSelector:", "windowWillReturnFieldEditor:toObject:")) {
                 return false;

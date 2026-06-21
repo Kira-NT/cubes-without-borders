@@ -10,13 +10,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Minecraft.class)
-abstract class MinecraftMixin {
+@Mixin(/*? >=26.2 {*/net.minecraft.client.gui.Gui/*?} else {*//*Minecraft*//*?}*/.class)
+abstract class GuiMixin {
     private static boolean IS_FULLSCREEN_STATE_INITIALIZED = false;
 
-    @WrapOperation(method = "pauseGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V", ordinal = 1), require = 0)
+    //? if <26.2 {
+    /*@WrapOperation(method = "pauseGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V", ordinal = 1), require = 0)
     private void ignorePauseOnLostFocusDuringMultiplayer(Minecraft it, Screen screen, Operation<Void> setScreen) {
-        if (it.isWindowActive() || CWB.CONFIG.getPauseOnLostFocusDuringMultiplayer()) {
+    *///?} else {
+    @WrapOperation(method = "setPauseScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V", ordinal = 1), require = 0)
+    private void ignorePauseOnLostFocusDuringMultiplayer(net.minecraft.client.gui.Gui it, Screen screen, Operation<Void> setScreen) {
+    //?}
+        if (Minecraft.getInstance().isWindowActive() || CWB.CONFIG.getPauseOnLostFocusDuringMultiplayer()) {
             setScreen.call(it, screen);
         }
     }

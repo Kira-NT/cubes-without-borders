@@ -89,21 +89,20 @@ public final class FullscreenTypes {
 
         @Override
         public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            long handle = MinecraftWindow.getHandle(window);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
 
-            window.x = monitor.getX();
-            window.y = monitor.getY();
-            window.width = monitor.getCurrentMode().getWidth();
-            window.height = monitor.getCurrentMode().getHeight();
-            GLFW.glfwSetWindowMonitor(handle, 0, window.x, window.y, window.width, window.height, -1);
+            window.x = monitor.x();
+            window.y = monitor.y();
+            window.width = monitor.currentMode().getWidth();
+            window.height = monitor.currentMode().getHeight();
+            GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
         }
 
         @Override
         public void disable(Window window) {
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
         }
     }
 
@@ -116,16 +115,15 @@ public final class FullscreenTypes {
         //? if >=26.1 {
         @Override
         public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            long handle = MinecraftWindow.getHandle(window);
             GLFW.glfwWindowHint(GLFW.GLFW_SOFT_FULLSCREEN, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
 
-            window.x = monitor.getX();
-            window.y = monitor.getY();
+            window.x = monitor.x();
+            window.y = monitor.y();
             window.width = videoMode.getWidth();
             window.height = videoMode.getHeight();
             int refreshRate = videoMode.getRefreshRate();
-            GLFW.glfwSetWindowMonitor(handle, monitor.getMonitor(), window.x, window.y, window.width, window.height, refreshRate);
+            GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, refreshRate);
         }
 
         @Override
@@ -148,20 +146,19 @@ public final class FullscreenTypes {
 
         @Override
         public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            long handle = MinecraftWindow.getHandle(window);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
 
-            window.x = monitor.getX();
-            window.y = monitor.getY();
-            window.width = monitor.getCurrentMode().getWidth();
-            window.height = monitor.getCurrentMode().getHeight();
-            int refreshRate = monitor.getCurrentMode().getRefreshRate();
-            GLFW.glfwSetWindowMonitor(handle, monitor.getMonitor(), window.x, window.y, window.width, window.height, refreshRate);
+            window.x = monitor.x();
+            window.y = monitor.y();
+            window.width = monitor.currentMode().getWidth();
+            window.height = monitor.currentMode().getHeight();
+            int refreshRate = monitor.currentMode().getRefreshRate();
+            GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, refreshRate);
         }
 
         @Override
         public void disable(Window window) {
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
         }
     }
 
@@ -178,17 +175,16 @@ public final class FullscreenTypes {
 
         @Override
         public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            long handle = MinecraftWindow.getHandle(window);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
             MinecraftWindow.MacOS.setHasShadow(window, false);
             MinecraftWindow.MacOS.hideGlobalUI();
 
-            window.x = monitor.getX();
-            window.y = monitor.getY();
-            window.width = monitor.getCurrentMode().getWidth();
-            window.height = monitor.getCurrentMode().getHeight();
-            GLFW.glfwSetWindowMonitor(handle, 0, window.x, window.y, window.width, window.height, -1);
+            window.x = monitor.x();
+            window.y = monitor.y();
+            window.width = monitor.currentMode().getWidth();
+            window.height = monitor.currentMode().getHeight();
+            GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
 
             // GLFW ignores the GLFW_RESIZABLE flag for undecorated windows because such windows are
             // always meant to be non-resizable. However, there was a brief bug where it failed
@@ -204,15 +200,15 @@ public final class FullscreenTypes {
             MinecraftWindow.MacOS.registerWindowWillReturnFieldEditorStub(window);
             MinecraftWindow.MacOS.showGlobalUI();
             MinecraftWindow.MacOS.setHasShadow(window, true);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
 
             // macOS 26.3+ (Tahoe) seems to leave a re-decorated window in a weird state
             // where it stops receiving keyboard and mouse inputs.
             // Thankfully, manually re-focusing it via `[window makeKeyAndOrderFront:nil]` helps,
             // which is exactly what `glfwFocusWindow` does under the hood.
-            GLFW.glfwFocusWindow(MinecraftWindow.getHandle(window));
+            GLFW.glfwFocusWindow(window.handle());
         }
     }
 
@@ -249,23 +245,22 @@ public final class FullscreenTypes {
 
         @Override
         public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            long handle = MinecraftWindow.getHandle(window);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
-            GLFW.glfwSetWindowAttrib(handle, GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
 
-            window.x = monitor.getX();
-            window.y = monitor.getY();
-            window.width = monitor.getCurrentMode().getWidth();
-            window.height = monitor.getCurrentMode().getHeight() + 1;
-            GLFW.glfwSetWindowMonitor(handle, 0, window.x, window.y, window.width, window.height, -1);
+            window.x = monitor.x();
+            window.y = monitor.y();
+            window.width = monitor.currentMode().getWidth();
+            window.height = monitor.currentMode().getHeight() + 1;
+            GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
             MinecraftWindow.Windows.pleaseStopDiscardingFuckingFramesThankYou(window);
         }
 
         @Override
         public void disable(Window window) {
             MinecraftWindow.Windows.restoreStyle(window);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(MinecraftWindow.getHandle(window), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
         }
     }
 
