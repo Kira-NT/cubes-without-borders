@@ -140,7 +140,7 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "BORDERLESS".
-    "borderlessFullscreenType": "minecraft:hybrid",
+    "borderlessFullscreenType": "minecraft:windowed",
 
     // Provides configuration overrides for the Linux operating system.
     // Properties defined within this section take precedence over
@@ -170,7 +170,6 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 | Name | Description |
 |------|-------------|
 | `minecraft:default` | Minecraft's default exclusive fullscreen mode.<br><br>Provides great performance with minimal latency at the cost of usability - the game is automatically minimized each time its window loses focus. |
-| `minecraft:hybrid` | Minecraft's default non-exclusive fullscreen mode.<br><br>This is a middle ground between exclusive fullscreen and borderless fullscreen, and is mainly intended for users who don't need a true borderless experience, but want to use overlays and/or rely on IME or similar technologies. |
 | `minecraft:windowed` | A windowed fullscreen mode with performance and UX characteristics that vary depending on the platform.<br><br>On **Windows**, this mode is generally the best way to play the game, as it provides the benefits typical of a borderless fullscreen experience with zero to none performance and latency penalties; however, some users may experience annoying blinking each time the game window gains or loses focus.<br><br>On **other platforms**, this mode may cause significant performance degradation and/or usability issues, such as your system's dock remaining visible or even being rendered on top of the game. |
 | `linux:borderless` | The default borderless fullscreen mode for Linux.<br><br>Provides great performance with minimal latency and has no known downsides. |
 | `macos:borderless` | The default borderless fullscreen mode for macOS.<br><br>Provides decent performance, but has slightly higher latency than that of the default exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS. |

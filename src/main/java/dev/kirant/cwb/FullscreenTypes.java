@@ -15,7 +15,6 @@ public final class FullscreenTypes {
         new MacOSBorderlessFullscreen(),
         new WindowedFullscreen(),
         new WindowsWindowedFullscreen(),
-        new HybridFullscreen(),
         FullscreenTypes.DEFAULT
     ).collect(Collectors.toMap(FullscreenType::getId, x -> x, (x, _) -> x, LinkedHashMap::new));
 
@@ -104,33 +103,6 @@ public final class FullscreenTypes {
             GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
             GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
         }
-    }
-
-    private static class HybridFullscreen extends WindowedFullscreen {
-        @Override
-        public String getId() {
-            return "minecraft:hybrid";
-        }
-
-        //? if >=26.1 {
-        @Override
-        public void enable(Window window, Monitor monitor, VideoMode videoMode) {
-            GLFW.glfwWindowHint(GLFW.GLFW_SOFT_FULLSCREEN, GLFW.GLFW_TRUE);
-            GLFW.glfwSetWindowAttrib(window.handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_TRUE);
-
-            window.x = monitor.x();
-            window.y = monitor.y();
-            window.width = videoMode.getWidth();
-            window.height = videoMode.getHeight();
-            int refreshRate = videoMode.getRefreshRate();
-            GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, refreshRate);
-        }
-
-        @Override
-        public void disable(Window window) {
-            GLFW.glfwWindowHint(GLFW.GLFW_SOFT_FULLSCREEN, GLFW.GLFW_FALSE);
-        }
-        //?}
     }
 
     private static class LinuxBorderlessFullscreen implements FullscreenType {
