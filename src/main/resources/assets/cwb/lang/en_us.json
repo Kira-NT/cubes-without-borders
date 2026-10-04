@@ -4,8 +4,8 @@
 
   "cwb.options.borderless": "Borderless",
 
-  "cwb.options.fullscreenType": "Fullscreen Type",
-  "cwb.options.fullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oON§r in §oVideo Settings§r.",
+  "cwb.options.exclusiveFullscreenType": "Exclusive Fullscreen Type",
+  "cwb.options.exclusiveFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oON§r in §oVideo Settings§r.",
 
   "cwb.options.borderlessFullscreenType": "Borderless Fullscreen Type",
   "cwb.options.borderlessFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oBorderless§r in §oVideo Settings§r.",

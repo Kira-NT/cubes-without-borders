@@ -3,8 +3,8 @@
 
   "cwb.options.borderless": "無邊框",
 
-  "cwb.options.fullscreenType": "全螢幕類型",
-  "cwb.options.fullscreenType.tooltip": "當在§o顯示設定§r中將§o全螢幕§r設定為§o開啟§r時，控制啟用哪種全螢幕模式。",
+  "cwb.options.exclusiveFullscreenType": "全螢幕類型",
+  "cwb.options.exclusiveFullscreenType.tooltip": "當在§o顯示設定§r中將§o全螢幕§r設定為§o開啟§r時，控制啟用哪種全螢幕模式。",
 
   "cwb.options.borderlessFullscreenType": "無邊框全螢幕類型",
   "cwb.options.borderlessFullscreenType.tooltip": "當§o顯示設定§r中的§o全螢幕§r設定為§o無邊框§r時，控制啟用哪種全螢幕模式。",

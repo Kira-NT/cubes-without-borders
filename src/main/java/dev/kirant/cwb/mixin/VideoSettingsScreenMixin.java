@@ -33,7 +33,7 @@ abstract class VideoSettingsScreenMixin {
     *///?}
 
     private static boolean patchFullscreenOption(Object[] options) {
-        if (CWB.CONFIG.getBorderlessFullscreenType() == CWB.CONFIG.getFullscreenType()) {
+        if (CWB.CONFIG.getBorderlessFullscreenType() == CWB.CONFIG.getExclusiveFullscreenType()) {
             return false;
         }
 

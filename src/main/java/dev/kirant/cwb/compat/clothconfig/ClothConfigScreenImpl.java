@@ -15,7 +15,7 @@ final class ClothConfigScreenImpl {
     public static Screen create(CWBConfig config, String modId, Screen parent) {
         //? if cloth-config: >=3.0.0 {
         Component title = Components.translatable("modmenu.nameTranslation." + modId);
-        Component fullscreenTypeText = Components.translatable(modId + ".options.fullscreenType");
+        Component exclusiveFullscreenTypeText = Components.translatable(modId + ".options.exclusiveFullscreenType");
         Component borderlessFullscreenTypeText = Components.translatable(modId + ".options.borderlessFullscreenType");
         Component useDelayedFullscreenText = Components.translatable(modId + ".options.useDelayedFullscreen");
         Component useScaledFramebufferText = Components.translatable(modId + ".options.useScaledFramebuffer");
@@ -23,7 +23,7 @@ final class ClothConfigScreenImpl {
         Component pauseOnLostFocusDuringMultiplayerText = Components.translatable(modId + ".options.pauseOnLostFocusDuringMultiplayer");
         //?} else {
         /*String title = Components.translatable("modmenu.nameTranslation." + modId).getString();
-        String fullscreenTypeText = Components.translatable(modId + ".options.fullscreenType").getString();
+        String exclusiveFullscreenTypeText = Components.translatable(modId + ".options.exclusiveFullscreenType").getString();
         String borderlessFullscreenTypeText = Components.translatable(modId + ".options.borderlessFullscreenType").getString();
         String useDelayedFullscreenText = Components.translatable(modId + ".options.useDelayedFullscreen").getString();
         String useScaledFramebufferText = Components.translatable(modId + ".options.useScaledFramebuffer").getString();
@@ -36,13 +36,13 @@ final class ClothConfigScreenImpl {
         ConfigCategory category = builder.getOrCreateCategory(title);
         ConfigEntryBuilder entries = builder.entryBuilder();
 
-        // Fullscreen Type
+        // Exclusive Fullscreen Type
         FullscreenType defaultFullscreenType = FullscreenTypes.exclusive();
-        FullscreenType currentFullscreenType = FullscreenTypes.validate(config.getFullscreenType(), defaultFullscreenType);
+        FullscreenType currentFullscreenType = FullscreenTypes.validate(config.getExclusiveFullscreenType(), defaultFullscreenType);
         List<String> fullscreenTypeSelections = FullscreenTypes.stream().map(FullscreenType::getId).collect(Collectors.toList());
         category.addEntry(entries
             .startStringDropdownMenu(fullscreenTypeText, currentFullscreenType.getId())
-            .setSaveConsumer(x -> FullscreenTypes.get(x).ifPresent(config::setFullscreenType))
+            .setSaveConsumer(x -> FullscreenTypes.get(x).ifPresent(config::setExclusiveFullscreenType))
             .setSelections(fullscreenTypeSelections)
             .setDefaultValue(defaultFullscreenType.getId())
             .requireRestart() // This is a lie

@@ -117,7 +117,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         this.previousFullscreenType = this.currentFullscreenType;
         if (this.fullscreen) {
-            FullscreenType requestedFullscreenType = this.borderless ? config.getBorderlessFullscreenType() : config.getFullscreenType();
+            FullscreenType requestedFullscreenType = this.borderless ? config.getBorderlessFullscreenType() : config.getExclusiveFullscreenType();
             FullscreenType defaultFullscreenType = this.borderless ? FullscreenTypes.borderless() : FullscreenTypes.exclusive();
             this.currentFullscreenType = FullscreenTypes.validate(requestedFullscreenType, defaultFullscreenType);
         } else {

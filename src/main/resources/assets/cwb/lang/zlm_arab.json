@@ -3,8 +3,8 @@
 
   "cwb.options.borderless": "تنڤا سمڤادن",
 
-  "cwb.options.fullscreenType": "جنيس سکرين ڤنوه",
-  "cwb.options.fullscreenType.tooltip": "مڠاول مود سکرين ڤنوه يڠ دداياکن اڤابيلا §oسکرين ڤنوه§r دتتقکن کڤد §oبوک§r دالم §oتتڤن ۏيديو§r.",
+  "cwb.options.exclusiveFullscreenType": "جنيس سکرين ڤنوه",
+  "cwb.options.exclusiveFullscreenType.tooltip": "مڠاول مود سکرين ڤنوه يڠ دداياکن اڤابيلا §oسکرين ڤنوه§r دتتقکن کڤد §oبوک§r دالم §oتتڤن ۏيديو§r.",
 
   "cwb.options.borderlessFullscreenType": "جنيس سکرين ڤنوه تنڤا سمڤادن",
   "cwb.options.borderlessFullscreenType.tooltip": "مڠاول مود سکرين ڤنوه يڠ دداياکن اڤابيلا §oسکرين ڤنوه§r دتتقکن کڤد §oتنڤا سمڤادن§r دالم §oتتڤن ۏيديو§r.",

@@ -3,8 +3,8 @@
 
   "cwb.options.borderless": "piirideta",
 
-  "cwb.options.fullscreenType": "Täisekraani liik",
-  "cwb.options.fullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §oSEES§r.",
+  "cwb.options.exclusiveFullscreenType": "Täisekraani liik",
+  "cwb.options.exclusiveFullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §oSEES§r.",
 
   "cwb.options.borderlessFullscreenType": "Piirideta täisekraani liik",
   "cwb.options.borderlessFullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §opiirideta§r.",

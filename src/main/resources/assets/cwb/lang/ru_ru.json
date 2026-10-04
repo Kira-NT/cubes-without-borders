@@ -3,8 +3,8 @@
 
   "cwb.options.borderless": "Безрамочный",
 
-  "cwb.options.fullscreenType": "Тип полноэкранного режима",
-  "cwb.options.fullscreenType.tooltip": "Определяет, какой полноэкранный режим должен быть включен, когда §oПолноэкранный режим§r установлен во §oВкл§r в §oНастройках графики§r.",
+  "cwb.options.exclusiveFullscreenType": "Тип полноэкранного режима",
+  "cwb.options.exclusiveFullscreenType.tooltip": "Определяет, какой полноэкранный режим должен быть включен, когда §oПолноэкранный режим§r установлен во §oВкл§r в §oНастройках графики§r.",
 
   "cwb.options.borderlessFullscreenType": "Тип безрамочного полноэкранного режима",
   "cwb.options.borderlessFullscreenType.tooltip": "Определяет, какой полноэкранный режим должен быть включен, когда §oПолноэкранный режим§r установлен в §oБезрамочный§r в §oНастройках графики§r.",

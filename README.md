@@ -136,7 +136,7 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "ON".
-    "fullscreenType": "minecraft:default",
+    "exclusiveFullscreenType": "minecraft:default",
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "BORDERLESS".

@@ -3,8 +3,8 @@
 
   "cwb.options.borderless": "无边框",
 
-  "cwb.options.fullscreenType": "全屏类型",
-  "cwb.options.fullscreenType.tooltip": "当在§o视频设置§r中将§o全屏§r设置为§o开§r时，控制启用哪种全屏模式。",
+  "cwb.options.exclusiveFullscreenType": "全屏类型",
+  "cwb.options.exclusiveFullscreenType.tooltip": "当在§o视频设置§r中将§o全屏§r设置为§o开§r时，控制启用哪种全屏模式。",
 
   "cwb.options.borderlessFullscreenType": "无边框全屏类型",
   "cwb.options.borderlessFullscreenType.tooltip": "当§o视频设置§r中的§o全屏§r设置为§o无边框§r时，控制启用哪种全屏模式。",
