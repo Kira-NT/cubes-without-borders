@@ -27,12 +27,18 @@ public final class WindowPlacementStrategies {
         WindowPlacementStrategies.moveAndResize(window);
     };
 
+    public static WindowPlacementStrategy MAXIMIZE = (window, _, _) -> WindowPlacementStrategies.maximize(window);
+
     private static void bindToMonitor(Window window, Monitor monitor, VideoMode videoMode) {
         org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, videoMode.getRefreshRate());
     }
 
     private static void moveAndResize(Window window) {
         org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
+    }
+
+    private static void maximize(Window window) {
+        org.lwjgl.glfw.GLFW.glfwMaximizeWindow(window.handle());
     }
 
     private WindowPlacementStrategies() { }

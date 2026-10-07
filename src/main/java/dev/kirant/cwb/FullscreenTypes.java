@@ -11,12 +11,14 @@ public final class FullscreenTypes {
     private static final FullscreenType[] VALUES;
 
     static {
-        int length = 3;
+        int length = 4;
         VALUES = new FullscreenType[length];
         VALUES[length - 1] = new FullscreenType("minecraft:default");
 
         FullscreenType windowedFullscreen = new FullscreenType("minecraft:windowed", WindowPlacementStrategies.FILL_MONITOR, WindowHints.DECORATED, WindowHints.AUTO_ICONIFY);
+        FullscreenType maximizedFullscreen = new FullscreenType("minecraft:maximized", WindowPlacementStrategies.MAXIMIZE, WindowHints.DECORATED, WindowHints.AUTO_ICONIFY);
         if (OS.isWindows()) {
+            VALUES[2] = maximizedFullscreen;
             VALUES[1] = new FullscreenType("windows:windowed", WindowPlacementStrategies.OVERSCAN, WindowHints.DECORATED, WindowHints.AUTO_ICONIFY);
             VALUES[0] = windowedFullscreen;
         } else if (OS.isMacOS()) {
@@ -25,10 +27,12 @@ public final class FullscreenTypes {
             WindowHint hasDockAndMenuBar = WindowHint.of(enableDockAndMenuBar, disableDockAndMenuBar);
             WindowHint hasShadow = MinecraftWindow.MacOS::setHasShadow;
             WindowHint stub = WindowHint.of(MinecraftWindow.MacOS::registerWindowWillReturnFieldEditorStub);
-            VALUES[1] = windowedFullscreen;
+            VALUES[2] = windowedFullscreen;
+            VALUES[1] = maximizedFullscreen;
             VALUES[0] = new FullscreenType("macos:borderless", WindowPlacementStrategies.FILL_MONITOR, new WindowHint[] { WindowHints.DECORATED, WindowHints.AUTO_ICONIFY, hasShadow, hasDockAndMenuBar, stub }, WindowHints.RESIZABLE);
         } else {
-            VALUES[1] = windowedFullscreen;
+            VALUES[2] = windowedFullscreen;
+            VALUES[1] = maximizedFullscreen;
             VALUES[0] = new FullscreenType("linux:borderless", WindowPlacementStrategies.BIND_TO_MONITOR, WindowHints.AUTO_ICONIFY);
         }
     }
