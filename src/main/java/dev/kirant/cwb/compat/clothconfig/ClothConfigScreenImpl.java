@@ -37,26 +37,22 @@ final class ClothConfigScreenImpl {
         ConfigEntryBuilder entries = builder.entryBuilder();
 
         // Exclusive Fullscreen Type
-        FullscreenType defaultFullscreenType = FullscreenTypes.exclusive();
-        FullscreenType currentFullscreenType = FullscreenTypes.validate(config.getExclusiveFullscreenType(), defaultFullscreenType);
-        List<String> fullscreenTypeSelections = FullscreenTypes.stream().map(FullscreenType::getId).collect(Collectors.toList());
+        List<String> fullscreenTypeSelections = FullscreenTypes.stream().map(FullscreenType::id).collect(Collectors.toList());
         category.addEntry(entries
-            .startStringDropdownMenu(fullscreenTypeText, currentFullscreenType.getId())
+            .startStringDropdownMenu(exclusiveFullscreenTypeText, config.getExclusiveFullscreenType().id())
             .setSaveConsumer(x -> FullscreenTypes.get(x).ifPresent(config::setExclusiveFullscreenType))
             .setSelections(fullscreenTypeSelections)
-            .setDefaultValue(defaultFullscreenType.getId())
+            .setDefaultValue(FullscreenTypes.exclusive().id())
             .requireRestart() // This is a lie
             /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
             .build());
 
         // Borderless Fullscreen Type
-        FullscreenType defaultBorderlessFullscreenType = FullscreenTypes.borderless();
-        FullscreenType currentBorderlessFullscreenType = FullscreenTypes.validate(config.getBorderlessFullscreenType(), defaultBorderlessFullscreenType);
         category.addEntry(entries
-            .startStringDropdownMenu(borderlessFullscreenTypeText, currentBorderlessFullscreenType.getId())
+            .startStringDropdownMenu(borderlessFullscreenTypeText, config.getBorderlessFullscreenType().id())
             .setSaveConsumer(x -> FullscreenTypes.get(x).ifPresent(config::setBorderlessFullscreenType))
             .setSelections(fullscreenTypeSelections)
-            .setDefaultValue(defaultBorderlessFullscreenType.getId())
+            .setDefaultValue(FullscreenTypes.borderless().id())
             .requireRestart() // This is a lie
             /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
             .build());

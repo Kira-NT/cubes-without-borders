@@ -9,7 +9,7 @@ import com.mojang.blaze3d.platform.Window;
 import dev.kirant.cwb.*;
 import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.system.MemoryStack;
 import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.nio.IntBuffer;
 import java.util.Optional;
 
 @Mixin(value = Window.class, priority = 0)
@@ -69,7 +70,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         //? if >=26.1 {
         // Ensure that the default fullscreen mode is always exclusive.
-        GLFW.glfwWindowHint(GLFW.GLFW_SOFT_FULLSCREEN, GLFW.GLFW_FALSE);
+        org.lwjgl.glfw.GLFW.glfwWindowHint(org.lwjgl.glfw.GLFW.GLFW_SOFT_FULLSCREEN, 0);
         Minecraft.getInstance().options.exclusiveFullscreen().set(true);
         //?}
 
@@ -78,7 +79,7 @@ abstract class WindowMixin implements FullscreenManager {
             MinecraftWindow.Windows.concealCommandLine();
         }
 
-        GLFW.glfwWindowHint(GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER, CWB.CONFIG.getUseScaledFramebuffer() ? GLFW.GLFW_TRUE : GLFW.GLFW_FALSE);
+        org.lwjgl.glfw.GLFW.glfwWindowHint(org.lwjgl.glfw.GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER, CWB.CONFIG.getUseScaledFramebuffer() ? 1 : 0);
         return getMonitor.call(screenManager, monitor);
     }
 
@@ -99,7 +100,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         // Make sure the window dimensions are up to date, as they may differ from those passed to glfwSetWindowMonitor.
         // This is mainly relevant on platforms where glfwGetVideoMode may return an invalid value, like on macOS.
-        GLFW.glfwPollEvents();
+        org.lwjgl.glfw.GLFW.glfwPollEvents();
         this.refreshWindowSize();
     }
 
@@ -117,9 +118,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         this.previousFullscreenType = this.currentFullscreenType;
         if (this.fullscreen) {
-            FullscreenType requestedFullscreenType = this.borderless ? config.getBorderlessFullscreenType() : config.getExclusiveFullscreenType();
-            FullscreenType defaultFullscreenType = this.borderless ? FullscreenTypes.borderless() : FullscreenTypes.exclusive();
-            this.currentFullscreenType = FullscreenTypes.validate(requestedFullscreenType, defaultFullscreenType);
+            this.currentFullscreenType = this.borderless ? config.getBorderlessFullscreenType() : config.getExclusiveFullscreenType();
         } else {
             // Let the original method deal with the windowed mode.
             this.currentFullscreenType = null;
@@ -189,11 +188,12 @@ abstract class WindowMixin implements FullscreenManager {
 
     private void refreshWindowSize() {
         Window window = (Window)(Object)this;
-        int[] outWindowWidth = new int[1];
-        int[] outWindowHeight = new int[1];
-        GLFW.glfwGetWindowSize(window.handle(), outWindowWidth, outWindowHeight);
-        window.width = outWindowWidth[0] > 0 ? outWindowWidth[0] : 1;
-        window.height = outWindowHeight[0] > 0 ? outWindowHeight[0] : 1;
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer size = stack.mallocInt(2);
+            org.lwjgl.glfw.GLFW.glfwGetWindowSize(window.handle(), size, (IntBuffer)size.duplicate().position(1));
+            window.width = size.get(0) > 0 ? size.get(0) : 1;
+            window.height = size.get(1) > 0 ? size.get(1) : 1;
+        }
     }
 
     private void syncCurrentFullscreenState() {

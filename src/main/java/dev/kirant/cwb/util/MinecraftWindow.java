@@ -1,17 +1,13 @@
 package dev.kirant.cwb.util;
 
-import ca.weblite.objc.Client;
-import ca.weblite.objc.Proxy;
+import ca.weblite.objc.*;
 import com.mojang.blaze3d.platform.Window;
 import com.sun.jna.Callback;
 import com.sun.jna.CallbackReference;
 import com.sun.jna.Pointer;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFWNativeCocoa;
-import org.lwjgl.glfw.GLFWNativeWin32;
 import org.lwjgl.system.*;
 import org.lwjgl.system.macosx.ObjCRuntime;
-import org.lwjgl.system.windows.User32;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -25,8 +21,6 @@ public final class MinecraftWindow {
     }
 
     public static final class Windows {
-        private static final WeakHashMap<Window, Map.Entry<Long, Long>> WINDOW_STYLES = new WeakHashMap<>();
-
         private static final String FAKE_CMD = "do.not.touch.this.process.please / net.minecraft.client.main.Main / ";
 
         private static String utf16Cmd;
@@ -89,75 +83,37 @@ public final class MinecraftWindow {
             utf16Buffer = asciiBuffer = null;
         }
 
-        public static void pleaseStopDiscardingFuckingFramesThankYou(Window window) {
-            // Windows LOVES discarding frames provided by windowed applications when it thinks
-            // it has more important things to do than render them - like downloading a new set
-            // of updates, for example. Hopefully, this set of flags, similar to those you
-            // would usually see on a regular fullscreen window, will give it a hint that
-            // this is not the best fucking idea in this scenario.
-            long style = User32.WS_VISIBLE | User32.WS_POPUP | User32.WS_CLIPSIBLINGS | User32.WS_CLIPCHILDREN;
-            long exStyle = User32.WS_EX_ACCEPTFILES | User32.WS_EX_APPWINDOW;
-            Windows.setStyle(window, style, exStyle);
-        }
-
-        public static void setStyle(Window window, long style, long exStyle) {
-            long hWnd = GLFWNativeWin32.glfwGetWin32Window(window.handle());
-            long currentStyle = User32.GetWindowLongPtr(null, hWnd, User32.GWL_STYLE);
-            long currentExStyle = User32.GetWindowLongPtr(null, hWnd, User32.GWL_EXSTYLE);
-            WINDOW_STYLES.put(window, new AbstractMap.SimpleEntry<>(currentStyle, currentExStyle));
-
-            int flags = User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_NOSENDCHANGING | User32.SWP_FRAMECHANGED;
-            User32.SetWindowLongPtr(null, hWnd, User32.GWL_STYLE, style);
-            User32.SetWindowLongPtr(null, hWnd, User32.GWL_EXSTYLE, exStyle);
-            User32.SetWindowPos(null, hWnd, 0, 0, 0, 0, 0, flags);
-        }
-
-        public static void restoreStyle(Window window) {
-            Map.Entry<Long, Long> styles = WINDOW_STYLES.get(window);
-            if (styles == null) {
-                return;
-            }
-
-            long hWnd = GLFWNativeWin32.glfwGetWin32Window(window.handle());
-            User32.SetWindowLongPtr(null, hWnd, User32.GWL_STYLE, styles.getKey());
-            User32.SetWindowLongPtr(null, hWnd, User32.GWL_EXSTYLE, styles.getValue());
-        }
-
         private Windows() { }
     }
 
     public static final class MacOS {
-        private static final WeakHashMap<Window, Callback> WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS = new WeakHashMap<>();
+        private static Callback WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK;
 
-        public static void showGlobalUI() {
-            final long NSApplicationPresentationDefault = 0L;
-
-            MacOS.setPresentationOptions(NSApplicationPresentationDefault);
+        private static Proxy getNSWindow(Window window) {
+            long nsWindow = org.lwjgl.glfw.GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
+            return new Proxy(new Pointer(nsWindow));
         }
 
-        public static void hideGlobalUI() {
-            final long NSApplicationPresentationHideDock = 1L << 1;
-            final long NSApplicationPresentationHideMenuBar = 1L << 3;
+        public static void setHasDockAndMenuBar(Boolean hasDock, Boolean hasMenuBar) {
+            final long AutoHideDock = 1L;
+            final long HideDock = 1L << 1;
+            final long AutoHideMenuBar = 1L << 2;
+            final long HideMenuBar = 1L << 3;
+            final long DisableMenuBarTransparency = 1L << 9;
 
-            MacOS.setPresentationOptions(NSApplicationPresentationHideDock | NSApplicationPresentationHideMenuBar);
-        }
-
-        public static void setPresentationOptions(long presentationOptions) {
-            Proxy sharedApplication = Client.getInstance().sendProxy("NSApplication", "sharedApplication");
-            sharedApplication.send("setPresentationOptions:", presentationOptions);
+            long presentationOptions = hasDock == null ? AutoHideDock : !hasDock ? HideDock : 0;
+            presentationOptions |= hasMenuBar == null ? AutoHideMenuBar : !hasMenuBar ? HideMenuBar : !Boolean.TRUE.equals(hasDock) ? DisableMenuBarTransparency : 0;
+            Client.getInstance().sendProxy("NSApplication", "sharedApplication").send("setPresentationOptions:", presentationOptions);
         }
 
         public static void setHasShadow(Window window, boolean hasShadow) {
-            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
-            Proxy nsWindow = new Proxy(new Pointer(nsWindowPtr));
-            nsWindow.send("setHasShadow:", hasShadow);
+            MacOS.getNSWindow(window).send("setHasShadow:", hasShadow);
         }
 
         public static void setResizable(Window window, boolean resizable) {
             final long NSWindowStyleMaskResizable = 1L << 3;
 
-            long nsWindowPtr = GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
-            Proxy nsWindow = new Proxy(new Pointer(nsWindowPtr));
+            Proxy nsWindow = MacOS.getNSWindow(window);
             long styleMask = ((Number)nsWindow.send("styleMask")).longValue();
             long newStyleMask = (styleMask & ~NSWindowStyleMaskResizable) | (resizable ? NSWindowStyleMaskResizable : 0);
             nsWindow.send("setStyleMask:", newStyleMask);
@@ -175,33 +131,24 @@ public final class MinecraftWindow {
             // the missing method on the window's delegate at runtime. A simple `return nil` is
             // more than enough, as it preserves the default behavior. Which is what we wanted
             // in the first place, but got a funny and hard to debug crash instead.
-            if (WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS.containsKey(window)) {
-                return false;
-            }
-
-            Proxy nsWindow = new Proxy(new Pointer(GLFWNativeCocoa.glfwGetCocoaWindow(window.handle())));
+            Proxy nsWindow = MacOS.getNSWindow(window);
             Proxy nsWindowDelegate = nsWindow.sendProxy("delegate");
-            if (nsWindowDelegate == null || nsWindowDelegate.sendBoolean("respondsToSelector:", "windowWillReturnFieldEditor:toObject:")) {
+            if (nsWindowDelegate == null || nsWindowDelegate.sendBoolean("respondsToSelector:", RuntimeUtils.sel("windowWillReturnFieldEditor:toObject:"))) {
                 return false;
             }
 
-            Callback windowWillReturnFieldEditorCallback = new Callback() {
+            WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK = WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK != null ? WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK : new Callback() {
                 @SuppressWarnings("unused")
                 public Pointer windowWillReturnFieldEditor(Pointer self, Pointer sel, Pointer sender, Pointer client) {
                     return null;
                 }
             };
-            boolean success = ObjCRuntime.class_addMethod(
+            return ObjCRuntime.class_addMethod(
                 ObjCRuntime.object_getClass(Pointer.nativeValue(nsWindowDelegate.getPeer())),
                 ObjCRuntime.sel_registerName("windowWillReturnFieldEditor:toObject:"),
-                Pointer.nativeValue(CallbackReference.getFunctionPointer(windowWillReturnFieldEditorCallback)),
+                Pointer.nativeValue(CallbackReference.getFunctionPointer(WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK)),
                 "@@:@@"
             );
-
-            if (success) {
-                WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACKS.put(window, windowWillReturnFieldEditorCallback);
-            }
-            return success;
         }
 
         private MacOS() { }
