@@ -11,7 +11,7 @@ public final class FullscreenTypes {
     private static final FullscreenType[] VALUES;
 
     static {
-        int length = 4;
+        int length = 4 + (OS.isMacOS() ? 1 : 0);
         VALUES = new FullscreenType[length];
         VALUES[length - 1] = new FullscreenType("minecraft:default");
 
@@ -24,12 +24,15 @@ public final class FullscreenTypes {
         } else if (OS.isMacOS()) {
             Consumer<Window> enableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(true, true);
             Consumer<Window> disableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(false, false);
+            Consumer<Window> disableDock = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(false, true);
             WindowHint hasDockAndMenuBar = WindowHint.of(enableDockAndMenuBar, disableDockAndMenuBar);
+            WindowHint hasDock = WindowHint.of(enableDockAndMenuBar, disableDock);
             WindowHint hasShadow = MinecraftWindow.MacOS::setHasShadow;
             WindowHint stub = WindowHint.of(MinecraftWindow.MacOS::registerWindowWillReturnFieldEditorStub);
-            VALUES[2] = windowedFullscreen;
-            VALUES[1] = maximizedFullscreen;
-            VALUES[0] = new FullscreenType("macos:borderless", WindowPlacementStrategies.FILL_MONITOR, new WindowHint[] { WindowHints.DECORATED, WindowHints.AUTO_ICONIFY, hasShadow, hasDockAndMenuBar, stub }, WindowHints.RESIZABLE);
+            VALUES[3] = windowedFullscreen;
+            VALUES[2] = maximizedFullscreen;
+            VALUES[1] = new FullscreenType("macos:windowed", WindowPlacementStrategies.FILL_MONITOR_SAFE_AREA, new WindowHint[] { WindowHints.DECORATED, WindowHints.AUTO_ICONIFY, hasShadow, hasDock, stub }, WindowHints.RESIZABLE);
+            VALUES[0] = new FullscreenType("macos:borderless", WindowPlacementStrategies.FILL_MONITOR_SAFE_AREA, new WindowHint[] { WindowHints.DECORATED, WindowHints.AUTO_ICONIFY, hasShadow, hasDockAndMenuBar, stub }, WindowHints.RESIZABLE);
         } else {
             VALUES[2] = windowedFullscreen;
             VALUES[1] = maximizedFullscreen;

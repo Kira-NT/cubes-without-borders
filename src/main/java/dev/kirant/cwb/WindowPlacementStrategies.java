@@ -1,6 +1,9 @@
 package dev.kirant.cwb;
 
 import com.mojang.blaze3d.platform.*;
+import org.lwjgl.system.MemoryStack;
+
+import java.nio.IntBuffer;
 
 public final class WindowPlacementStrategies {
     public static WindowPlacementStrategy BIND_TO_MONITOR = (window, monitor, videoMode) -> {
@@ -17,6 +20,19 @@ public final class WindowPlacementStrategies {
         window.width = monitor.currentMode().getWidth();
         window.height = monitor.currentMode().getHeight();
         WindowPlacementStrategies.moveAndResize(window);
+    };
+
+    public static WindowPlacementStrategy FILL_MONITOR_SAFE_AREA = (window, monitor, _) -> {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer area = stack.mallocInt(4);
+            org.lwjgl.glfw.GLFW.glfwGetMonitorWorkarea(monitor.monitor(), area, (IntBuffer)area.duplicate().position(1), (IntBuffer)area.duplicate().position(2), (IntBuffer)area.duplicate().position(3));
+
+            window.x = area.get(0);
+            window.y = area.get(1);
+            window.width = area.get(2);
+            window.height = area.get(3);
+        }
+        WindowPlacementStrategies.maximize(window);
     };
 
     public static WindowPlacementStrategy OVERSCAN = (window, monitor, _) -> {
