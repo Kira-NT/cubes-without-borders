@@ -36,10 +36,21 @@ public final class WindowPlacementStrategies {
     };
 
     public static WindowPlacementStrategy OVERSCAN = (window, monitor, _) -> {
-        window.x = monitor.x();
-        window.y = monitor.y();
-        window.width = monitor.currentMode().getWidth();
-        window.height = monitor.currentMode().getHeight() + 1;
+        boolean left = false;
+        boolean right = false;
+        boolean up = false;
+        boolean down = false;
+        for (Monitor otherMonitor : window.monitorManager.monitors.values()) {
+            left |= otherMonitor.x() < monitor.x();
+            right |= otherMonitor.x() > monitor.x();
+            up |= otherMonitor.y() < monitor.y();
+            down |= otherMonitor.y() > monitor.y();
+        }
+
+        window.x = monitor.x() + (left ? 0 : (right ? -2 : -1));
+        window.y = monitor.y() + (up ? 0 : (down ? -2 : -1));
+        window.width = monitor.currentMode().getWidth() + (left & right & !(up & down) ? 0 : 2);
+        window.height = monitor.currentMode().getHeight() + (up & down ? 0 : 2);
         WindowPlacementStrategies.moveAndResize(window);
     };
 

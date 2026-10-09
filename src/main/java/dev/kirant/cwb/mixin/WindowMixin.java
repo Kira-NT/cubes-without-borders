@@ -19,8 +19,6 @@ import java.util.Optional;
 abstract class WindowMixin implements FullscreenManager {
     private static @Shadow @Final Logger LOGGER;
 
-    private @Shadow @Final MonitorManager monitorManager;
-
     private @Shadow Optional<VideoMode> preferredFullscreenVideoMode;
 
     private @Shadow int windowedX;
@@ -113,7 +111,7 @@ abstract class WindowMixin implements FullscreenManager {
         this.currentFullscreenType = null;
 
         boolean useCustomFullscreenType = this.fullscreen;
-        useCustomFullscreenType = useCustomFullscreenType && (monitor = this.monitorManager.findBestMonitor(window)) != null;
+        useCustomFullscreenType = useCustomFullscreenType && (monitor = window.monitorManager.findBestMonitor(window)) != null;
         useCustomFullscreenType = useCustomFullscreenType && (this.currentFullscreenType = config.getPreferredFullscreenType(this.preferredFullscreenMode)) != FullscreenTypes.exclusive();
         if (!useCustomFullscreenType) {
             return;
