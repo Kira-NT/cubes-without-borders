@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.cwb": "Дозволяє грати у Minecraft у безрамковому повноекранному вікні.",
 
-  "cwb.options.borderless": "Безрамковий",
+  "cwb.fullscreenMode.borderless": "Безрамковий",
 
   "cwb.options.exclusiveFullscreenType": "Тип повноекранного режиму",
   "cwb.options.exclusiveFullscreenType.tooltip": "Визначає, який повноекранний режим вмикається, коли §oПовний екран§r встановлено в §oУВIМК.§r у §oНалаштуваннях відео§r.",

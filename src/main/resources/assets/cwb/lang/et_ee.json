@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.cwb": "Võimaldab Minecrafti mängida täisekraanil, piirideta aknas.",
 
-  "cwb.options.borderless": "piirideta",
+  "cwb.fullscreenMode.borderless": "piirideta",
 
   "cwb.options.exclusiveFullscreenType": "Täisekraani liik",
   "cwb.options.exclusiveFullscreenType.tooltip": "Määrab, millist täisekraanirežiimi kasutatakse, kui §ograafikaseadetes§r on §otäisekraani§r väärtuseks §oSEES§r.",

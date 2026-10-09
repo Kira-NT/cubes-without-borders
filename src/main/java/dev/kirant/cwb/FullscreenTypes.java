@@ -48,6 +48,10 @@ public final class FullscreenTypes {
         return FullscreenTypes.VALUES[0];
     }
 
+    public static FullscreenType windowed() {
+        return FullscreenTypes.VALUES[1];
+    }
+
     public static FullscreenType[] values() {
         return Arrays.copyOf(FullscreenTypes.VALUES, FullscreenTypes.VALUES.length);
     }

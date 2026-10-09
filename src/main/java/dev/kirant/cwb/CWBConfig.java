@@ -22,6 +22,8 @@ public class CWBConfig {
 
     private @Expose String borderlessFullscreenType;
 
+    private @Expose String windowedFullscreenType;
+
     private @Expose Boolean useDelayedFullscreen;
 
     private @Expose Boolean useScaledFramebuffer;
@@ -81,6 +83,18 @@ public class CWBConfig {
         this.setValue(c -> c.preferredFullscreenMode, (c, x) -> c.preferredFullscreenMode = x, fullscreenMode);
     }
 
+    public FullscreenType getPreferredFullscreenType() {
+        return this.getPreferredFullscreenType(this.getPreferredFullscreenMode());
+    }
+
+    public FullscreenType getPreferredFullscreenType(FullscreenMode preferredFullscreenMode) {
+        return preferredFullscreenMode == FullscreenMode.WINDOWED
+            ? this.getWindowedFullscreenType()
+            : preferredFullscreenMode == FullscreenMode.EXCLUSIVE
+                ? this.getExclusiveFullscreenType()
+                : this.getBorderlessFullscreenType();
+    }
+
     public FullscreenType getExclusiveFullscreenType() {
         return this.getValue(c -> c.exclusiveFullscreenType, x -> FullscreenTypes.get(x).orElse(null), FullscreenTypes.exclusive());
     }
@@ -95,6 +109,14 @@ public class CWBConfig {
 
     public void setBorderlessFullscreenType(FullscreenType fullscreenType) {
         this.setPlatformAwareValue(c -> c.borderlessFullscreenType, (c, x) -> c.borderlessFullscreenType = x, fullscreenType == null ? null : fullscreenType.id());
+    }
+
+    public FullscreenType getWindowedFullscreenType() {
+        return this.getValue(c -> c.windowedFullscreenType, x -> FullscreenTypes.get(x).orElse(null), FullscreenTypes.windowed());
+    }
+
+    public void setWindowedFullscreenType(FullscreenType fullscreenType) {
+        this.setPlatformAwareValue(c -> c.windowedFullscreenType, (c, x) -> c.windowedFullscreenType = x, fullscreenType == null ? null : fullscreenType.id());
     }
 
     public boolean getUseDelayedFullscreen() {

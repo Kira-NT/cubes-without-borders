@@ -2,13 +2,24 @@
   "modmenu.nameTranslation.cwb": "Cubes Without Borders",
   "modmenu.descriptionTranslation.cwb": "Allows you to play Minecraft in a borderless fullscreen window.",
 
-  "cwb.options.borderless": "Borderless",
+  "cwb.fullscreenMode.off": "Off",
+  "cwb.fullscreenMode.exclusive": "Exclusive",
+  "cwb.fullscreenMode.borderless": "Borderless",
+  "cwb.fullscreenMode.windowed": "Windowed",
+
+  "cwb.options.fullscreenMode": "Fullscreen Mode",
+  "cwb.options.fullscreenMode.tooltip": "§lExclusive§r fullscreen makes it cumbersome or outright impossible to use other apps while the game is running, yet it offers no performance benefits on this platform.\n\n§lBorderless§r fullscreen aims to preserve the performance characteristics of exclusive fullscreen while incorporating common behaviors typically associated with windowed applications.\n\n§lWindowed§r fullscreen preserves the characteristics of a windowed application while still delivering decent overall performance. Works best on systems with the dock and/or menu bar disabled or configured to hide automatically.\n",
+  "cwb.options.fullscreenMode.tooltip.macos": "§lExclusive§r fullscreen delivers great performance with minimal latency at the cost of usability, making it cumbersome or outright impossible to use other apps while the game is running.\n\n§lBorderless§r fullscreen aims to preserve the characteristics of a windowed application at the cost of increased latency, while still delivering decent overall performance.\n\n§lWindowed§r fullscreen retains the characteristics of borderless fullscreen while also keeping the menu bar visible at all times, which might prove useful for people who dislike the notch on newer MacBooks covering part of their game.\n",
+  "cwb.options.fullscreenMode.tooltip.windows": "§lExclusive§r fullscreen delivers great performance with minimal latency at the cost of usability, making it cumbersome or outright impossible to use other apps while the game is running.\n\n§lBorderless§r fullscreen aims to preserve the performance characteristics of exclusive fullscreen while incorporating common behaviors typically associated with windowed applications.\n\n§lWindowed§r fullscreen prioritizes the characteristics of a windowed application over performance. You will experience higher latency and may encounter significant performance degradation, depending on your system, hardware, and drivers.\n",
 
   "cwb.options.exclusiveFullscreenType": "Exclusive Fullscreen Type",
-  "cwb.options.exclusiveFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oON§r in §oVideo Settings§r.",
+  "cwb.options.exclusiveFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oExclusive§r in §oVideo Settings§r.",
 
   "cwb.options.borderlessFullscreenType": "Borderless Fullscreen Type",
   "cwb.options.borderlessFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oBorderless§r in §oVideo Settings§r.",
+
+  "cwb.options.windowedFullscreenType": "Windowed Fullscreen Type",
+  "cwb.options.windowedFullscreenType.tooltip": "Controls which fullscreen mode is enabled when §oFullscreen§r is set to §oWindowed§r in §oVideo Settings§r.",
 
   "cwb.options.useDelayedFullscreen": "Use Delayed Fullscreen",
   "cwb.options.useDelayedFullscreen.tooltip": "Specifies whether to postpone entering fullscreen mode until Minecraft is fully loaded.\n\nEnabling this option may result in a smoother startup sequence and can fix rare issues on systems with faulty drivers that do not immediately allow certain windows to enter fullscreen mode at a resolution that differs from the default one.",

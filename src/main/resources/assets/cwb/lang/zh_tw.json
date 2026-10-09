@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.cwb": "允許你在無邊框全螢幕視窗模式下遊玩 Minecraft。",
 
-  "cwb.options.borderless": "無邊框",
+  "cwb.fullscreenMode.borderless": "無邊框",
 
   "cwb.options.exclusiveFullscreenType": "全螢幕類型",
   "cwb.options.exclusiveFullscreenType.tooltip": "當在§o顯示設定§r中將§o全螢幕§r設定為§o開啟§r時，控制啟用哪種全螢幕模式。",

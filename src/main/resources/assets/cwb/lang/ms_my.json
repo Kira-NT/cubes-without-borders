@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.cwb": "Membolehkan anda bermain Minecraft dalam tetingkap skrin penuh tanpa sempadan.",
 
-  "cwb.options.borderless": "Tanpa Sempadan",
+  "cwb.fullscreenMode.borderless": "Tanpa Sempadan",
 
   "cwb.options.exclusiveFullscreenType": "Jenis Skrin Penuh",
   "cwb.options.exclusiveFullscreenType.tooltip": "Mengawal mod skrin penuh yang didayakan apabila §oSkrin Penuh§r ditetapkan kepada §oBUKA§r dalam §oTetapan Video§r.",

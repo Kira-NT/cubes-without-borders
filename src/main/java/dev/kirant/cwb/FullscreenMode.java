@@ -1,38 +1,34 @@
 package dev.kirant.cwb;
 
 public enum FullscreenMode {
-    OFF(0, "options.off"),
-    ON(1, "options.on"),
-    BORDERLESS(2, "cwb.options.borderless");
-
-    private final int id;
+    OFF(CWB.MOD_ID + ".fullscreenMode.off"),
+    EXCLUSIVE(CWB.MOD_ID + ".fullscreenMode.exclusive"),
+    BORDERLESS(CWB.MOD_ID + ".fullscreenMode.borderless"),
+    WINDOWED(CWB.MOD_ID + ".fullscreenMode.windowed");
 
     private final String translationKey;
 
-    FullscreenMode(int id, String translationKey) {
-        this.id = id;
+    FullscreenMode(String translationKey) {
         this.translationKey = translationKey;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getTranslationKey() {
+    public String translationKey() {
         return this.translationKey;
     }
 
-    public static FullscreenMode get(int id) {
-        id = ((id % 3) + 3) % 3;
+    public static FullscreenMode valueOf(int ordinal) {
+        switch (ordinal & 3) {
+            case 1:
+                return FullscreenMode.EXCLUSIVE;
 
-        if (id == ON.id) {
-            return ON;
+            case 2:
+                return FullscreenMode.BORDERLESS;
+
+            case 3:
+                return FullscreenMode.WINDOWED;
+
+            default:
+                return FullscreenMode.OFF;
         }
-
-        if (id == BORDERLESS.id) {
-            return BORDERLESS;
-        }
-
-        return OFF;
     }
 }

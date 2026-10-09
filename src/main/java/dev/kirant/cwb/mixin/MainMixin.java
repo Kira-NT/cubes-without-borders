@@ -17,6 +17,7 @@ abstract class MainMixin {
     @ModifyReceiver(method = "main", at = @At(value = "INVOKE", target = "Ljoptsimple/OptionParser;parse([Ljava/lang/String;)Ljoptsimple/OptionSet;"), require = 0)
     private static OptionParser allowBorderlessOption(OptionParser parser, String[] arguments) {
         parser.accepts("borderless");
+        parser.accepts("windowed");
         return parser;
     }
 
@@ -24,6 +25,8 @@ abstract class MainMixin {
     private static void readBorderlessOption(CallbackInfo ci, @Local(ordinal = 0) OptionSet options) {
         if (options.has("borderless")) {
             CWB.CONFIG.setFullscreenMode(FullscreenMode.BORDERLESS);
+        } else if (options.has("windowed")) {
+            CWB.CONFIG.setFullscreenMode(FullscreenMode.WINDOWED);
         }
     }
 }

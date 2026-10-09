@@ -6,27 +6,20 @@ import dev.kirant.cwb.util.*;
 import net.caffeinemc.mods.sodium.api.config.*;
 import net.caffeinemc.mods.sodium.api.config.option.*;
 import net.caffeinemc.mods.sodium.api.config.structure.*;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 @ConfigEntryPointForge(CWB.MOD_ID)
 public final class SodiumConfigBuilder implements ConfigEntryPoint {
     @Override
     public void registerConfigLate(ConfigBuilder builder) {
-        String fullscreenTooltipKey = "sodium.options.fullscreen_mode.tooltip";
-        Component fullscreenTooltip = Components.translatable(fullscreenTooltipKey);
-        if (fullscreenTooltipKey.equals(fullscreenTooltip.getString())) {
-            fullscreenTooltip = Components.translatable("sodium.options.fullscreen.tooltip");
-        }
-
         EnumOptionBuilder<FullscreenMode> fullscreenOption = builder
             .createEnumOption(Identifier.fromNamespaceAndPath(CWB.MOD_ID, "general.fullscreen"), FullscreenMode.class)
             .setStorageHandler(CWB.CONFIG::save)
-            .setName(Components.translatable("options.fullscreen"))
-            .setTooltip(fullscreenTooltip)
-            .setImpact(OptionImpact.HIGH)
+            .setName(Components.translatable(CWB.MOD_ID + ".options.fullscreenMode"))
+            .setTooltip(Components.translatable(CWB.MOD_ID + ".options.fullscreenMode.tooltip" + (OS.isWindows() ? ".windows" : OS.isMacOS() ? ".macos" : "")))
+            .setImpact(OS.isWindows() ? OptionImpact.HIGH : OS.isMacOS() ? OptionImpact.MEDIUM : OptionImpact.LOW)
             .setDefaultValue(FullscreenMode.OFF)
-            .setElementNameProvider(x -> Components.translatable(x.getTranslationKey()))
+            .setElementNameProvider(x -> Components.translatable(x.translationKey()))
             .setBinding(FullscreenManager.getInstance()::setFullscreenMode, FullscreenManager.getInstance()::getFullscreenMode);
 
         ModOptionsBuilder options = builder.registerOwnModOptions();

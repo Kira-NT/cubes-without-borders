@@ -16,14 +16,14 @@ Unlike other "borderless fullscreen" mods, **Cubes Without Borders** is highly c
 
 ## Usage
 
-To enable borderless fullscreen, go to the `Video Settings` tab, where you would typically find the `Fullscreen` setting, and switch it to the newly added third option: `Borderless`.
+To enable non-exclusive fullscreen, go to the `Video Settings` tab, where you would typically find the `Fullscreen` setting, and switch it to one of the newly added options: `Borderless` or `Windowed` - whichever works best for you.
 
-Depending on whether you have Sodium installed, you may find this option in one of the following locations:
+Depending on whether you have Sodium installed, you may find these options in one of the following locations:
 
 | ![Video Settings](media/video-settings.webp) | ![Video Settings (Sodium)](media/video-settings-sodium.webp) |
 | - | - |
 
-Additionally, the mod introduces a `--borderless` startup flag that forces the game to launch in the borderless fullscreen mode, regardless of your current settings.
+Additionally, the mod introduces two new startup flags, `--borderless` and `--windowed`, which force the game to launch in borderless or windowed fullscreen mode, respectively, regardless of your current settings.
 
 ----
 
@@ -33,9 +33,7 @@ Additionally, the mod introduces a `--borderless` startup flag that forces the g
 <summary>I'm a Windows user and...</summary>
 <br>
 
-That is a problem indeed, my friend! In all seriousness, though, if you are having issues with the default borderless fullscreen mode used by CWB, you can switch to a different one in the mod's settings.
-
-Check whether `minecraft:windowed` *(the default, low-latency borderless fullscreen mode)* or `windows:windowed` *(the true windowed fullscreen mode)* works better for you.
+That is a problem indeed, my friend! In all seriousness, though, if you are having issues with borderless fullscreen, you can switch to windowed fullscreen and see which one works better for you.
 
 Additionally, it's generally recommended to use CWB alongside [Sodium](https://modrinth.com/mod/sodium), as it fixes many hardware- and driver-specific issues that might otherwise hinder your experience.
 
@@ -46,7 +44,7 @@ Additionally, it's generally recommended to use CWB alongside [Sodium](https://m
 <summary>On Windows, my cursor becomes invisible in inventories when fullscreen is enabled.</summary>
 <br>
 
-Once again, you can switch to `windows:windowed` in the mod's settings to force the game to run in windowed mode, as proper fullscreen mode does not seem to work correctly on your system.
+As mentioned earlier, you can switch to windowed fullscreen in Video Settings, as proper fullscreen mode does not seem to work correctly on your system.
 
 It's worth noting, however, that what you are experiencing is not a problem with the mod, but rather an issue with your system that you might be able to fix. People commonly report their cursor becoming invisible in games on Windows in the following scenarios:
 
@@ -73,7 +71,7 @@ In fact, if you simply toggle fullscreen by pressing <kbd>F11</kbd>, for example
 <summary>When I set Fullscreen Mode to Borderless in Video Settings, nothing really changes compared to when it is set to Exclusive - the game window continues to be automatically minimized whenever it loses focus.</summary>
 <br>
 
-This mod does not label its setting as "Fullscreen Mode", it is simply called "Fullscreen". It also does not require you to restart the game when switching from one fullscreen mode to another. What you are seeing is a very misleadingly named option provided by Sodium. To enable real borderless fullscreen provided by CWB, please see the workaround for unsupported versions of Sodium and its forks described above.
+As mentioned earlier, you are probably using a version of Sodium that CWB doesn't support, meaning that what you are seeing is a very misleadingly named option provided by Sodium itself. Please, open vanilla Video Settings by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and change your fullscreen mode from there.
 
 <br>
 </details>
@@ -101,15 +99,15 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 ```jsonc
 {
     // Specifies whether the game should start in windowed, exclusive fullscreen,
-    // or borderless fullscreen mode.
+    // borderless fullscreen, or windowed fullscreen mode.
     //
-    // Should be one of: "OFF", "ON", or "BORDERLESS".
+    // Should be one of: "OFF", "EXCLUSIVE", "BORDERLESS", or "WINDOWED".
     "fullscreenMode": "OFF",
 
     // Specifies whether the game should enter exclusive or borderless fullscreen mode
     // when a player attempts to switch to fullscreen using a keybinding (e.g., F11).
     //
-    // Should be either "ON", or "BORDERLESS".
+    // Should be either "EXCLUSIVE", "BORDERLESS", or "WINDOWED".
     "preferredFullscreenMode": "BORDERLESS",
 
     // Specifies whether to postpone entering fullscreen mode until Minecraft is fully loaded.
@@ -135,32 +133,39 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
     "pauseOnLostFocusDuringMultiplayer": true,
 
     // Controls which fullscreen mode is enabled when
-    // "fullscreenMode" is set to "ON".
+    // "fullscreenMode" is set to "EXCLUSIVE".
     "exclusiveFullscreenType": "minecraft:default",
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "BORDERLESS".
     "borderlessFullscreenType": "minecraft:windowed",
 
+    // Controls which fullscreen mode is enabled when
+    // "fullscreenMode" is set to "WINDOWED".
+    "windowedFullscreenType": "minecraft:windowed",
+
     // Provides configuration overrides for the Linux operating system.
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "linux": {
-        "borderlessFullscreenType": "linux:borderless"
+        "borderlessFullscreenType": "linux:borderless",
+        "windowedFullscreenType": "minecraft:maximized"
     },
 
     // Provides configuration overrides for the macOS operating system.
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "macos": {
-        "borderlessFullscreenType": "macos:borderless"
+        "borderlessFullscreenType": "macos:borderless",
+        "windowedFullscreenType": "macos:windowed"
     },
 
     // Provides configuration overrides for the Windows operating system.
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "windows": {
-        "borderlessFullscreenType": "minecraft:windowed"
+        "borderlessFullscreenType": "minecraft:windowed",
+        "windowedFullscreenType": "windows:windowed"
     }
 }
 ```

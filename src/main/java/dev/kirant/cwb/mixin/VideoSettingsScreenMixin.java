@@ -1,9 +1,7 @@
 package dev.kirant.cwb.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import dev.kirant.cwb.CWB;
-import dev.kirant.cwb.FullscreenManager;
-import dev.kirant.cwb.FullscreenMode;
+import dev.kirant.cwb.*;
 import dev.kirant.cwb.util.Components;
 import dev.kirant.cwb.util.MinecraftWindow;
 import net.minecraft.client.Minecraft;
@@ -33,7 +31,10 @@ abstract class VideoSettingsScreenMixin {
     *///?}
 
     private static boolean patchFullscreenOption(Object[] options) {
-        if (CWB.CONFIG.getBorderlessFullscreenType() == CWB.CONFIG.getExclusiveFullscreenType()) {
+        FullscreenType exclusiveFullscreenType = CWB.CONFIG.getExclusiveFullscreenType();
+        FullscreenType borderlessFullscreenType = CWB.CONFIG.getBorderlessFullscreenType();
+        FullscreenType windowedFullscreenType = CWB.CONFIG.getWindowedFullscreenType();
+        if (exclusiveFullscreenType == borderlessFullscreenType && borderlessFullscreenType == windowedFullscreenType) {
             return false;
         }
 
@@ -71,8 +72,8 @@ abstract class VideoSettingsScreenMixin {
         return new net.minecraft.client.OptionInstance<>(
             "options.fullscreen",
             net.minecraft.client.OptionInstance.noTooltip(),
-            (text, value) -> Components.translatable(value.getTranslationKey()),
-            new net.minecraft.client.OptionInstance.Enum<>(Arrays.asList(FullscreenMode.values()), com.mojang.serialization.Codec.INT.xmap(FullscreenMode::get, FullscreenMode::getId)),
+            (_, x) -> Components.translatable(x.translationKey()),
+            new net.minecraft.client.OptionInstance.Enum<>(Arrays.asList(FullscreenMode.values()), com.mojang.serialization.Codec.INT.xmap(FullscreenMode::valueOf, FullscreenMode::ordinal)),
             window.getFullscreenMode(),
             window::setFullscreenMode
         );
@@ -94,7 +95,7 @@ abstract class VideoSettingsScreenMixin {
         return net.minecraft.client.CycleOption.create(
             "options.fullscreen",
             Arrays.asList(FullscreenMode.values()),
-            value -> Components.translatable(value.getTranslationKey()),
+            value -> Components.translatable(value.translationKey()),
             gameOptions -> window.getFullscreenMode(),
             (gameOptions, option, value) -> window.setFullscreenMode(value)
         );
@@ -104,12 +105,12 @@ abstract class VideoSettingsScreenMixin {
         FullscreenManager window = FullscreenManager.getInstance();
         return new net.minecraft.client.CycleOption(
             "options.fullscreen",
-            (gameOptions, amount) -> window.setFullscreenMode(FullscreenMode.get(window.getFullscreenMode().getId() + amount)),
+            (gameOptions, amount) -> window.setFullscreenMode(FullscreenMode.valueOf(window.getFullscreenMode().ordinal() + amount)),
             (gameOptions, option) -> {
                 FullscreenMode value = window.getFullscreenMode();
                 return new net.minecraft.network.chat.TranslatableComponent("options.fullscreen")
                     .append(": ")
-                    .append(new net.minecraft.network.chat.TranslatableComponent(value.getTranslationKey()))
+                    .append(new net.minecraft.network.chat.TranslatableComponent(value.translationKey()))
                     /^¹? <1.16 {¹^//^¹.getString()¹^//^¹?}¹^/;
             }
         );

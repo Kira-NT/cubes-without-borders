@@ -1,22 +1,15 @@
 package dev.kirant.cwb.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mojang.blaze3d.platform.Monitor;
-import com.mojang.blaze3d.platform.MonitorManager;
-import com.mojang.blaze3d.platform.VideoMode;
-import com.mojang.blaze3d.platform.Window;
+import com.llamalad7.mixinextras.injector.wrapoperation.*;
+import com.mojang.blaze3d.platform.*;
 import dev.kirant.cwb.*;
 import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.system.MemoryStack;
 import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.nio.IntBuffer;
@@ -42,7 +35,7 @@ abstract class WindowMixin implements FullscreenManager {
 
     private @Shadow boolean actuallyFullscreen;
 
-    private boolean borderless;
+    private FullscreenMode preferredFullscreenMode;
 
     private FullscreenType previousFullscreenType;
 
@@ -50,16 +43,16 @@ abstract class WindowMixin implements FullscreenManager {
 
     @Override
     public FullscreenMode getFullscreenMode() {
-        return this.fullscreen ? this.borderless ? FullscreenMode.BORDERLESS : FullscreenMode.ON : FullscreenMode.OFF;
+        return this.fullscreen ? this.preferredFullscreenMode : FullscreenMode.OFF;
     }
 
     @Override
     public void setFullscreenMode(FullscreenMode fullscreenMode) {
         FullscreenMode currentFullscreenMode = this.getFullscreenMode();
         this.fullscreen = fullscreenMode != FullscreenMode.OFF;
-        this.borderless = this.fullscreen ? fullscreenMode == FullscreenMode.BORDERLESS : this.borderless;
+        this.preferredFullscreenMode = this.fullscreen ? fullscreenMode : this.preferredFullscreenMode;
         this.actuallyFullscreen = (currentFullscreenMode == fullscreenMode) == this.fullscreen;
-        this.syncCurrentFullscreenState();
+        Minecraft.getInstance().options.fullscreen/*? >=1.19 {*/().set/*?} else {*//*=*//*?}*/(this.fullscreen);
     }
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/MonitorManager;getMonitor(J)Lcom/mojang/blaze3d/platform/Monitor;"))
@@ -91,10 +84,9 @@ abstract class WindowMixin implements FullscreenManager {
 
         CWBConfig config = CWB.CONFIG;
         this.fullscreen = this.actuallyFullscreen = !config.getUseDelayedFullscreen() && config.getFullscreenMode() != FullscreenMode.OFF;
-        this.borderless = config.getPreferredFullscreenMode() == FullscreenMode.BORDERLESS;
-        this.borderless = this.borderless || config.getFullscreenMode() == FullscreenMode.BORDERLESS;
+        this.preferredFullscreenMode = config.getFullscreenMode() == FullscreenMode.OFF ? config.getPreferredFullscreenMode() : config.getFullscreenMode();
         this.previousFullscreenType = this.currentFullscreenType = null;
-        this.syncCurrentFullscreenState();
+        Minecraft.getInstance().options.fullscreen/*? >=1.19 {*/().set/*?} else {*//*=*//*?}*/(this.fullscreen);
 
         setMode.call(window);
 
@@ -113,34 +105,21 @@ abstract class WindowMixin implements FullscreenManager {
 
     @Inject(method = "setMode", at = @At("HEAD"), cancellable = true)
     private void enableFullscreen(CallbackInfo ci) {
-        Window window = (Window)(Object)this;
         CWBConfig config = CWB.CONFIG;
+        Window window = (Window)(Object)this;
+        Monitor monitor = null;
 
         this.previousFullscreenType = this.currentFullscreenType;
-        if (this.fullscreen) {
-            this.currentFullscreenType = this.borderless ? config.getBorderlessFullscreenType() : config.getExclusiveFullscreenType();
-        } else {
-            // Let the original method deal with the windowed mode.
-            this.currentFullscreenType = null;
+        this.currentFullscreenType = null;
+
+        boolean useCustomFullscreenType = this.fullscreen;
+        useCustomFullscreenType = useCustomFullscreenType && (monitor = this.monitorManager.findBestMonitor(window)) != null;
+        useCustomFullscreenType = useCustomFullscreenType && (this.currentFullscreenType = config.getPreferredFullscreenType(this.preferredFullscreenMode)) != FullscreenTypes.exclusive();
+        if (!useCustomFullscreenType) {
             return;
         }
 
-        Monitor monitor = this.monitorManager.findBestMonitor(window);
-        if (monitor == null) {
-            // We couldn't detect a monitor to attach this window to.
-            // Let the original method deal with this problem.
-            this.currentFullscreenType = null;
-            return;
-        }
-
-        if (this.currentFullscreenType == FullscreenTypes.exclusive()) {
-            // The player requests built-in fullscreen mode.
-            // Once again, let the original method deal with it.
-            return;
-        }
-
-        boolean wasInWindowedMode = this.previousFullscreenType == null;
-        if (wasInWindowedMode) {
+        if (this.previousFullscreenType == null) {
             this.windowedX = window.x;
             this.windowedY = window.y;
             this.windowedWidth = window.width;
@@ -182,7 +161,7 @@ abstract class WindowMixin implements FullscreenManager {
     private void save(CallbackInfo ci) {
         CWBConfig config = CWB.CONFIG;
         config.setFullscreenMode(this.getFullscreenMode());
-        config.setPreferredFullscreenMode(this.borderless ? FullscreenMode.BORDERLESS : FullscreenMode.ON);
+        config.setPreferredFullscreenMode(this.preferredFullscreenMode);
         config.save();
     }
 
@@ -194,13 +173,5 @@ abstract class WindowMixin implements FullscreenManager {
             window.width = size.get(0) > 0 ? size.get(0) : 1;
             window.height = size.get(1) > 0 ? size.get(1) : 1;
         }
-    }
-
-    private void syncCurrentFullscreenState() {
-        //? if >=1.19 {
-        Minecraft.getInstance().options.fullscreen().set(this.fullscreen);
-         //?} else {
-        /*Minecraft.getInstance().options.fullscreen = this.fullscreen;
-        *///?}
     }
 }
