@@ -134,20 +134,21 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "EXCLUSIVE".
-    "exclusiveFullscreenType": "minecraft:default",
+    "exclusiveFullscreenType": "@default",
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "BORDERLESS".
-    "borderlessFullscreenType": "minecraft:windowed",
+    "borderlessFullscreenType": "@borderless",
 
     // Controls which fullscreen mode is enabled when
     // "fullscreenMode" is set to "WINDOWED".
-    "windowedFullscreenType": "minecraft:windowed",
+    "windowedFullscreenType": "@windowed",
 
     // Provides configuration overrides for the Linux operating system.
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "linux": {
+        "exclusiveFullscreenType": "minecraft:default",
         "borderlessFullscreenType": "linux:borderless",
         "windowedFullscreenType": "minecraft:maximized"
     },
@@ -156,6 +157,7 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "macos": {
+        "exclusiveFullscreenType": "minecraft:default",
         "borderlessFullscreenType": "macos:borderless",
         "windowedFullscreenType": "macos:windowed"
     },
@@ -164,6 +166,7 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
     // Properties defined within this section take precedence over
     // their top-level counterparts.
     "windows": {
+        "exclusiveFullscreenType": "minecraft:default",
         "borderlessFullscreenType": "minecraft:windowed",
         "windowedFullscreenType": "windows:windowed"
     }

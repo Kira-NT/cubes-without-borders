@@ -66,6 +66,15 @@ public final class FullscreenTypes {
                 return Optional.of(value);
             }
         }
+        if ("@default".equalsIgnoreCase(id) || "@exclusive".equalsIgnoreCase(id)) {
+            return Optional.of(FullscreenTypes.exclusive());
+        }
+        if ("@borderless".equalsIgnoreCase(id)) {
+            return Optional.of(FullscreenTypes.borderless());
+        }
+        if ("@windowed".equalsIgnoreCase(id)) {
+            return Optional.of(FullscreenTypes.windowed());
+        }
         return Optional.empty();
     }
 
