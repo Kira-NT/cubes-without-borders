@@ -18,3 +18,4 @@ hs_err_*.log
 out/
 replay_*.log
 run/
+stonecutter.gradle.kts

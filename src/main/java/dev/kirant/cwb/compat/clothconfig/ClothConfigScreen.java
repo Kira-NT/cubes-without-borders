@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
 
 public final class ClothConfigScreen {
-    //? if cloth-config: >0.0.0 {
+    //? if cloth-config {
     // So, apparently, Cloth Config uses different IDs
     // on (Neo)Forge and Fabric (and only sometimes!),
     // and there was a period of time when it's been renamed to
@@ -38,4 +38,3 @@ public final class ClothConfigScreen {
 
     private ClothConfigScreen() { }
 }
-//?}

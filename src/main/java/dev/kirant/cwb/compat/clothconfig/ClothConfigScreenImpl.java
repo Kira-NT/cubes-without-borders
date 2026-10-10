@@ -1,4 +1,4 @@
-//? if cloth-config: >0.0.0 {
+//? if cloth-config {
 package dev.kirant.cwb.compat.clothconfig;
 
 import dev.kirant.cwb.*;

@@ -1,4 +1,4 @@
-//? if yacl: >0.0.0 {
+//? if yacl {
 package dev.kirant.cwb.compat.yacl;
 
 import dev.isxander.yacl3.api.*;

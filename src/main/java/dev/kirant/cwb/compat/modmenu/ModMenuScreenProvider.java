@@ -1,4 +1,4 @@
-//? if modmenu: >0.0.0 {
+//? if modmenu {
 package dev.kirant.cwb.compat.modmenu;
 
 import com.terraformersmc.modmenu.api.ModMenuApi;

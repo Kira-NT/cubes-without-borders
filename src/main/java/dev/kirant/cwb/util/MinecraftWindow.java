@@ -17,7 +17,7 @@ public final class MinecraftWindow {
         //? if >=1.15 {
         return Minecraft.getInstance().getWindow();
         //?} else
-        /*return Minecraft.getInstance().window;*/
+        //return Minecraft.getInstance().window;
     }
 
     public static final class Windows {

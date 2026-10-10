@@ -111,7 +111,7 @@ abstract class VideoSettingsScreenMixin {
                 return new net.minecraft.network.chat.TranslatableComponent("options.fullscreen")
                     .append(": ")
                     .append(new net.minecraft.network.chat.TranslatableComponent(value.translationKey()))
-                    /^¹? <1.16 {¹^//^¹.getString()¹^//^¹?}¹^/;
+                    /^? <1.16 {^//^.getString()^//^?}^/;
             }
         );
     }

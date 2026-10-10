@@ -29,7 +29,7 @@ public final class SodiumConfigBuilder implements ConfigEntryPoint {
     }
 
     private static void registerOptionReplacement(ModOptionsBuilder builder, String id, OptionBuilder option) {
-        //? if sodium: >=0.8.13 <0.9.0 || >=0.9.2 {
+        //? if sodium: >=0.8.13 <0.9.0 || sodium: >=0.9.2 {
         try {
             builder.registerOptionReplacement(Identifier.parse(id), option, Integer.MAX_VALUE);
             return;
@@ -42,7 +42,7 @@ public final class SodiumConfigBuilder implements ConfigEntryPoint {
     }
 
     private static void registerOptionOverlay(ModOptionsBuilder builder, String id, OptionBuilder option) {
-        //? if sodium: >=0.8.13 <0.9.0 || >=0.9.2 {
+        //? if sodium: >=0.8.13 <0.9.0 || sodium: >=0.9.2 {
         try {
             builder.registerOptionOverlay(Identifier.parse(id), option, Integer.MAX_VALUE);
             return;

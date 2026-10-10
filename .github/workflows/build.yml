@@ -18,13 +18,13 @@ jobs:
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: gradle.properties
-          properties: dependencies.java
+          properties: org.gradle.java.version
 
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: ${{ steps.gradle-properties.outputs.dependencies-java }}
+          java-version: ${{ steps.gradle-properties.outputs.org-gradle-java-version }}
 
       - name: Build artifacts
         run: ./gradlew clean build --no-daemon
@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: artifacts
-          path: build/libs/
+          path: versions/*/build/libs/!(*-@(dev|shadow)).jar

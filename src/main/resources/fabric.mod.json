@@ -27,7 +27,7 @@
   "accessWidener": "${id}.accesswidener",
   "custom": {
     "mc-publish": {
-      "loaders": ["fabric", "quilt", "neoforge", "forge"],
+      "loaders": ["${loaders}"],
       "modrinth": "${modrinth}",
       "curseforge": "${curseforge}",
       "dependencies": [
@@ -75,7 +75,7 @@
   },
   "depends": {
     "fabricloader": ">=${fabric_loader}",
-    "minecraft": ">=${minecraft}",
+    "minecraft": ">=${minecraft} <${minecraft_next}",
     "java": ">=${java}"
   },
   "suggests": {

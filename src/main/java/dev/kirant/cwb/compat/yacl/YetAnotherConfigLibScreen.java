@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
 
 public final class YetAnotherConfigLibScreen {
-    //? if yacl: >0.0.0 {
+    //? if yacl {
     private static final boolean IS_YACL_LOADED = ModLoader.getInstance().isModLoaded("yet_another_config_lib_v3");
 
     public static boolean isSupported() {
