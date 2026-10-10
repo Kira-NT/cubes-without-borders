@@ -1,5 +1,9 @@
+@file:Suppress("UnstableApiUsage")
+
+import net.fabricmc.loom.task.*
+
 plugins {
-    id("net.fabricmc.fabric-loom")
+    id("net.fabricmc.fabric-loom-remap")
 }
 
 val minVersion = "0.0.0"
@@ -56,7 +60,18 @@ dependencies {
     }
 
     minecraft("com.mojang:minecraft:$baselineMinecraft")
-    use("fabric") { implementation("net.fabricmc:fabric-loader:$it") }
+    mappings(loom.layered {
+        val range = sc.parse(baselineMinecraft).rangeUntil(sc.parse(if (isUnobfuscated) maxVersion else firstUnobfuscatedVersion))
+        takeUnless { isUnobfuscated }?.let { officialMojangMappings { nameSyntheticMembers = true } }
+        rootProject.file("mappings").listFiles { it.extension == "tiny" }.orEmpty()
+            .map { it to sc.tryParse(it.nameWithoutExtension).getOrNull() }
+            .filter { it.second?.let(range::contains) ?: false }
+            .sortedByDescending { it.second }.map { it.first }
+            .ifEmpty { listOf(rootProject.file("mappings/.tiny")) }
+            .forEach { mappings(it) }
+    })
+
+    use("fabric") { modImplementation("net.fabricmc:fabric-loader:$it") }
     use("fancymodloader") { compileOnly("net.neoforged.fancymodloader:loader:$it") }
     use("neoforge") { compileOnly("net.neoforged:neoforge:$it") }
     use("forge") {
@@ -66,10 +81,10 @@ dependencies {
         compileOnly("net.minecraftforge:fmlcore:$it")
     }
 
-    use("sodium") { compileOnly("maven.modrinth:sodium:$it") }
-    use("modmenu") { compileOnly("maven.modrinth:modmenu:$it") }
-    use("yacl") { compileOnly("maven.modrinth:yacl:$it") }
-    use("cloth-config") { compileOnly("maven.modrinth:cloth-config:$it") }
+    use("sodium") { modCompileOnly("maven.modrinth:sodium:$it") }
+    use("modmenu") { modCompileOnly("maven.modrinth:modmenu:$it") }
+    use("yacl") { modCompileOnly("maven.modrinth:yacl:$it") }
+    use("cloth-config") { modCompileOnly("maven.modrinth:cloth-config:$it") }
 
     use("java-objc-bridge") { compileOnly("ca.weblite:java-objc-bridge:$it") }
 }
@@ -111,6 +126,10 @@ tasks.processResources {
 tasks.jar {
     from(rootDir) { include("LICENSE*") }
     manifest.attributes("MixinConfigs" to "$modId.mixins.json")
+}
+
+tasks.withType<AbstractRemapJarTask> {
+    targetNamespace.takeIf { isUnobfuscated }?.set("official")
 }
 
 tasks.withType<JavaCompile> {
