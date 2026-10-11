@@ -1,0 +1,9 @@
+tiny	2	0	official	named
+c	com/mojang/blaze3d/platform/Window	com/mojang/blaze3d/platform/Window
+	f	Lcom/mojang/blaze3d/platform/ScreenManager;	screenManager	monitorManager
+c	com/mojang/blaze3d/platform/ScreenManager	com/mojang/blaze3d/platform/MonitorManager
+c	com/mojang/blaze3d/platform/Monitor	com/mojang/blaze3d/platform/Monitor
+	m	()I	getX	x
+	m	()I	getY	y
+	m	()J	getMonitor	monitor
+	m	()Lcom/mojang/blaze3d/platform/VideoMode;	getCurrentMode	currentMode
