@@ -1,6 +1,11 @@
 @file:Suppress("UnstableApiUsage")
 
 import net.fabricmc.loom.task.*
+import net.fabricmc.loom.util.*
+import java.nio.file.*
+import java.nio.file.Path
+import kotlin.io.path.*
+import kotlin.*
 
 plugins {
     id("net.fabricmc.fabric-loom-remap")
@@ -130,6 +135,32 @@ tasks.jar {
 
 tasks.withType<AbstractRemapJarTask> {
     targetNamespace.takeIf { isUnobfuscated }?.set("official")
+
+    doLast {
+        archiveFile.get().asFile.toPath().asFileSystem.use { fs ->
+            // Convert the access widener to an access transformer if we target (Neo)Forge.
+            // By this time, it should have been remapped already.
+            fs.getPath("").takeIf { loaders.any { it.endsWith("forge") } }?.listDirectoryEntries("*.accesswidener")?.firstOrNull()?.let { aw ->
+                fs.getPath("META-INF/accesstransformer.cfg").writeLines(aw.readLines().drop(1).map(::aw2at))
+                aw.takeUnless { "fabric" in loaders || "quilt" in loaders }?.deleteExisting()
+            }
+
+            // The Gradle way would be to exclude these files from the final jar during the processResources phase.
+            // Here, however, we HATE Gradle and its way of doing things! :3
+            // Oh, and also Loom will not remap the access widener if there's no fabric.mod.json present,
+            // so it's the best place to do it, really.
+            fs.getPath("fabric.mod.json").takeUnless { "fabric" in loaders }?.deleteIfExists()
+            fs.getPath("quilt.mod.json").takeUnless { "quilt" in loaders }?.deleteIfExists()
+            fs.getPath("META-INF/mods.toml").takeUnless { "forge" in loaders }?.deleteIfExists()
+            fs.getPath("META-INF/neoforge.mods.toml").takeUnless { "neoforge" in loaders }?.deleteIfExists()
+            fs.getPath("pack.mcmeta").takeUnless { loaders.any { it.endsWith("forge") } }?.deleteIfExists()
+        }
+
+        // Fix up the jar after we've meddled with it.
+        if (isReproducibleFileOrder || !isPreserveFileTimestamps || entryCompression != ZipEntryCompression.DEFLATED) {
+            ZipReprocessorUtil.reprocessZip(archiveFile.get().asFile.toPath(), isReproducibleFileOrder, isPreserveFileTimestamps, entryCompression)
+        }
+    }
 }
 
 tasks.withType<JavaCompile> {
@@ -162,3 +193,20 @@ fun formatVersion(version: String, minecraft: String, loader: String): String = 
     ".0".takeIf { loader.isNotBlank() && minecraft.indexOf('.') == minecraft.lastIndexOf('.') }?.let { append(it) }
     loader.ifBlank { null }?.let { append('.').append(it) }
 }
+
+fun aw2at(entry: String): String = buildString(entry.length) {
+    // https://docs.fabricmc.net/develop/class-tweakers/access-widening
+    // https://docs.neoforged.net/docs/advanced/accesstransformers
+    val parts = entry.substringBefore('#').trim().removePrefix("transitive-").split(' ', '\t').filter { it.isNotEmpty() }
+    if (parts.size < 3 || parts[0] !in listOf("accessible", "extendable", "mutable")) {
+        return@buildString
+    }
+
+    append(if (parts[0] == "accessible") "public" else "public-f").append(' ').append(parts[2].replace('/', '.'))
+    if (parts.size == 5) {
+        append(' ').append(parts[3]).takeIf { parts[2] == "method" }?.append(parts[4])
+    }
+}
+
+val Path.asFileSystem: FileSystem
+    get() = FileSystems.newFileSystem(this, null as ClassLoader?)
