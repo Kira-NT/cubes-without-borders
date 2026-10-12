@@ -5,5 +5,11 @@ accessible field com/mojang/blaze3d/platform/Window y I
 accessible field com/mojang/blaze3d/platform/Window width I
 accessible field com/mojang/blaze3d/platform/Window height I
 
+#? if 26.2
+#mutable field com/mojang/blaze3d/platform/Window exclusiveFullscreen Z
+
+#? if <26.3 {
+#accessible field com/mojang/blaze3d/platform/MonitorManager monitors Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
+#?} else
+accessible field com/mojang/blaze3d/platform/MonitorManager monitors Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
 accessible field com/mojang/blaze3d/platform/Window monitorManager Lcom/mojang/blaze3d/platform/MonitorManager;
-accessible field com/mojang/blaze3d/platform/MonitorManager monitors Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;

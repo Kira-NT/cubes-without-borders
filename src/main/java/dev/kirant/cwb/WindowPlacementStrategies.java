@@ -3,7 +3,7 @@ package dev.kirant.cwb;
 import com.mojang.blaze3d.platform.*;
 import org.lwjgl.system.MemoryStack;
 
-import java.nio.IntBuffer;
+import java.nio.*;
 
 public final class WindowPlacementStrategies {
     public static WindowPlacementStrategy BIND_TO_MONITOR = (window, monitor, videoMode) -> {
@@ -24,8 +24,14 @@ public final class WindowPlacementStrategies {
 
     public static WindowPlacementStrategy FILL_MONITOR_SAFE_AREA = (window, monitor, _) -> {
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            IntBuffer area = stack.mallocInt(4);
+            //? if >=26.3 {
+            ByteBuffer buffer = stack.malloc(16);
+            org.lwjgl.sdl.SDLVideo.SDL_GetDisplayUsableBounds(monitor.id(), new org.lwjgl.sdl.SDL_Rect(buffer));
+            IntBuffer area = buffer.asIntBuffer();
+            //?} else {
+            /*IntBuffer area = stack.mallocInt(4);
             org.lwjgl.glfw.GLFW.glfwGetMonitorWorkarea(monitor.monitor(), area, (IntBuffer)area.duplicate().position(1), (IntBuffer)area.duplicate().position(2), (IntBuffer)area.duplicate().position(3));
+            *///?}
 
             window.x = area.get(0);
             window.y = area.get(1);
@@ -57,15 +63,32 @@ public final class WindowPlacementStrategies {
     public static WindowPlacementStrategy MAXIMIZE = (window, _, _) -> WindowPlacementStrategies.maximize(window);
 
     private static void bindToMonitor(Window window, Monitor monitor, VideoMode videoMode) {
-        org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, videoMode.getRefreshRate());
+        //? if >=26.3 {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            org.lwjgl.sdl.SDL_DisplayMode displayMode = org.lwjgl.sdl.SDL_DisplayMode.malloc(stack);
+            boolean isValid = org.lwjgl.sdl.SDLVideo.SDL_GetClosestFullscreenDisplayMode(monitor.id(), videoMode.getWidth(), videoMode.getHeight(), videoMode.getRefreshRate(), true, displayMode);
+            org.lwjgl.sdl.SDLVideo.SDL_SetWindowFullscreenMode(window.handle(), isValid ? displayMode : null);
+            org.lwjgl.sdl.SDLVideo.SDL_SetWindowFullscreen(window.handle(), true);
+        }
+        //?} else
+        //org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), monitor.monitor(), window.x, window.y, window.width, window.height, videoMode.getRefreshRate());
     }
 
     private static void moveAndResize(Window window) {
-        org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
+        //? if >=26.3 {
+        org.lwjgl.sdl.SDLVideo.SDL_SetWindowFullscreen(window.handle(), false);
+        org.lwjgl.sdl.SDLVideo.SDL_SetWindowPosition(window.handle(), window.x, window.y);
+        org.lwjgl.sdl.SDLVideo.SDL_SetWindowSize(window.handle(), window.width, window.height);
+        //?} else
+        //org.lwjgl.glfw.GLFW.glfwSetWindowMonitor(window.handle(), 0, window.x, window.y, window.width, window.height, -1);
     }
 
     private static void maximize(Window window) {
-        org.lwjgl.glfw.GLFW.glfwMaximizeWindow(window.handle());
+        //? if >=26.3 {
+        org.lwjgl.sdl.SDLVideo.SDL_SetWindowFullscreen(window.handle(), false);
+        org.lwjgl.sdl.SDLVideo.SDL_MaximizeWindow(window.handle());
+        //?} else
+        //org.lwjgl.glfw.GLFW.glfwMaximizeWindow(window.handle());
     }
 
     private WindowPlacementStrategies() { }

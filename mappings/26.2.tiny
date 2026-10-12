@@ -1,0 +1,6 @@
+tiny	2	0	official	named
+c	com/mojang/blaze3d/platform/Window	com/mojang/blaze3d/platform/Window
+	f	Z	actuallyFullscreen	fullscreen
+	f	Z	fullscreen	fullscreenRequested
+c	com/mojang/blaze3d/platform/Monitor	com/mojang/blaze3d/platform/Monitor
+	m	(Ljava/util/Optional;)Lcom/mojang/blaze3d/platform/VideoMode;	getPreferredVidMode	getPreferredVideoMode

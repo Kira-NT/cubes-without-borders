@@ -90,7 +90,10 @@ public final class MinecraftWindow {
         private static Callback WINDOW_WILL_RETURN_FIELD_EDITOR_CALLBACK;
 
         private static Proxy getNSWindow(Window window) {
-            long nsWindow = org.lwjgl.glfw.GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
+            //? if >=26.3 {
+            long nsWindow = org.lwjgl.sdl.SDLProperties.SDL_GetPointerProperty(org.lwjgl.sdl.SDLVideo.SDL_GetWindowProperties(window.handle()), "SDL.window.cocoa.window", 0);
+            //?} else
+            //long nsWindow = org.lwjgl.glfw.GLFWNativeCocoa.glfwGetCocoaWindow(window.handle());
             return new Proxy(new Pointer(nsWindow));
         }
 
