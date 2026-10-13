@@ -122,6 +122,22 @@ public final class MinecraftWindow {
             nsWindow.send("setStyleMask:", newStyleMask);
         }
 
+        //? if <26.3 {
+        /*public static void setWantsBestResolutionOpenGLSurface(Window window, boolean wantsBestResolutionOpenGLSurface) {
+            Proxy nsView = MacOS.getNSWindow(window).sendProxy("contentView");
+            int api = org.lwjgl.glfw.GLFW.glfwGetWindowAttrib(window.handle(), org.lwjgl.glfw.GLFW.GLFW_CLIENT_API);
+            if (api == 0 || nsView == null || !nsView.sendBoolean("respondsToSelector:", RuntimeUtils.sel("setWantsBestResolutionOpenGLSurface:"))) {
+                return;
+            }
+
+            nsView.send("setWantsBestResolutionOpenGLSurface:", wantsBestResolutionOpenGLSurface);
+            long nsGlContext = org.lwjgl.glfw.GLFWNativeNSGL.glfwGetNSGLContext(window.handle());
+            if (nsGlContext != 0) {
+                new Proxy(new Pointer(nsGlContext)).send("update");
+            }
+        }
+        *///?}
+
         public static boolean registerWindowWillReturnFieldEditorStub(Window window) {
             // [NSWindowDelegate windowWillReturnFieldEditor:toObject:] is supposed to be an optional method,
             // like any other method on NSWindowDelegate, which is why GLFWWindowDelegate does not implement it.

@@ -105,6 +105,12 @@ abstract class WindowMixin implements FullscreenManager {
         WindowHints.AUTO_ICONIFY.set(window, true);
         setMode.call(window);
 
+        //? if <26.3 && (forge || neoforge) {
+        /*if (OS.isMacOS() && !config.getUseScaledFramebuffer()) {
+            MinecraftWindow.MacOS.setWantsBestResolutionOpenGLSurface(window, false);
+        }
+        *///?}
+
         // Make sure the window dimensions are up to date, as they may differ from those passed to glfwSetWindowMonitor.
         // This is mainly relevant on platforms where glfwGetVideoMode may return an invalid value, like on macOS.
         this.refreshWindowSize();
