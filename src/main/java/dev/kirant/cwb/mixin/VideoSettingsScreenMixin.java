@@ -72,7 +72,7 @@ abstract class VideoSettingsScreenMixin {
         return new net.minecraft.client.OptionInstance<>(
             "options.fullscreen",
             net.minecraft.client.OptionInstance.noTooltip(),
-            (_, x) -> Components.translatable(x.translationKey()),
+            (c, x) -> Components.translatable(x.translationKey()),
             new net.minecraft.client.OptionInstance.Enum<>(Arrays.asList(FullscreenMode.values()), com.mojang.serialization.Codec.INT.xmap(FullscreenMode::valueOf, FullscreenMode::ordinal)),
             window.getFullscreenMode(),
             window::setFullscreenMode

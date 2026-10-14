@@ -33,7 +33,7 @@ public final class SodiumConfigBuilder implements ConfigEntryPoint {
         try {
             builder.registerOptionReplacement(Identifier.parse(id), option, Integer.MAX_VALUE);
             return;
-        } catch (Throwable _) {
+        } catch (Throwable t) {
             // Ignore `MethodNotFoundException` if the player has an older version of Sodium installed.
         }
         //?}
@@ -46,7 +46,7 @@ public final class SodiumConfigBuilder implements ConfigEntryPoint {
         try {
             builder.registerOptionOverlay(Identifier.parse(id), option, Integer.MAX_VALUE);
             return;
-        } catch (Throwable _) {
+        } catch (Throwable t) {
             // Ignore `MethodNotFoundException` if the player has an older version of Sodium installed.
         }
         //?}

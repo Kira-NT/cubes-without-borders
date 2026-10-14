@@ -14,7 +14,7 @@ public final class WindowPlacementStrategies {
         WindowPlacementStrategies.bindToMonitor(window, monitor, videoMode);
     };
 
-    public static WindowPlacementStrategy FILL_MONITOR = (window, monitor, _) -> {
+    public static WindowPlacementStrategy FILL_MONITOR = (window, monitor, videoMode) -> {
         window.x = monitor.x();
         window.y = monitor.y();
         window.width = monitor.currentMode().getWidth();
@@ -22,7 +22,7 @@ public final class WindowPlacementStrategies {
         WindowPlacementStrategies.moveAndResize(window);
     };
 
-    public static WindowPlacementStrategy FILL_MONITOR_SAFE_AREA = (window, monitor, _) -> {
+    public static WindowPlacementStrategy FILL_MONITOR_SAFE_AREA = (window, monitor, videoMode) -> {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             //? if >=26.3 {
             ByteBuffer buffer = stack.malloc(16);
@@ -41,7 +41,7 @@ public final class WindowPlacementStrategies {
         WindowPlacementStrategies.maximize(window);
     };
 
-    public static WindowPlacementStrategy OVERSCAN = (window, monitor, _) -> {
+    public static WindowPlacementStrategy OVERSCAN = (window, monitor, videoMode) -> {
         boolean left = false;
         boolean right = false;
         boolean up = false;
@@ -60,7 +60,7 @@ public final class WindowPlacementStrategies {
         WindowPlacementStrategies.moveAndResize(window);
     };
 
-    public static WindowPlacementStrategy MAXIMIZE = (window, _, _) -> WindowPlacementStrategies.maximize(window);
+    public static WindowPlacementStrategy MAXIMIZE = (window, monitor, videoMode) -> WindowPlacementStrategies.maximize(window);
 
     private static void bindToMonitor(Window window, Monitor monitor, VideoMode videoMode) {
         //? if >=26.3 {

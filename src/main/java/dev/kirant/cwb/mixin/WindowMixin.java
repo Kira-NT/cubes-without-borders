@@ -73,7 +73,7 @@ abstract class WindowMixin implements FullscreenManager {
         //org.lwjgl.glfw.GLFW.glfwWindowHint(org.lwjgl.glfw.GLFW.GLFW_SOFT_FULLSCREEN, 0);
         //? if >=26.1 {
         this.exclusiveFullscreen = true;
-        try { Minecraft.getInstance().options.exclusiveFullscreen().set(true); } catch (Throwable _) { }
+        try { Minecraft.getInstance().options.exclusiveFullscreen().set(true); } catch (Throwable t) { }
         //?}
 
         // Hide Minecraft from broken Nvidia drivers on Windows.

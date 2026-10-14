@@ -19,7 +19,7 @@ public abstract class ModLoader {
                 if (modLoader.getConfigFolder() != null) {
                     return modLoader;
                 }
-            } catch (Throwable _) { }
+            } catch (Throwable t) { }
         }
         return new ModLoader() { };
     }

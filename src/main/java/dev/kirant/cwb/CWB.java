@@ -31,7 +31,7 @@ public final class CWB {
         public NeoForge(net.neoforged.fml.ModContainer mod) {
             CWB.registerConfigScreen(f -> mod.registerExtensionPoint(
                 net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
-                (_, x) -> f.apply(x)
+                (m, x) -> f.apply(x)
             ));
         }
     }
@@ -45,7 +45,7 @@ public final class CWB {
         public Forge() {
             CWB.registerConfigScreen(f -> net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
                 net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory((_, x) -> f.apply(x))
+                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory((m, x) -> f.apply(x))
             ));
         }
     }

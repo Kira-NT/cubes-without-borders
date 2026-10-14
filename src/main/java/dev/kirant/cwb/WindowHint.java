@@ -17,6 +17,6 @@ public interface WindowHint {
     }
 
     static WindowHint of(Consumer<Window> enable) {
-        return WindowHint.of(enable, _ -> { });
+        return WindowHint.of(enable, w -> { });
     }
 }
