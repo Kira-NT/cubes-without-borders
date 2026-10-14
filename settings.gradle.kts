@@ -6,18 +6,18 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         maven("https://maven.kikugie.dev/releases/")
         maven("https://maven.kikugie.dev/snapshots/")
+        maven("https://maven.architectury.dev/")
+        maven("https://files.minecraftforge.net/maven/")
         mavenCentral()
         gradlePluginPortal()
     }
-
-    plugins {
-        id("net.fabricmc.fabric-loom-remap") version providers.gradleProperty("plugins.fabric-loom-remap")
-    }
+    includeBuild("build-logic")
 }
 
 plugins {
     id("dev.kikugie.stonecutter") version providers.gradleProperty("plugins.stonecutter")
     id("org.gradle.toolchains.foojay-resolver-convention") version providers.gradleProperty("plugins.foojay-resolver-convention")
+    id("dev.kirant.omni-loom")
 }
 
 stonecutter {

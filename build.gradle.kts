@@ -8,7 +8,7 @@ import kotlin.io.path.*
 import kotlin.*
 
 plugins {
-    id("net.fabricmc.fabric-loom-remap")
+    id("dev.kirant.omni-loom")
 }
 
 val minVersion = "0.0.0"
@@ -52,9 +52,11 @@ val accessWidener = rootProject.file("src/main/resources/$modId.accesswidener")
 loom.accessWidenerPath = sc.process(accessWidener, loomCache.resolve(accessWidener.name).toString())
 
 repositories {
+    mavenCentral { name = "MavenCentralLWJGL" } // Arch Loom REALLY wants this repository.
     maven("https://api.modrinth.com/maven/") { content { includeGroup("maven.modrinth") } }
-    maven("https://maven.neoforged.net/releases/") { content { includeGroupByRegex("net.neoforged.*") } }
+    maven("https://maven.neoforged.net/releases/") { content { includeGroupByRegex("(net|cpw).(neoforged|mods).*") } }
     maven("https://maven.minecraftforge.net/") { content { includeGroup("net.minecraftforge") } }
+    maven("https://repo.spongepowered.org/repository/maven-public/") { content { includeGroup("org.spongepowered") } }
 }
 
 dependencies {
@@ -78,12 +80,21 @@ dependencies {
 
     use("fabric") { modImplementation("net.fabricmc:fabric-loader:$it") }
     use("fancymodloader") { compileOnly("net.neoforged.fancymodloader:loader:$it") }
-    use("neoforge") { compileOnly("net.neoforged:neoforge:$it") }
-    use("forge") {
-        compileOnly("net.minecraftforge:forge:$it:universal")
-        compileOnly("net.minecraftforge:javafmllanguage:$it")
-        compileOnly("net.minecraftforge:fmlloader:$it")
-        compileOnly("net.minecraftforge:fmlcore:$it")
+    use("neoforge") { (if (isUnobfuscated) "compileOnly" else "neoForge")("net.neoforged:neoforge:$it") }
+    use("forge") { when {
+        isUnobfuscated -> {
+            compileOnly("net.minecraftforge:forge:$it:universal")
+            compileOnly("net.minecraftforge:javafmllanguage:$it")
+            compileOnly("net.minecraftforge:fmlloader:$it")
+            compileOnly("net.minecraftforge:fmlcore:$it")
+        }
+        else -> "forge"("net.minecraftforge:forge:$it")
+    } }
+
+    use("mixin") { compileOnly("org.spongepowered:mixin:$it") }
+    use("mixinextras") {
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:$it")!!)
+        implementation("include"("io.github.llamalad7:mixinextras-$loader:$it")!!)
     }
 
     use("sodium") { modCompileOnly("maven.modrinth:sodium:$it") }
