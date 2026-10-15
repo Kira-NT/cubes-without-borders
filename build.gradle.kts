@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import kotlinx.serialization.json.*
 import net.fabricmc.loom.task.*
 import net.fabricmc.loom.util.*
 import java.nio.file.*
@@ -66,6 +67,16 @@ dependencies {
         it?.let(consumer)
     }
 
+    fun unJarJar(notation: String, target: String = ""): FileCollection {
+        val name = target.ifBlank { notation.substringAfter(':').substringBefore(':') }
+        val input = configurations.detachedConfiguration(dependencies.create(notation)).singleFile.toPath()
+        val output = layout.buildDirectory.file("unJarJar/${notation.replace(':', '.')}.jar").get().asFile.toPath()
+        input.takeUnless { output.exists() }?.let { it.asFileSystem.use { fs ->
+            (fs.jarJarMetadata?.jarJarEntries?.firstOrNull { j -> j.name.contains(name) } ?: it).copyTo(output.createParentDirectories())
+        } }
+        return files(output)
+    }
+
     minecraft("com.mojang:minecraft:$baselineMinecraft")
     mappings(loom.layered {
         val range = sc.parse(baselineMinecraft).rangeUntil(sc.parse(if (isUnobfuscated) maxVersion else firstUnobfuscatedVersion))
@@ -97,7 +108,7 @@ dependencies {
         implementation("include"("io.github.llamalad7:mixinextras-$loader:$it")!!)
     }
 
-    use("sodium") { modCompileOnly("maven.modrinth:sodium:$it") }
+    use("sodium") { modCompileOnly(unJarJar("maven.modrinth:sodium:$it")) }
     use("modmenu") { modCompileOnly("maven.modrinth:modmenu:$it") }
     use("yacl") { modCompileOnly("maven.modrinth:yacl:$it") }
     use("cloth-config") { modCompileOnly("maven.modrinth:cloth-config:$it") }
@@ -218,6 +229,16 @@ fun aw2at(entry: String): String = buildString(entry.length) {
         append(' ').append(parts[3]).takeIf { parts[2] == "method" }?.append(parts[4])
     }
 }
+
+val FileSystem.jarJarMetadata: Path?
+    get() = getPath("META-INF/jarjar/metadata.json").takeIf { it.exists() }
+
+val Path.jarJarEntries: List<Path>
+    get() = Json.parseToJsonElement(readText()).jsonObject
+        .getOrDefault("jars", null)?.jsonArray.orEmpty()
+        .mapNotNull { it.jsonObject.getOrDefault("path", null)?.jsonPrimitive?.content }
+        .map { fileSystem.getPath(it) }
+        .filter { it.exists() }
 
 val Path.asFileSystem: FileSystem
     get() = FileSystems.newFileSystem(this, null as ClassLoader?)
