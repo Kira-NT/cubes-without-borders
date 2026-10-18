@@ -1,12 +1,16 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.github.jengelman.gradle.plugins.shadow.relocation.*
 import kotlinx.serialization.json.*
 import net.fabricmc.loom.task.*
 import net.fabricmc.loom.util.*
+import org.objectweb.asm.*
+import org.objectweb.asm.commons.*
 import java.nio.file.*
 import java.nio.file.Path
 import kotlin.io.path.*
 import kotlin.*
+import kotlin.math.*
 
 plugins {
     id("dev.kirant.omni-loom")
@@ -184,6 +188,24 @@ tasks.withType<AbstractRemapJarTask> {
 
     doLast {
         archiveFile.get().asFile.toPath().asFileSystem.use { fs ->
+            // Forge only implemented proper Jar-in-Jar support during the 1.18.2 cycle.
+            // Before that, our only option was shading.
+            //
+            // Unfortunately, the com.gradleup.shadow plugin doesn't do everything we need:
+            // it doesn't care about mixin configs or java services, and it only relocates
+            // classes and their associated resources. So, we have to implement it ourselves.
+            //
+            // My implementation isn't perfect, as it currently can't handle a jarjared mod:
+            // Forge will crash when it attempts to register itself, because there's no
+            // corresponding mods.toml entry for it. That said, I'm not really sure what
+            // the best approach here would be, given the potential conflicts that could
+            // arise if someone tried to load the original version of a shaded mod.
+            // It works wonders for libraries, though, and that's all we need at the moment.
+            fs.jarJarMetadata.takeIf { sc.current.parsed < "1.18.2" }?.let { metadata ->
+                shadowJarJar(fs, metadata, modId).forEach { it.deleteExisting() }
+                metadata.deleteExisting()
+            }
+
             // Convert the access widener to an access transformer if we target (Neo)Forge.
             // By this time, it should have been remapped already.
             fs.getPath("").takeIf { loaders.any { it.endsWith("forge") } }?.listDirectoryEntries("*.accesswidener")?.firstOrNull()?.let { aw ->
@@ -255,6 +277,72 @@ fun aw2at(entry: String): String = buildString(entry.length) {
     }
 }
 
+fun shadowJarJar(fs: FileSystem, metadata: Path, shadowPath: String, mixins: MutableSet<String> = mutableSetOf(), relocators: MutableSet<Relocator> = mutableSetOf()): List<Path> =
+    metadata.jarJarEntries.onEach { innerJar -> innerJar.asFileSystem.use { innerFs ->
+        innerFs.jarJarMetadata?.let { shadowJarJar(fs, it, shadowPath, mixins, relocators) }
+
+        innerFs.javaServices.forEach { services ->
+            val lines = services.readLines() + fs.getPath("$services").takeIf { it.exists() }?.readLines().orEmpty()
+            fs.getPath("$services").createParentDirectories().writeLines(lines.distinct())
+        }
+
+        innerFs.javaManifest?.mixinConfigs.orEmpty()
+            .map { it to "shadow/the/hedgehog/$shadowPath/$it" }
+            .onEach { innerFs.getPath(it.first).copyTo(fs.getPath(it.second).createParentDirectories()) }
+            .map { it.second }
+            .apply(mixins::addAll)
+
+        innerFs.getPath("").walk().filter { it.extension == "class" }
+            .onEach { it.copyTo(fs.getPath("shadow/the/hedgehog/$shadowPath/$it").createParentDirectories()) }
+            .map { "${it.parent}" }
+            .map { SimpleRelocator(Regex.escapeReplacement(it), Regex.escapeReplacement("shadow.the.hedgehog.$shadowPath.$it")) }
+            .apply(relocators::addAll)
+    } }.apply {
+        val classPattern = Regex("([\\[()BCDFIJSZ]*)?L([^;]+);?")
+        val remapper = object : Remapper(Opcodes.ASM9) {
+            override fun mapValue(value: Any): Any = if (value is String) map(value) else super.mapValue(value)
+
+            override fun map(value: String): String = value.split(';').joinToString(";") { entry ->
+                val (prefix, name) = classPattern.matchEntire(entry)?.let { "${it.groupValues[1]}L" to it.groupValues[2] } ?: ("" to entry)
+                relocators.firstNotNullOfOrNull { when {
+                    it.canRelocateClass(name) -> "$prefix${it.relocateClass(name)}"
+                    it.canRelocatePath(name) -> "$prefix${it.relocatePath(name)}"
+                    else -> null
+                } } ?: entry
+            }
+        }
+        val fixJava = { visitor: ClassVisitor, java: Int -> object : ClassVisitor(Opcodes.ASM9, visitor) {
+            override fun visit(version: Int, access: Int, name: String?, signature: String?, superName: String?, interfaces: Array<out String?>?) {
+                super.visit(min(44 + java, version), access, name, signature, superName, interfaces)
+            }
+        } }
+
+        fs.javaManifest?.let { it.mixinConfigs = (mixins + it.mixinConfigs).toList() }
+        fs.javaServices.forEach { services ->
+            val lines = services.readLines().map { remapper.map(it) }.also { services.deleteExisting() }
+            services.parent.resolve(remapper.map(services.name)).writeLines(lines)
+        }
+        fs.javaManifest?.mixinConfigs.orEmpty().map { fs.getPath(it) }.forEach { config ->
+            val configJson = buildJsonObject {
+                Json.parseToJsonElement(config.readText()).jsonObject
+                    .onEach { (k, v) -> put(k, v) }
+                    .apply { getOrDefault("plugin", null)?.let { put("plugin", remapper.map(it.jsonPrimitive.content)) } }
+                    .apply { getOrDefault("package", null)?.let { put("package", remapper.map(it.jsonPrimitive.content)) } }
+            }
+            config.writeText(configJson.toString())
+        }
+        fs.getPath("").walk().filter { it.extension == "class" }.forEach { cls ->
+            val writer = ClassWriter(0).also { ClassReader(cls.readBytes()).accept(fixJava(ClassRemapper(it, remapper), java), ClassReader.EXPAND_FRAMES) }
+            cls.writeBytes(writer.toByteArray())
+        }
+    }
+
+val FileSystem.javaManifest: Path?
+    get() = getPath("META-INF/MANIFEST.MF").takeIf { it.exists() }
+
+val FileSystem.javaServices: List<Path>
+    get() = getPath("META-INF/services").takeIf { it.exists() }?.listDirectoryEntries().orEmpty()
+
 val FileSystem.jarJarMetadata: Path?
     get() = getPath("META-INF/jarjar/metadata.json").takeIf { it.exists() }
 
@@ -264,6 +352,10 @@ val Path.jarJarEntries: List<Path>
         .mapNotNull { it.jsonObject.getOrDefault("path", null)?.jsonPrimitive?.content }
         .map { fileSystem.getPath(it) }
         .filter { it.exists() }
+
+var Path.mixinConfigs: List<String>
+    get() = readLines().firstOrNull { it.startsWith("MixinConfigs:") }?.substring(13)?.trim()?.split(',').orEmpty().filter { fileSystem.getPath(it).exists() }
+    set(configs) = useLines { lines -> writeLines(lines.filterNot { it.isBlank() || it.startsWith("MixinConfigs:") } + listOf("MixinConfigs: ${configs.joinToString(",")}")) }
 
 val Path.asFileSystem: FileSystem
     get() = FileSystems.newFileSystem(this, null as ClassLoader?)

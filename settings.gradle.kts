@@ -15,6 +15,7 @@ pluginManagement {
 }
 
 plugins {
+    id("com.gradleup.shadow") version providers.gradleProperty("plugins.shadow") apply false
     id("dev.kikugie.stonecutter") version providers.gradleProperty("plugins.stonecutter")
     id("org.gradle.toolchains.foojay-resolver-convention") version providers.gradleProperty("plugins.foojay-resolver-convention")
     id("dev.kirant.omni-loom")
