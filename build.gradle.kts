@@ -116,6 +116,12 @@ dependencies {
     use("java-objc-bridge") { compileOnly("ca.weblite:java-objc-bridge:$it") }
 }
 
+stonecutter.replacements {
+    string(sc.eval(sc.targets["modmenu"]!!, ">=1.15.0")) {
+        replace("io.github.prospector.modmenu.", "com.terraformersmc.modmenu.")
+    }
+}
+
 tasks.processResources {
     fun MutableMap<String, String?>.add(key: String, value: String?) {
         inputs.property(key, value)

@@ -1,8 +1,9 @@
 //? if modmenu {
 package dev.kirant.cwb.compat.modmenu;
 
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import com.terraformersmc.modmenu.api.*;
 import dev.kirant.cwb.CWB;
+import net.minecraft.client.gui.screens.Screen;
 
 public final class ModMenuScreenProvider implements ModMenuApi {
     @Override
@@ -14,7 +15,7 @@ public final class ModMenuScreenProvider implements ModMenuApi {
     @Override
     public java.util.function.Function<Screen, ? extends Screen> getConfigScreenFactory() {
     *///?} else
-    public com.terraformersmc.modmenu.api.ConfigScreenFactory<?> getModConfigScreenFactory() {
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return CWB::createConfigScreen;
     }
 }
