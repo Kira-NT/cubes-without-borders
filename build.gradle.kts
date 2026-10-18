@@ -116,7 +116,19 @@ dependencies {
     use("java-objc-bridge") { compileOnly("ca.weblite:java-objc-bridge:$it") }
 }
 
+val mainMixinConfig = "$modId.mixins.json"
+val sodiumMixinConfig = "$modId.sodium.mixins.json"
+val mixinConfigs = when {
+    sc.eval(sc.targets["sodium"]!!, ">0.0.0 <0.8.0") -> listOf(mainMixinConfig, sodiumMixinConfig)
+    else -> listOf(mainMixinConfig)
+}
+
 stonecutter.replacements {
+    string(sc.eval(sc.targets["sodium"]!!, ">=0.6.0")) {
+        replace("me.jellysquid.", "net.caffeinemc.")
+        replace("me/jellysquid/", "net/caffeinemc/")
+    }
+
     string(sc.eval(sc.targets["modmenu"]!!, ">=1.15.0")) {
         replace("io.github.prospector.modmenu.", "com.terraformersmc.modmenu.")
     }
@@ -143,6 +155,8 @@ tasks.processResources {
         add("sources", sourcesUrl)
         add("issues", sc.properties.getOrNull("mod.issues") ?: "$sourcesUrl/issues")
         add("loaders", loaders.joinToString(", ") { "\"$it\"" }.trim('"'))
+        add("mixins", mixinConfigs.joinToString(", ") { "\"$it\"" }.trim('"'))
+        add("mixins_neoforge", mixinConfigs.mapIndexed { i, x -> "${if (i == 0) "" else "[[mixins]]\nconfig = "}\"$x\"" }.joinToString("\n\n").trim('"'))
         add("fabric_loader", sc.properties.getOrNull("dependencies.fabric") ?: minVersion)
         add("neoforge", sc.properties.getOrNull("dependencies.neoforge") ?: minVersion)
         add("forge", sc.properties.getOrNull("dependencies.forge") ?: minVersion)
@@ -158,7 +172,7 @@ tasks.processResources {
 
 tasks.jar {
     from(rootDir) { include("LICENSE*") }
-    manifest.attributes("MixinConfigs" to "$modId.mixins.json")
+    manifest.attributes("MixinConfigs" to mixinConfigs.joinToString(","))
 }
 
 tasks.withType<AbstractRemapJarTask> {
@@ -177,6 +191,7 @@ tasks.withType<AbstractRemapJarTask> {
             // Here, however, we HATE Gradle and its way of doing things! :3
             // Oh, and also Loom will not remap the access widener if there's no fabric.mod.json present,
             // so it's the best place to do it, really.
+            fs.getPath(sodiumMixinConfig).takeUnless { sodiumMixinConfig in mixinConfigs }?.deleteIfExists()
             fs.getPath("fabric.mod.json").takeUnless { "fabric" in loaders }?.deleteIfExists()
             fs.getPath("quilt.mod.json").takeUnless { "quilt" in loaders }?.deleteIfExists()
             fs.getPath("META-INF/mods.toml").takeUnless { "forge" in loaders }?.deleteIfExists()

@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.kirant.cwb.compat.sodium.mixin",
+  "plugin": "dev.kirant.cwb.compat.sodium.SodiumMixinPlugin",
+  "client": [
+    "ControlValueFormatterMixin",
+    "SodiumGameOptionPagesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

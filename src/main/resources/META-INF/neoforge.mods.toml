@@ -14,60 +14,60 @@ authors = "${author}"
 logoFile = "icon.png"
 displayURL = "${homepage}"
 
-[[dependencies.${id}]]
+[[mixins]]
+config = "${mixins_neoforge}"
+
+[[dependencies."${id}"]]
 modId = "neoforge"
 type = "required"
 versionRange = "[${neoforge},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "minecraft"
 type = "required"
 versionRange = "[${minecraft},${minecraft_next})"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "cloth_config"
 type = "optional"
-[dependencies.${id}.mc-publish]
+[dependencies."${id}".mc-publish]
 modrinth = "9s6osm5g"
 curseforge = 348521
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "yet_another_config_lib_v3"
 type = "optional"
-[dependencies.${id}.mc-publish]
+[dependencies."${id}".mc-publish]
 modrinth = "1eAoo2KR"
 curseforge = 667299
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "borderlessmining"
 type = "incompatible"
 reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"borderlessmining\"."
-[dependencies.${id}.mc-publish]
+[dependencies."${id}".mc-publish]
 modrinth = "KxYAzYLi"
 curseforge = 1487420
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "borderlesswindow"
 type = "incompatible"
 reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"borderlesswindow\"."
-[dependencies.${id}.mc-publish]
+[dependencies."${id}".mc-publish]
 modrinth = "CnalMsa0"
 curseforge = 378979
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "concentration"
 type = "incompatible"
 reason = "You already have a mod that provides borderless fullscreen. Please uninstall \"concentration\"."
-[dependencies.${id}.mc-publish]
+[dependencies."${id}".mc-publish]
 modrinth = "QyvWSZ5S"
 curseforge = 1120678
-
-[[mixins]]
-config = "${id}.mixins.json"
 
 [mc-publish]
 modrinth = "${modrinth}"

@@ -21,9 +21,7 @@
       "${group}.compat.modmenu.ModMenuScreenProvider"
     ]
   },
-  "mixins": [
-    "${id}.mixins.json"
-  ],
+  "mixins": ["${mixins}"],
   "accessWidener": "${id}.accesswidener",
   "custom": {
     "mc-publish": {
