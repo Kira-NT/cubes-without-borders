@@ -10,6 +10,9 @@
   "cwb.options.borderlessFullscreenType": "無邊框全螢幕類型",
   "cwb.options.borderlessFullscreenType.tooltip": "當§o顯示設定§r中的§o全螢幕§r設定為§o無邊框§r時，控制啟用哪種全螢幕模式。",
 
+  "cwb.options.useDelayedFullscreen": "使用延遲全螢幕",
+  "cwb.options.useDelayedFullscreen.tooltip": "指定是否延遲進入全螢幕模式，直到 Minecraft 完全載入完畢。\n\n啟用此選項可使啟動程序更加順暢，並且可以修復由於驅動程式異常而無法立即讓某些窗口以非預設解析度進入全螢幕模式的問題。",
+
   "cwb.options.useScaledFramebuffer": "使用縮放幀緩衝",
   "cwb.options.useScaledFramebuffer.tooltip": "當螢幕座標可相對於像素座標縮放的平台（例如 §omacOS§r 和 §oWayland (Linux)§r）時控制是否使用全解析度幀緩衝。\n\n停用此選項可能顯著提升效能，但會降低影像品質。",
 
