@@ -132,6 +132,10 @@ stonecutter.replacements {
     string(sc.eval(sc.targets["modmenu"]!!, ">=1.15.0")) {
         replace("io.github.prospector.modmenu.", "com.terraformersmc.modmenu.")
     }
+
+    string(loader != "forge" || sc.eval(sc.targets["cloth-config"]!!, ">3.0.0")) {
+        replace("me.shedaniel.forge.clothconfig2.", "me.shedaniel.clothconfig2.")
+    }
 }
 
 tasks.processResources {

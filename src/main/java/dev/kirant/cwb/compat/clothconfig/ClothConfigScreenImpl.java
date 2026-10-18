@@ -26,7 +26,8 @@ final class ClothConfigScreenImpl {
             .setSelections(fullscreenTypeSelections)
             .setDefaultValue(FullscreenTypes.exclusive().id())
             .requireRestart() // This is a lie
-            /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
+            //? if (cloth-config: >=2.0.0 && !forge) || (cloth-config: >3.0.0)
+            .setSuggestionMode(false)
             .build());
 
         // Borderless Fullscreen Type
@@ -36,7 +37,8 @@ final class ClothConfigScreenImpl {
             .setSelections(fullscreenTypeSelections)
             .setDefaultValue(FullscreenTypes.borderless().id())
             .requireRestart() // This is a lie
-            /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
+            //? if (cloth-config: >=2.0.0 && !forge) || (cloth-config: >3.0.0)
+            .setSuggestionMode(false)
             .build());
 
         // Windowed Fullscreen Type
@@ -46,7 +48,8 @@ final class ClothConfigScreenImpl {
             .setSelections(fullscreenTypeSelections)
             .setDefaultValue(FullscreenTypes.windowed().id())
             .requireRestart() // This is a lie
-            /*? cloth-config: >=2.0.0 {*/.setSuggestionMode(false)/*?}*/
+            //? if (cloth-config: >=2.0.0 && !forge) || (cloth-config: >3.0.0)
+            .setSuggestionMode(false)
             .build());
 
         // Use Delayed Fullscreen
@@ -82,7 +85,7 @@ final class ClothConfigScreenImpl {
         return builder.build();
     }
 
-    //? if cloth-config: >=3.0.0 {
+    //? if cloth-config: >3.0.0 {
     private static Component translate(String key) {
         return Components.translatable(key);
     }
