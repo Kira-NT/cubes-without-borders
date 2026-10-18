@@ -17,6 +17,7 @@ public class CWBConfig {
 
     private @Expose FullscreenMode preferredFullscreenMode;
 
+    //? if !forge || >=1.16
     @SerializedName(value = "exclusiveFullscreenType", alternate = "fullscreenType")
     private @Expose String exclusiveFullscreenType;
 
@@ -205,6 +206,7 @@ public class CWBConfig {
 
     @SuppressWarnings("deprecation")
     private static final Gson GSON = new GsonBuilder()
+        //? if !forge || >=1.16
         .setLenient()
         .setPrettyPrinting()
         .excludeFieldsWithoutExposeAnnotation()

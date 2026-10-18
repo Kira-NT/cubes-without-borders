@@ -73,13 +73,13 @@ public abstract class ModLoader {
 
         @Override
         public boolean isModLoaded(String modId) {
-            return net.neoforged.fml.loading.FMLLoader.getCurrent().getLoadingModList().getModFileById(modId) != null;
+            return net.neoforged.fml.loading.FMLLoader/*? >=1.21.9 {*/.getCurrent()/*?}*/.getLoadingModList().getModFileById(modId) != null;
         }
 
         @Override
         public boolean isModLoaded(String modId, String minVersion) {
-            net.neoforged.fml.loading.moddiscovery.ModFileInfo mod = net.neoforged.fml.loading.FMLLoader.getCurrent().getLoadingModList().getModFileById(modId);
-            org.apache.maven.artifact.versioning.DefaultArtifactVersion modVersion = mod == null ? null : new org.apache.maven.artifact.versioning.DefaultArtifactVersion(mod.versionString());
+            net.neoforged.fml.loading.moddiscovery.ModFileInfo mod = net.neoforged.fml.loading.FMLLoader/*? >=1.21.9 {*/.getCurrent()/*?}*/.getLoadingModList().getModFileById(modId);
+            org.apache.maven.artifact.versioning.ArtifactVersion modVersion = mod == null ? null : mod.getMods().get(0).getVersion();
             org.apache.maven.artifact.versioning.DefaultArtifactVersion targetVersion = new org.apache.maven.artifact.versioning.DefaultArtifactVersion(minVersion);
             return modVersion != null && modVersion.compareTo(targetVersion) >= 0;
         }
@@ -95,13 +95,13 @@ public abstract class ModLoader {
 
         @Override
         public boolean isModLoaded(String modId) {
-            return net.minecraftforge.fml.ModList.getModFileById(modId) != null;
+            return net.minecraftforge.fml.ModList/*? <26.1 {*//*.get()*//*?}*/.getModFileById(modId) != null;
         }
 
         @Override
         public boolean isModLoaded(String modId, String minVersion) {
-            net.minecraftforge.forgespi.language.IModFileInfo mod = net.minecraftforge.fml.ModList.getModFileById(modId);
-            org.apache.maven.artifact.versioning.DefaultArtifactVersion modVersion = mod == null ? null : new org.apache.maven.artifact.versioning.DefaultArtifactVersion(mod.versionString());
+            net.minecraftforge.forgespi.language.IModFileInfo mod = net.minecraftforge.fml.ModList/*? <26.1 {*//*.get()*//*?}*/.getModFileById(modId);
+            org.apache.maven.artifact.versioning.ArtifactVersion modVersion = mod == null ? null : mod.getMods().get(0).getVersion();
             org.apache.maven.artifact.versioning.DefaultArtifactVersion targetVersion = new org.apache.maven.artifact.versioning.DefaultArtifactVersion(minVersion);
             return modVersion != null && modVersion.compareTo(targetVersion) >= 0;
         }

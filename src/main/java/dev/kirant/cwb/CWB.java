@@ -44,8 +44,19 @@ public final class CWB {
         @SuppressWarnings("removal")
         public Forge() {
             CWB.registerConfigScreen(f -> net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
+                //? if >=1.19 {
                 net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory((m, x) -> f.apply(x))
+                //?} else if >=1.18 {
+                /*net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory.class,
+                () -> new net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory((m, x) -> f.apply(x))
+                *///?} else if >=1.17 {
+                /*net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory.class,
+                () -> new net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory((m, x) -> f.apply(x))
+                *///?} else {
+                /*net.minecraftforge.fml.ExtensionPoint.CONFIGGUIFACTORY,
+                () -> (m, x) -> f.apply(x)
+                *///?}
             ));
         }
     }

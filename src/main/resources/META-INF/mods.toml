@@ -14,14 +14,14 @@ authors = "${author}"
 logoFile = "icon.png"
 displayURL = "${homepage}"
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "forge"
 mandatory = true
 versionRange = "[${forge},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${id}]]
+[[dependencies."${id}"]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minecraft},${minecraft_next})"
@@ -32,6 +32,8 @@ side = "BOTH"
 modrinth = "${modrinth}"
 curseforge = "${curseforge}"
 dependencies = [
+  #? if <1.15
+  #"mixinbootstrap(required){modrinth:6a16628x}{curseforge:357178}",
   "cloth-config(optional)",
   "borderlessmining(incompatible){modrinth:kYq5qkSL}{curseforge:310205}",
   "borderlesswindow(incompatible){modrinth:CnalMsa0}{curseforge:378979}",
