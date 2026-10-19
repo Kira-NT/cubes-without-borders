@@ -61,3 +61,15 @@ forge = "1.21.11-61.2.0"
 mixinextras = "0.5.0"
 cloth-config = "15.0.130+forge"
 yacl = "3.2.0+1.20-forge"
+
+["1.21.9"."forge".dependencies]
+forge = "1.21.9-59.0.5"
+mixinextras = "0.5.0"
+cloth-config = "15.0.130+forge"
+yacl = "3.2.0+1.20-forge"
+
+["1.21.9"."neoforge".dependencies]
+neoforge = "21.9.0-beta"
+sodium = "mc1.21.10-0.7.3-neoforge"
+cloth-config = "15.0.127+neoforge"
+yacl = "3.2.0+1.20-forge"

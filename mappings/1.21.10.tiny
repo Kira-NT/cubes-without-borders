@@ -1,0 +1,4 @@
+tiny	2	0	intermediary	named
+c	net/minecraft/class_2960	net/minecraft/resources/Identifier
+c	net/minecraft/class_446	net/minecraft/client/gui/screens/options/VideoSettingsScreen
+	m	(Lnet/minecraft/class_315;)[Lnet/minecraft/class_7172;	method_41846	displayOptions
