@@ -105,3 +105,22 @@ forge = "1.21-51.0.33"
 mixinextras = "0.5.0"
 cloth-config = "15.0.130+forge"
 yacl = "3.2.0+1.20-forge"
+
+["1.20.5"."neoforge".dependencies]
+neoforge = "20.5.0-beta"
+cloth-config = "15.0.127+neoforge"
+yacl = "3.2.0+1.20-forge"
+
+["1.20"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.17.1-0.3.0"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+yacl = "3.2.0+1.20-fabric"
+
+["1.20"."forge".dependencies]
+minecraft = "1.20.1"
+forge = "1.20.1-47.4.10"
+mixinextras = "0.5.0"
+cloth-config = "11.0.99+forge"
+yacl = "3.2.0+1.20-forge"
