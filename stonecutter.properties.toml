@@ -199,3 +199,17 @@ mixinextras = "0.5.0"
 mixin = "0.8"
 cloth-config = "3.0+forge"
 java-objc-bridge = "1.0.0"
+
+["1.14"."fabric".dependencies]
+minecraft = "1.14.4"
+fabric = "0.15.0"
+modmenu = "1.7.17"
+cloth-config = "1.8+fabric"
+java-objc-bridge = "1.0.0"
+
+["1.14"."forge".dependencies]
+minecraft = "1.14.4"
+forge = "1.14.4-28.2.26"
+mixinextras = "0.5.0"
+mixin = "0.8"
+java-objc-bridge = "1.0.0"
