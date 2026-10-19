@@ -128,6 +128,10 @@ val mixinConfigs = when {
 }
 
 stonecutter.replacements {
+    string(sc.current.parsed >= "1.18.2") {
+        replace("org.apache.logging.log4j.", "org.slf4j.")
+    }
+
     string(sc.eval(sc.targets["sodium"]!!, ">=0.6.0")) {
         replace("me.jellysquid.", "net.caffeinemc.")
         replace("me/jellysquid/", "net/caffeinemc/")
