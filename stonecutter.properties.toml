@@ -73,3 +73,16 @@ neoforge = "21.9.0-beta"
 sodium = "mc1.21.10-0.7.3-neoforge"
 cloth-config = "15.0.127+neoforge"
 yacl = "3.2.0+1.20-forge"
+
+["1.21.2"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.21.10-0.7.3-fabric"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+yacl = "3.2.0+1.20-fabric"
+
+["1.21.2"."neoforge".dependencies]
+neoforge = "21.2.0-beta"
+sodium = "mc1.21.10-0.7.3-neoforge"
+cloth-config = "15.0.127+neoforge"
+yacl = "3.2.0+1.20-forge"
