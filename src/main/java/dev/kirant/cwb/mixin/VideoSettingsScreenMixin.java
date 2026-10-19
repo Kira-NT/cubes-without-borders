@@ -1,17 +1,17 @@
 package dev.kirant.cwb.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.*;
+import com.llamalad7.mixinextras.injector.wrapoperation.*;
+import com.mojang.blaze3d.platform.*;
 import dev.kirant.cwb.*;
-import dev.kirant.cwb.util.Components;
-import dev.kirant.cwb.util.MinecraftWindow;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.options.VideoSettingsScreen;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
+import dev.kirant.cwb.util.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.screens.options.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Mixin(VideoSettingsScreen.class)
 abstract class VideoSettingsScreenMixin {
@@ -50,7 +50,7 @@ abstract class VideoSettingsScreenMixin {
     }
 
     //? if >=1.19 {
-    @ModifyReturnValue(method = /*? >=26.1 {*/"displayOptions"/*?} else {*//*"options"*//*?}*/, at = @At("RETURN"))
+    @ModifyReturnValue(method = "displayOptions", at = @At("RETURN"))
     private static net.minecraft.client.OptionInstance<?>[] patchDisplayOptions(net.minecraft.client.OptionInstance<?>[] displayOptions) {
         VideoSettingsScreenMixin.patchFullscreenOption(displayOptions);
 

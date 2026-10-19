@@ -42,3 +42,22 @@ sodium = "mc26.1.2-0.9.2-fabric"
 modmenu = "18.0.0-alpha.8"
 cloth-config = "26.1.154+fabric"
 yacl = "3.9.1+26.1-fabric"
+
+["1.21.11"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.21.11-0.8.14-fabric"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+yacl = "3.2.0+1.20-fabric"
+
+["1.21.11"."neoforge".dependencies]
+neoforge = "21.11.17-beta"
+sodium = "mc1.21.11-0.8.14-neoforge"
+cloth-config = "15.0.127+neoforge"
+yacl = "3.2.0+1.20-forge"
+
+["1.21.11"."forge".dependencies]
+forge = "1.21.11-61.2.0"
+mixinextras = "0.5.0"
+cloth-config = "15.0.130+forge"
+yacl = "3.2.0+1.20-forge"

@@ -1,0 +1,15 @@
+tiny	2	0	intermediary	named
+c	net/minecraft/class_1041	com/mojang/blaze3d/platform/Window
+	m	(ZLnet/minecraft/class_10219;)	method_4485	updateFullscreenIfChanged
+	m	()J	method_4490	handle
+	f	Lnet/minecraft/class_323;	field_5195	monitorManager
+	f	Z	field_16517	exclusiveFullscreen
+	f	Z	field_5177	fullscreen
+	f	Z	field_5191	fullscreenRequested
+c	net/minecraft/class_323	com/mojang/blaze3d/platform/MonitorManager
+c	net/minecraft/class_313	com/mojang/blaze3d/platform/Monitor
+	m	()I	method_1616	x
+	m	()I	method_1618	y
+	m	()J	method_1622	monitor
+	m	()Lnet/minecraft/class_319;	method_1617	currentMode
+	m	(Ljava/util/Optional;)Lnet/minecraft/class_319;	method_1614	getPreferredVideoMode
