@@ -160,3 +160,15 @@ minecraft-next = "1.18.2"
 forge = "1.18-38.0.17"
 mixinextras = "0.5.0"
 cloth-config = "6.2.57+forge"
+
+["1.17"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.17.1-0.3.0"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+
+["1.17"."forge".dependencies]
+minecraft = "1.17.1"
+forge = "1.17.1-37.1.1"
+mixinextras = "0.5.0"
+cloth-config = "5.3.58+forge"
