@@ -124,3 +124,27 @@ forge = "1.20.1-47.4.10"
 mixinextras = "0.5.0"
 cloth-config = "11.0.99+forge"
 yacl = "3.2.0+1.20-forge"
+
+["1.19.3"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.17.1-0.3.0"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+
+["1.19.3"."forge".dependencies]
+minecraft = "1.19.4"
+forge = "1.19.4-45.4.0"
+mixinextras = "0.5.0"
+cloth-config = "10.1.135+forge"
+
+["1.19"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.17.1-0.3.0"
+modmenu = "1.15.0"
+cloth-config = "4.6.0+fabric"
+
+["1.19"."forge".dependencies]
+minecraft = "1.19.1"
+forge = "1.19.1-42.0.9"
+mixinextras = "0.5.0"
+cloth-config = "8.1.77+forge"
