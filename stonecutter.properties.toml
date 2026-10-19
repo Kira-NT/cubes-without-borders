@@ -172,3 +172,17 @@ minecraft = "1.17.1"
 forge = "1.17.1-37.1.1"
 mixinextras = "0.5.0"
 cloth-config = "5.3.58+forge"
+
+["1.16"."fabric".dependencies]
+fabric = "0.15.0"
+sodium = "mc1.16.5-0.2.0"
+modmenu = "1.14.5+build.30"
+cloth-config = "4.6.0+fabric"
+java-objc-bridge = "1.0.0"
+
+["1.16"."forge".dependencies]
+minecraft = "1.16.2"
+forge = "1.16.2-33.0.61"
+mixinextras = "0.5.0"
+cloth-config = "4.14.54+forge"
+java-objc-bridge = "1.0.0"
