@@ -1,6 +1,7 @@
 {
   "modmenu.nameTranslation.cwb": "Cubes Without Borders",
   "modmenu.descriptionTranslation.cwb": "Allows you to play Minecraft in a borderless fullscreen window.",
+  "neoforge.screen.mods.info.description.cwb": "Allows you to play Minecraft in a borderless fullscreen window.",
 
   "cwb.fullscreenMode.off": "Off",
   "cwb.fullscreenMode.exclusive": "Exclusive",

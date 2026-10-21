@@ -11,7 +11,9 @@ description = '''
 ${description}
 '''
 authors = "${author}"
-logoFile = "icon.png"
+iconFile = "icon.png"
+#? if <26.2
+#logoFile = "icon.png"
 displayURL = "${homepage}"
 
 [[mixins]]
