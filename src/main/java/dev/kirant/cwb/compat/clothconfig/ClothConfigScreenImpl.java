@@ -68,6 +68,22 @@ final class ClothConfigScreenImpl {
             .requireRestart()
             .build());
 
+        // Auto-Hide Dock
+        category.addEntry(entries
+            .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideDock"), config.getAutoHideDock())
+            .setSaveConsumer(config::setAutoHideDock)
+            .setDefaultValue(false)
+            .requireRestart() // This is a lie
+            .build());
+
+        // Auto-Hide Menu Bar
+        category.addEntry(entries
+            .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideMenuBar"), config.getAutoHideMenuBar())
+            .setSaveConsumer(config::setAutoHideMenuBar)
+            .setDefaultValue(false)
+            .requireRestart() // This is a lie
+            .build());
+
         // Pause on Lost Focus
         category.addEntry(entries
             .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.pauseOnLostFocus"), client.options.pauseOnLostFocus)

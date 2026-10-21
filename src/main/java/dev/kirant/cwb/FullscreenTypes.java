@@ -23,8 +23,8 @@ public final class FullscreenTypes {
             VALUES[0] = windowedFullscreen;
         } else if (OS.isMacOS()) {
             Consumer<Window> enableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(true, true);
-            Consumer<Window> disableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(false, false);
-            Consumer<Window> disableDock = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(false, true);
+            Consumer<Window> disableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, CWB.CONFIG.getAutoHideMenuBar() ? null : false);
+            Consumer<Window> disableDock = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, true);
             WindowHint hasDockAndMenuBar = WindowHint.of(enableDockAndMenuBar, disableDockAndMenuBar);
             WindowHint hasDock = WindowHint.of(enableDockAndMenuBar, disableDock);
             WindowHint hasShadow = MinecraftWindow.MacOS::setHasShadow;

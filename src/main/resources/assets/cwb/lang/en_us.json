@@ -27,6 +27,12 @@
   "cwb.options.useScaledFramebuffer": "Use Scaled Framebuffer",
   "cwb.options.useScaledFramebuffer.tooltip": "Specifies whether to use a full-resolution framebuffer on platforms where screen coordinates can be scaled relative to pixel coordinates, such as §omacOS§r and §oWayland (Linux)§r.\n\nDisabling this option may lead to a significant performance boost at the cost of image quality.",
 
+  "cwb.options.autoHideDock": "Auto-Hide Dock",
+  "cwb.options.autoHideDock.tooltip": "On supported platforms (e.g., §omacOS§r), specifies whether to automatically hide the dock in non-exclusive fullscreen modes, so it can be revealed by moving the mouse to the edge of the screen, instead of disabling it entirely.",
+
+  "cwb.options.autoHideMenuBar": "Auto-Hide Menu Bar",
+  "cwb.options.autoHideMenuBar.tooltip": "On supported platforms (e.g., §omacOS§r), specifies whether to automatically hide the menu bar in non-exclusive fullscreen modes, so it can be revealed by moving the mouse to the edge of the screen, instead of disabling it entirely.",
+
   "cwb.options.pauseOnLostFocus": "Pause on Lost Focus",
   "cwb.options.pauseOnLostFocus.tooltip": "Specifies whether the game should be automatically paused when its window loses focus.",
 

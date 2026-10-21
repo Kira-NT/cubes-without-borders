@@ -29,6 +29,10 @@ public class CWBConfig {
 
     private @Expose Boolean useScaledFramebuffer;
 
+    private @Expose Boolean autoHideDock;
+
+    private @Expose Boolean autoHideMenuBar;
+
     private @Expose Boolean pauseOnLostFocusDuringMultiplayer;
 
     private @Expose @Nullable CWBConfig linux;
@@ -55,6 +59,8 @@ public class CWBConfig {
             config.setBorderlessFullscreenType(config.getBorderlessFullscreenType());
             config.setUseDelayedFullscreen(config.getUseDelayedFullscreen());
             config.setUseScaledFramebuffer(config.getUseScaledFramebuffer());
+            config.setAutoHideDock(config.getAutoHideDock());
+            config.setAutoHideMenuBar(config.getAutoHideMenuBar());
             config.setPauseOnLostFocusDuringMultiplayer(config.getPauseOnLostFocusDuringMultiplayer());
         }
 
@@ -134,6 +140,22 @@ public class CWBConfig {
 
     public void setUseScaledFramebuffer(boolean useScaledFramebuffer) {
         this.setValue(c -> c.useScaledFramebuffer, (c, x) -> c.useScaledFramebuffer = x, useScaledFramebuffer);
+    }
+
+    public boolean getAutoHideDock() {
+        return this.getValue(c -> c.autoHideDock, false);
+    }
+
+    public void setAutoHideDock(boolean autoHideDock) {
+        this.setValue(c -> c.autoHideDock, (c, x) -> c.autoHideDock = x, autoHideDock);
+    }
+
+    public boolean getAutoHideMenuBar() {
+        return this.getValue(c -> c.autoHideMenuBar, false);
+    }
+
+    public void setAutoHideMenuBar(boolean autoHideMenuBar) {
+        this.setValue(c -> c.autoHideMenuBar, (c, x) -> c.autoHideMenuBar = x, autoHideMenuBar);
     }
 
     public boolean getPauseOnLostFocusDuringMultiplayer() {

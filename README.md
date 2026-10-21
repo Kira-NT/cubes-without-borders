@@ -125,6 +125,16 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
     // at the cost of image quality.
     "useScaledFramebuffer": true,
 
+    // On supported platforms (e.g., macOS), specifies whether to automatically
+    // hide the dock in non-exclusive fullscreen modes, so it can be revealed by
+    // moving the mouse to the edge of the screen, instead of disabling it entirely.
+    "autoHideDock": false,
+
+    // On supported platforms (e.g., macOS), specifies whether to automatically
+    // hide the menu bar in non-exclusive fullscreen modes, so it can be revealed by
+    // moving the mouse to the edge of the screen, instead of disabling it entirely.
+    "autoHideMenuBar": false,
+
     // When "pauseOnLostFocus" is enabled, specifies whether its effect should
     // also apply to multiplayer sessions, where the game cannot be truly paused.
     //
