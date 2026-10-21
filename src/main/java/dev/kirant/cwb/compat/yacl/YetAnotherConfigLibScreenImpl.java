@@ -4,7 +4,7 @@ package dev.kirant.cwb.compat.yacl;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.impl.controller.*;
 import dev.kirant.cwb.*;
-import dev.kirant.cwb.util.Components;
+import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -45,6 +45,7 @@ final class YetAnotherConfigLibScreenImpl {
                     .flag(OptionFlag.GAME_RESTART)
                     .build())
                 .option(Option.<Boolean>createBuilder()
+                    .available(OS.isUnix())
                     .name(Components.translatable(modId + ".options.useScaledFramebuffer"))
                     .description(OptionDescription.of(Components.translatable(modId + ".options.useScaledFramebuffer.tooltip")))
                     .binding(true, config::getUseScaledFramebuffer, config::setUseScaledFramebuffer)
@@ -52,6 +53,7 @@ final class YetAnotherConfigLibScreenImpl {
                     .flag(OptionFlag.GAME_RESTART)
                     .build())
                 .option(Option.<Boolean>createBuilder()
+                    .available(OS.isMacOS())
                     .name(Components.translatable(modId + ".options.autoHideDock"))
                     .description(OptionDescription.of(Components.translatable(modId + ".options.autoHideDock.tooltip")))
                     .binding(false, config::getAutoHideDock, config::setAutoHideDock)
@@ -59,6 +61,7 @@ final class YetAnotherConfigLibScreenImpl {
                     .flag(OptionFlag.GAME_RESTART)
                     .build())
                 .option(Option.<Boolean>createBuilder()
+                    .available(OS.isMacOS())
                     .name(Components.translatable(modId + ".options.autoHideMenuBar"))
                     .description(OptionDescription.of(Components.translatable(modId + ".options.autoHideMenuBar.tooltip")))
                     .binding(false, config::getAutoHideMenuBar, config::setAutoHideMenuBar)

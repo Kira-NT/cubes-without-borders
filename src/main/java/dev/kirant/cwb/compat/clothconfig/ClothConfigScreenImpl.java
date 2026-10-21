@@ -60,29 +60,33 @@ final class ClothConfigScreenImpl {
             .requireRestart()
             .build());
 
-        // Use Scaled Framebuffer
-        category.addEntry(entries
-            .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.useScaledFramebuffer"), config.getUseScaledFramebuffer())
-            .setSaveConsumer(config::setUseScaledFramebuffer)
-            .setDefaultValue(true)
-            .requireRestart()
-            .build());
+        if (OS.isUnix()) {
+            // Use Scaled Framebuffer
+            category.addEntry(entries
+                .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.useScaledFramebuffer"), config.getUseScaledFramebuffer())
+                .setSaveConsumer(config::setUseScaledFramebuffer)
+                .setDefaultValue(true)
+                .requireRestart()
+                .build());
+        }
 
-        // Auto-Hide Dock
-        category.addEntry(entries
-            .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideDock"), config.getAutoHideDock())
-            .setSaveConsumer(config::setAutoHideDock)
-            .setDefaultValue(false)
-            .requireRestart() // This is a lie
-            .build());
+        if (OS.isMacOS()) {
+            // Auto-Hide Dock
+            category.addEntry(entries
+                .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideDock"), config.getAutoHideDock())
+                .setSaveConsumer(config::setAutoHideDock)
+                .setDefaultValue(false)
+                .requireRestart() // This is a lie
+                .build());
 
-        // Auto-Hide Menu Bar
-        category.addEntry(entries
-            .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideMenuBar"), config.getAutoHideMenuBar())
-            .setSaveConsumer(config::setAutoHideMenuBar)
-            .setDefaultValue(false)
-            .requireRestart() // This is a lie
-            .build());
+            // Auto-Hide Menu Bar
+            category.addEntry(entries
+                .startBooleanToggle(ClothConfigScreenImpl.translate(modId + ".options.autoHideMenuBar"), config.getAutoHideMenuBar())
+                .setSaveConsumer(config::setAutoHideMenuBar)
+                .setDefaultValue(false)
+                .requireRestart() // This is a lie
+                .build());
+        }
 
         // Pause on Lost Focus
         category.addEntry(entries
