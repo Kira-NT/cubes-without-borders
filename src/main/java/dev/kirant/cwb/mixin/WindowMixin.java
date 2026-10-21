@@ -199,6 +199,14 @@ abstract class WindowMixin implements FullscreenManager {
         return true;
     }
 
+    @WrapOperation(method = "updateWindowMouseGrab", at = @At(value = "INVOKE", target = "Lorg/lwjgl/sdl/SDLVideo;SDL_SetWindowMouseGrab(JZ)Z"))
+    private boolean disableWindowMouseGrab(long window, boolean grabbed, Operation<Boolean> original) {
+        // The game already locks the cursor in place while you are actually playing it.
+        // There's zero to none reasons to additionally confine it to the area of the window
+        // while the player is paused or in a menu. Did literally anybody ask for it?
+        return original.call(window, false);
+    }
+
     @WrapOperation(method = "setMode", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;applyFullscreen()Z"))
     private boolean enableExclusiveFullscreenWithBorderlessFallback(Window window, Operation<Boolean> applyFullscreen) {
         try {
