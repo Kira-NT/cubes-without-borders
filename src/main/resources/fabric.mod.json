@@ -24,6 +24,11 @@
   "mixins": ["${mixins}"],
   "accessWidener": "${id}.accesswidener",
   "custom": {
+    "modmenu" : {
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/${modrinth}"
+      }
+    },
     "mc-publish": {
       "loaders": ["${loaders}"],
       "modrinth": "${modrinth}",
@@ -77,6 +82,7 @@
     "java": ">=${java}"
   },
   "suggests": {
+    "fabric-api": "*",
     "modmenu": "*",
     "yacl": "*",
     "cloth-config": "*"
