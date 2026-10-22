@@ -57,21 +57,14 @@ It's worth noting, however, that what you are experiencing is not a problem with
 </details>
 
 <details>
-<summary>When I open Video Settings, the Fullscreen setting doesn't include a Borderless option - it's just a toggle!</summary>
+<summary>The mod doesn't seem to work with Sodium.</summary>
 <br>
 
-You are probably using a rebranded fork of Sodium, or a version of Sodium that CWB doesn't support yet/already. Don't worry, though! You can access vanilla Video Settings from Sodium's custom screen by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> - there you'll be able to find the modified Fullscreen setting.
+Please, make sure you have the latest versions of both Sodium and CWB installed, and verify that the `Fullscreen Mode` option in Sodium's settings provides four options: `Off`, `Exclusive`, `Borderless`, and `Windowed`. If any of them are missing, or if the setting itself is but a simple toggle, you are using outdated versions of the mods.
+
+No worries, though! Even if you are unable to update, you can always access vanilla Video Settings from Sodium's custom screen by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> - there you'll be able to find the modified Fullscreen setting.
 
 In fact, if you simply toggle fullscreen by pressing <kbd>F11</kbd>, for example, you should immediately jump straight into the borderless mode, as it's set as your preferred fullscreen mode by default.
-
-<br>
-</details>
-
-<details>
-<summary>When I set Fullscreen Mode to Borderless in Video Settings, nothing really changes compared to when it is set to Exclusive - the game window continues to be automatically minimized whenever it loses focus.</summary>
-<br>
-
-As mentioned earlier, you are probably using a version of Sodium that CWB doesn't support, meaning that what you are seeing is a very misleadingly named option provided by Sodium itself. Please, open vanilla Video Settings by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and change your fullscreen mode from there.
 
 <br>
 </details>
@@ -194,6 +187,16 @@ Otherwise, you can configure it by directly editing the `cwb.json` file, stored 
 | `macos:borderless` | The default borderless fullscreen mode for macOS.<br><br>Provides decent performance, but has slightly higher latency than that of the default exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS. |
 | `macos:windowed` | The default windowed fullscreen mode for macOS.<br><br>Unlike `macos:borderless`, this mode leaves the menu bar visible at all times, which might prove useful for people who dislike the notch on newer MacBooks covering part of their game.<br><br>Provides decent performance, but has slightly higher latency than that of the exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS. |
 | `windows:windowed` | The default windowed fullscreen mode for Windows.<br><br>Unlike `minecraft:windowed`, it does not suffer from the blinking issues, but it also lacks the performance benefits of the said mode.<br><br>Its latency is higher than that of the default exclusive fullscreen mode due to the implicit V-Sync imposed on all windowed applications by the OS. Additionally, some users may experience severe performance degradation, as Windows sometimes discards frames provided by windowed applications instead of rendering them, especially when performing background tasks it deems more important than that, such as downloading updates or indexing screenshots of your activity captured by Windows Recall. |
+
+----
+
+## «AI» Policy
+
+This project *(nor any of my other projects, for that matter)* does not accept "AI"-generated or "AI"-assisted contributions.
+
+And while the license does not forbid it, because I want to keep my work open source in the truest sense of the term - available for everyone to modify and redistribute, I ask you not to use my projects as training data, nor to modify them using the aforementioned technology, even for strictly personal use.
+
+As is often the case in our world, there will be no consequences for violating my consent. Except for proving me even more right about the nature of the average "AI" user.
 
 ----
 
