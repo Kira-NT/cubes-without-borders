@@ -2,6 +2,40 @@ name: Bug report
 description: Report a bug or crash
 labels: [bug]
 body:
+  - type: dropdown
+    id: loader
+    validations:
+      required: true
+    attributes:
+      label: Mod Loader
+      description: >-
+        Select the mod loader you are playing with.
+      options:
+        - Fabric
+        - Quilt
+        - NeoForge
+        - Forge
+
+  - type: input
+    id: version
+    validations:
+      required: true
+    attributes:
+      label: Mod Version
+      description: >-
+        Specify the version of the mod you are using.
+      placeholder: >-
+        5.0.0+26.3
+
+  - type: input
+    id: sodium-version
+    attributes:
+      label: Sodium Version
+      description: >-
+        Specify the version of Sodium you have installed (if applicable).
+      placeholder: >-
+        mc26.3-0.9.2-fabric
+
   - type: textarea
     id: description
     validations:
@@ -42,8 +76,6 @@ body:
 
   - type: checkboxes
     id: known-issue
-    validations:
-      required: true
     attributes:
       label: Have you verified that your problem is not a known issue?
       options:
