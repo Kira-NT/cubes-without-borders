@@ -26,9 +26,9 @@ public final class SodiumConfigBuilder implements ConfigEntryPoint {
         SodiumConfigBuilder.registerOptionReplacement(options, "sodium:general.fullscreen", fullscreenOption);
         SodiumConfigBuilder.registerOptionReplacement(options, "sodium:general.fullscreen_mode", fullscreenOption);
         SodiumConfigBuilder.registerOptionOverlay(options, "sodium:general.fullscreen_resolution", builder.createIntegerOption(Identifier.parse("sodium:general.fullscreen_resolution")).setEnabledProvider(x -> true));
-        SodiumConfigBuilder.registerOptionOverlay(options, "sodium:general.mac_fullscreen_menu_visibility", builder.createBooleanOption(Identifier.parse("sodium:general.mac_fullscreen_menu_visibility")).setBinding(
-            x -> { CWB.CONFIG.setAutoHideDock(x); CWB.CONFIG.setAutoHideMenuBar(x); }, () -> CWB.CONFIG.getAutoHideDock() || CWB.CONFIG.getAutoHideMenuBar())
-        );
+        SodiumConfigBuilder.registerOptionOverlay(options, "sodium:general.mac_fullscreen_menu_visibility", builder.createBooleanOption(Identifier.parse("sodium:general.mac_fullscreen_menu_visibility"))
+            .setApplyHook(x -> FullscreenManager.getInstance().refreshFullscreenMode())
+            .setBinding(x -> { CWB.CONFIG.setAutoHideDock(x); CWB.CONFIG.setAutoHideMenuBar(x); }, () -> CWB.CONFIG.getAutoHideDock() || CWB.CONFIG.getAutoHideMenuBar()));
     }
 
     private static void registerOptionReplacement(ModOptionsBuilder builder, String id, OptionBuilder option) {

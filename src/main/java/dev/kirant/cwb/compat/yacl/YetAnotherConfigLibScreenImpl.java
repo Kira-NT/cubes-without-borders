@@ -10,6 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 final class YetAnotherConfigLibScreenImpl {
+    private static final OptionFlag REFRESH_FULLSCREEN = mc -> FullscreenManager.getInstance().refreshFullscreenMode();
+
     public static Screen create(CWBConfig config, String modId, Screen parent) {
         Minecraft client = Minecraft.getInstance();
         return YetAnotherConfigLib.createBuilder()
@@ -21,21 +23,21 @@ final class YetAnotherConfigLibScreenImpl {
                     .description(id -> YetAnotherConfigLibScreenImpl.getFullscreenTypeOptionDescription(modId, "exclusiveFullscreenType", id))
                     .binding(FullscreenTypes.exclusive().id(), () -> config.getExclusiveFullscreenType().id(), x -> FullscreenTypes.get(x).ifPresent(config::setExclusiveFullscreenType))
                     .controller(x -> new DropdownStringControllerBuilderImpl(x).values(FullscreenTypes.stream().map(FullscreenType::id).toArray(String[]::new)))
-                    .flag(OptionFlag.GAME_RESTART)
+                    .flag(YetAnotherConfigLibScreenImpl.REFRESH_FULLSCREEN)
                     .build())
                 .option(Option.<String>createBuilder()
                     .name(Components.translatable(modId + ".options.borderlessFullscreenType"))
                     .description(id -> YetAnotherConfigLibScreenImpl.getFullscreenTypeOptionDescription(modId, "borderlessFullscreenType", id))
                     .binding(FullscreenTypes.borderless().id(), () -> config.getBorderlessFullscreenType().id(), x -> FullscreenTypes.get(x).ifPresent(config::setBorderlessFullscreenType))
                     .controller(x -> new DropdownStringControllerBuilderImpl(x).values(FullscreenTypes.stream().map(FullscreenType::id).toArray(String[]::new)))
-                    .flag(OptionFlag.GAME_RESTART)
+                    .flag(YetAnotherConfigLibScreenImpl.REFRESH_FULLSCREEN)
                     .build())
                 .option(Option.<String>createBuilder()
                     .name(Components.translatable(modId + ".options.windowedFullscreenType"))
                     .description(id -> YetAnotherConfigLibScreenImpl.getFullscreenTypeOptionDescription(modId, "windowedFullscreenType", id))
                     .binding(FullscreenTypes.windowed().id(), () -> config.getWindowedFullscreenType().id(), x -> FullscreenTypes.get(x).ifPresent(config::setWindowedFullscreenType))
                     .controller(x -> new DropdownStringControllerBuilderImpl(x).values(FullscreenTypes.stream().map(FullscreenType::id).toArray(String[]::new)))
-                    .flag(OptionFlag.GAME_RESTART)
+                    .flag(YetAnotherConfigLibScreenImpl.REFRESH_FULLSCREEN)
                     .build())
                 .option(Option.<Boolean>createBuilder()
                     .name(Components.translatable(modId + ".options.useDelayedFullscreen"))
@@ -58,7 +60,7 @@ final class YetAnotherConfigLibScreenImpl {
                     .description(OptionDescription.of(Components.translatable(modId + ".options.autoHideDock.tooltip")))
                     .binding(false, config::getAutoHideDock, config::setAutoHideDock)
                     .controller(TickBoxControllerBuilderImpl::new)
-                    .flag(OptionFlag.GAME_RESTART)
+                    .flag(YetAnotherConfigLibScreenImpl.REFRESH_FULLSCREEN)
                     .build())
                 .option(Option.<Boolean>createBuilder()
                     .available(OS.isMacOS())
@@ -66,7 +68,7 @@ final class YetAnotherConfigLibScreenImpl {
                     .description(OptionDescription.of(Components.translatable(modId + ".options.autoHideMenuBar.tooltip")))
                     .binding(false, config::getAutoHideMenuBar, config::setAutoHideMenuBar)
                     .controller(TickBoxControllerBuilderImpl::new)
-                    .flag(OptionFlag.GAME_RESTART)
+                    .flag(YetAnotherConfigLibScreenImpl.REFRESH_FULLSCREEN)
                     .build())
                 .option(Option.<Boolean>createBuilder()
                     .name(Components.translatable(modId + ".options.pauseOnLostFocus"))

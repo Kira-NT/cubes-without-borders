@@ -10,4 +10,12 @@ public interface FullscreenManager {
     FullscreenMode getFullscreenMode();
 
     void setFullscreenMode(FullscreenMode fullscreenMode);
+
+    default void refreshFullscreenMode() {
+        FullscreenMode mode = this.getFullscreenMode();
+        if (mode != FullscreenMode.OFF) {
+            this.setFullscreenMode(FullscreenMode.OFF);
+            this.setFullscreenMode(mode);
+        }
+    }
 }
