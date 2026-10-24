@@ -2,7 +2,7 @@
 id = "cwb"
 name = "Cubes Without Borders"
 description = "Allows you to play Minecraft in a borderless fullscreen window."
-version = "4.1.0"
+version = "5.0.0"
 author = "Kira-NT"
 license = "MIT"
 sources = "https://github.com/Kira-NT/cubes-without-borders"
