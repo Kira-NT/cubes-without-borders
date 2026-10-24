@@ -2,7 +2,15 @@
   "modmenu.descriptionTranslation.cwb": "允许你在无边框全屏窗口模式下游玩 Minecraft。",
   "neoforge.screen.mods.info.description.cwb": "允许你在无边框全屏窗口模式下游玩 Minecraft。",
 
+  "cwb.fullscreenMode.off": "关關",
+  "cwb.fullscreenMode.exclusive": "独占",
   "cwb.fullscreenMode.borderless": "无边框",
+  "cwb.fullscreenMode.windowed": "窗口化",
+
+  "cwb.options.fullscreenMode": "全屏模式",
+  "cwb.options.fullscreenMode.tooltip": "§l独占§r全屏会在游戏运行时使使用其他应用变得繁琐甚至完全不可能，但在该平台上并无性能优势。\n\n§l无边框§r全屏旨在保留独占全屏的性能特征，同时融入窗口化应用常见的行为表现。\n\n§l窗口化§r全屏保留了窗口化应用的特征，同时仍能提供不错的整体性能。在已禁用程序坞和/或菜单栏或将其配置为自动隐藏的系统上效果最佳。\n",
+  "cwb.options.fullscreenMode.tooltip.macos": "§l独占§r全屏以可用性为代价，提供出色的性能与最低延迟，但会在游戏运行时使使用其他应用变得繁琐甚至完全不可能。\n\n§l无边框§r全屏旨在以延迟增加为代价保留窗口化应用的特征，同时仍能提供不错的整体性能。\n\n§l窗口化§r全屏保留了无边框全屏的特征，同时始终显示菜单栏，这对于不喜欢新款 MacBook 刘海遮挡游戏画面的用户可能有帮助。\n",
+  "cwb.options.fullscreenMode.tooltip.windows": "§l独占§r全屏以可用性为代价，提供出色的性能与最低延迟，但会在游戏运行时使使用其他应用变得繁琐甚至完全不可能。\n\n§l无边框§r全屏旨在保留独占全屏的性能特征，同时融入窗口化应用常见的行为表现。\n\n§l窗口化§r全屏将窗口化应用的特征置于性能之上。根据系统、硬件和驱动的不同，您将体验到更高的延迟，并可能遭遇显著的性能下降。\n",
 
   "cwb.options.exclusiveFullscreenType": "全屏类型",
   "cwb.options.exclusiveFullscreenType.tooltip": "当在§o视频设置§r中将§o全屏§r设置为§o开§r时，控制启用哪种全屏模式。",
@@ -10,8 +18,20 @@
   "cwb.options.borderlessFullscreenType": "无边框全屏类型",
   "cwb.options.borderlessFullscreenType.tooltip": "当§o视频设置§r中的§o全屏§r设置为§o无边框§r时，控制启用哪种全屏模式。",
 
-  "cwb.options.useScaledFramebuffer": "使用缩放帧缓冲",
+  "cwb.options.windowedFullscreenType": "窗口化全屏类型",
+  "cwb.options.windowedFullscreenType.tooltip": "当§o视频设置§r中的§o全屏§r设置为§o窗口化§r时，控制启用哪种全屏模式。",
+
+  "cwb.options.useDelayedFullscreen": "启用延迟全屏",
+  "cwb.options.useDelayedFullscreen.tooltip": "指定是否推迟进入全屏模式，直到 Minecraft 完全加载完毕。\n\n启用此选项可使启动过程更加流畅，并且可以修复由于驱动程序异常而无法立即让某些窗口以非默认分辨率进入全屏模式的问题。",
+
+  "cwb.options.useScaledFramebuffer": "启用缩放帧缓冲",
   "cwb.options.useScaledFramebuffer.tooltip": "当屏幕坐标可相对于像素坐标缩放的平台（例如 §omacOS§r 和 §oWayland (Linux)§r）时控制是否使用全分辨率帧缓冲。\n\n禁用此选项可能会显著提升性能，但会降低图像质量。",
+
+  "cwb.options.autoHideDock": "自动隐藏程序坞",
+  "cwb.options.autoHideDock.tooltip": "在受支持的平台上（例如 §omacOS§r），指定是否在非独占全屏模式下自动隐藏程序坞，以便可以通过将鼠标移至屏幕边缘来呼出，而非完全禁用。",
+
+  "cwb.options.autoHideMenuBar": "自动隐藏菜单栏",
+  "cwb.options.autoHideMenuBar.tooltip": "在受支持的平台上（例如 §omacOS§r），指定是否在非独占全屏模式下自动隐藏菜单栏，以便可以通过将鼠标移至屏幕边缘来呼出，而非完全禁用。",
 
   "cwb.options.pauseOnLostFocus": "失去焦点时暂停",
   "cwb.options.pauseOnLostFocus.tooltip": "当游戏窗口失去焦点时控制是否自动暂停游戏。",
@@ -19,9 +39,11 @@
   "cwb.options.pauseOnLostFocusDuringMultiplayer": "失去焦点时暂停（多人游戏）",
   "cwb.options.pauseOnLostFocusDuringMultiplayer.tooltip": "当§o失去焦点时暂停§r启用时，可以设置效果是否也适用于多人游戏场景，在这些场景中不暂停游戏。",
 
-  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "一种带窗口的全屏模式，性能和用户体验特征会根据平台而有所不同。\n\n在 §lWindows§r 上，这种模式通常是游玩游戏的最佳方式，因为它提供了无边框全屏体验的许多好处，而且几乎没有性能或延迟损失；然而，游戏在游戏窗口获得或失去焦点时可能会遇到烦人的闪烁现象。\n\n在§l其他平台§r上，这种模式可能会导致显著的性能下降或可用性问题，例如系统的 Dock 栏仍然可见，还可能会被渲染在游戏之上。",
+  "cwb.fullscreenTypes.minecraft:maximized.tooltip": "一种窗口化全屏模式，将游戏变为最大化的无边框窗口。\n\n该模式的性能和用户体验特征可能因平台而异，但由于大多数主流合成器对所有窗口化应用程序强制启用隐式垂直同步，通常可以预期其延迟会比默认独占全屏模式略高。\n\n在已禁用程序坞和/或菜单栏或将其配置为自动隐藏的系统上效果最佳，也适合希望它们保持可见的玩家。",
+  "cwb.fullscreenTypes.minecraft:windowed.tooltip": "一种窗口化全屏模式，性能和用户体验特征会根据平台而有所不同。\n\n在 §lWindows§r 上，这种模式通常是游玩游戏的最佳方式，因为它提供了无边框全屏体验的许多好处，而且几乎没有性能或延迟损失；然而，游戏在游戏窗口获得或失去焦点时可能会遇到烦人的闪烁现象。\n\n在§l其他平台§r上，这种模式可能会导致显著的性能下降或可用性问题，例如系统的 Dock 栏仍然可见，还可能会被渲染在游戏之上。",
   "cwb.fullscreenTypes.minecraft:default.tooltip": "Minecraft 的默认独占全屏模式。\n\n以可用性为代价提供出色的性能和最小的延迟——每当游戏窗口失去焦点时，游戏都会自动最小化。",
-  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 的默认无边框全屏模式。\n\n提供极佳的性能和最小的延迟，目前没有已知缺点。",
-  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 的默认无边框全屏模式。\n\n提供较好的性能，但由于操作系统对所有窗口应用程序强制使用的隐式垂直同步，本模式的延迟比默认的独占全屏模式略高。",
-  "cwb.fullscreenTypes.windows:windowed.tooltip": "适用于 Windows 的真正的窗口化全屏模式。\n\n与 §ominecraft:windowed§r 不同，它不会出现闪烁问题，但也缺乏该模式的性能优势。\n\n由于操作系统对所有窗口化应用程序强制使用了隐式垂直同步，其延迟高于默认的独占全屏模式。不过，一些用户可能会遇到严重的性能下降，因为 Windows 有时会丢弃窗口化应用程序提供的帧，而不会渲染它们，尤其是在执行操作系统认为比该任务更重要的后台任务时，例如下载更新或索引 Windows 录制的活动截图。"
+  "cwb.fullscreenTypes.linux:borderless.tooltip": "Linux 的默认无边框全屏模式。\n\n提供极佳的性能和最低延迟，目前没有已知缺点。",
+  "cwb.fullscreenTypes.macos:windowed.tooltip": "macOS 的默认窗口化全屏模式。\n\n与 §omacos:borderless§r 不同，本模式始终显示菜单栏，这对于不喜欢新款 MacBook 刘海遮挡部分游戏画面的用户可能有帮助。\n\n提供较好的性能，但由于操作系统对所有窗口应用程序强制启用隐式垂直同步，本模式的延迟比默认的独占全屏模式略高。",
+  "cwb.fullscreenTypes.macos:borderless.tooltip": "macOS 的默认无边框全屏模式。\n\n提供较好的性能，但由于操作系统对所有窗口应用程序强制启用隐式垂直同步，本模式的延迟比默认的独占全屏模式略高。",
+  "cwb.fullscreenTypes.windows:windowed.tooltip": "Windows 的默认窗口化全屏模式。\n\n与 §ominecraft:windowed§r 不同，本模式不会出现闪烁问题，但也缺少该模式的性能优势。\n\n由于操作系统对所有窗口化应用程序强制启用隐式垂直同步，其延迟高于默认的独占全屏模式。不过，一些用户可能会遇到严重的性能下降，因为 Windows 有时会丢弃窗口化应用程序提供的帧，而不会渲染它们，尤其是在执行操作系统认为比该任务更重要的后台任务时，例如下载更新或索引 Windows 录制的活动截图。"
 }
