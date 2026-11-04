@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import dev.eav.tomlkt.*
 import kotlin.math.*
 
@@ -11,14 +13,12 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    includeBuild("build-logic")
 }
 
 plugins {
     id("com.gradleup.shadow") version providers.gradleProperty("plugins.shadow") apply false
     id("dev.kikugie.stonecutter") version providers.gradleProperty("plugins.stonecutter")
     id("org.gradle.toolchains.foojay-resolver-convention") version providers.gradleProperty("plugins.foojay-resolver-convention")
-    id("dev.kirant.omni-loom")
 }
 
 stonecutter {
@@ -35,4 +35,23 @@ stonecutter {
                     + abs(2 - abs(it.first.length - it.second.length - 7))
             })
     }
+}
+
+gradle.lifecycle.beforeProject {
+    val loader = name.substringAfterLast('+', "fabric").takeUnless { this == rootProject } ?: return@beforeProject
+    val version = (name.split('.', '+') + listOf("0")).take(3).fold(0) { acc, x -> acc * 100 + (x.toIntOrNull() ?: 0) }
+    val (pluginId, pluginVersion) = when (loader) {
+        "fabric" -> "net.fabricmc.fabric-loom-remap" to findProperty("plugins.fabric-loom-remap")
+        else -> "dev.architectury.loom" to findProperty("plugins.architectury-loom")
+    }
+
+    extensions.extraProperties["loom.platform"] = loader
+    extensions.extraProperties["fabric.loom.dropNonIntermediateRootMethods"] = "${version < when (loader) {
+        "neoforge" -> 1_20_02
+        "forge" -> 1_17_00
+        else -> 26_01_00
+    }}"
+
+    extensions.extraProperties["gradle.plugins"] = "${findProperty("gradle.plugins") ?: ""};$pluginId"
+    buildscript.dependencies.add("classpath", "$pluginId:$pluginId.gradle.plugin:$pluginVersion")
 }

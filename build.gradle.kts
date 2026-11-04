@@ -13,7 +13,7 @@ import kotlin.*
 import kotlin.math.*
 
 plugins {
-    id("dev.kirant.omni-loom")
+    id("apply-plugins")
 }
 
 val minVersion = "0.0.0"

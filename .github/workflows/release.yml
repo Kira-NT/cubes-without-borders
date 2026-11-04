@@ -31,7 +31,7 @@ jobs:
       - name: Restore Loom Cache
         uses: actions/cache@v6
         env:
-          MAPPINGS_CACHE_KEY: ${{ hashFiles('mappings/*', '*.gradle*', 'build-logic/*', 'build-logic/src/**/*') }}
+          MAPPINGS_CACHE_KEY: ${{ hashFiles('mappings/*', '*.gradle*') }}
           VERSIONS_CACHE_KEY: ${{ hashFiles('gradle.properties', 'stonecutter.properties.toml') }}
         with:
           path: .gradle/loom-cache
