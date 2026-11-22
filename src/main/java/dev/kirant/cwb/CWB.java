@@ -25,8 +25,8 @@ public final class CWB {
     }
 
     //? if neoforge {
-    @net.neoforged.fml.common.Mod(CWB.MOD_ID)
-    @net.neoforged.api.distmarker.OnlyIn(net.neoforged.api.distmarker.Dist.CLIENT)
+    //~ if >1.21.5 ') @net.neoforged.api.distmarker.OnlyIn(' -> ', dist = '
+    @net.neoforged.fml.common.Mod(value = CWB.MOD_ID, dist = net.neoforged.api.distmarker.Dist.CLIENT)
     public static class NeoForge {
         public NeoForge(net.neoforged.fml.ModContainer mod) {
             CWB.registerConfigScreen(f -> mod.registerExtensionPoint(
