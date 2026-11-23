@@ -90,14 +90,19 @@ public final class MinecraftWindow {
         }
 
         public static void setHasDockAndMenuBar(Boolean hasDock, Boolean hasMenuBar) {
-            final long AutoHideDock = 1L;
-            final long HideDock = 1L << 1;
-            final long AutoHideMenuBar = 1L << 2;
-            final long HideMenuBar = 1L << 3;
-            final long DisableMenuBarTransparency = 1L << 9;
+            final long autoHideDock = 1L;
+            final long hideDock = 1L << 1;
+            final long autoHideMenuBar = 1L << 2;
+            final long hideMenuBar = 1L << 3;
+            final long disableMenuBarTransparency = 1L << 9;
 
-            long presentationOptions = hasDock == null ? AutoHideDock : !hasDock ? HideDock : 0;
-            presentationOptions |= hasMenuBar == null ? AutoHideMenuBar : !hasMenuBar ? HideMenuBar : !Boolean.TRUE.equals(hasDock) ? DisableMenuBarTransparency : 0;
+            long presentationOptions = (
+                hasMenuBar == null ? (autoHideMenuBar | (hasDock == null ? autoHideDock : hideDock)) :
+                !hasMenuBar ? (hideMenuBar | hideDock) :
+                hasDock == null ? (autoHideDock | disableMenuBarTransparency) :
+                !hasDock ? (hideDock | disableMenuBarTransparency) :
+                0
+            );
             Client.getInstance().sendProxy("NSApplication", "sharedApplication").send("setPresentationOptions:", presentationOptions);
         }
 
