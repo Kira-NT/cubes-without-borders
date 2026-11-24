@@ -161,8 +161,9 @@ abstract class WindowMixin implements FullscreenManager {
         *///?}
     })
     private void disableFullscreen(CallbackInfo ci) {
-        if (this.previousFullscreenType != null) {
-            this.previousFullscreenType.disable((Window)(Object)this);
+        FullscreenType previousFullscreenType = this.previousFullscreenType;
+        if (previousFullscreenType != null && previousFullscreenType != FullscreenTypes.exclusive()) {
+            previousFullscreenType.disable((Window)(Object)this);
         }
     }
 
