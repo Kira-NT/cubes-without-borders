@@ -22,13 +22,13 @@ public final class FullscreenTypes {
             VALUES[1] = new FullscreenType("windows:windowed", WindowPlacementStrategies.OVERSCAN, WindowHints.DECORATED, WindowHints.AUTO_ICONIFY);
             VALUES[0] = windowedFullscreen;
         } else if (OS.isMacOS()) {
-            Consumer<Window> enableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(true, true);
-            Consumer<Window> disableDockAndMenuBar = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, CWB.CONFIG.getAutoHideMenuBar() ? null : false);
-            Consumer<Window> disableDock = w -> MinecraftWindow.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, true);
+            Consumer<Window> enableDockAndMenuBar = w -> OS.MacOS.setHasDockAndMenuBar(true, true);
+            Consumer<Window> disableDockAndMenuBar = w -> OS.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, CWB.CONFIG.getAutoHideMenuBar() ? null : false);
+            Consumer<Window> disableDock = w -> OS.MacOS.setHasDockAndMenuBar(CWB.CONFIG.getAutoHideDock() ? null : false, true);
             WindowHint hasDockAndMenuBar = WindowHint.of(enableDockAndMenuBar, disableDockAndMenuBar);
             WindowHint hasDock = WindowHint.of(enableDockAndMenuBar, disableDock);
-            WindowHint hasShadow = MinecraftWindow.MacOS::setHasShadow;
-            WindowHint stub = WindowHint.of(MinecraftWindow.MacOS::registerWindowWillReturnFieldEditorStub);
+            WindowHint hasShadow = OS.MacOS::setHasShadow;
+            WindowHint stub = WindowHint.of(OS.MacOS::registerWindowWillReturnFieldEditorStub);
             VALUES[3] = windowedFullscreen;
             VALUES[2] = maximizedFullscreen;
             VALUES[1] = new FullscreenType("macos:windowed", WindowPlacementStrategies.FILL_MONITOR_SAFE_AREA, new WindowHint[] { WindowHints.DECORATED, WindowHints.AUTO_ICONIFY, hasShadow, hasDock, stub }, WindowHints.RESIZABLE);

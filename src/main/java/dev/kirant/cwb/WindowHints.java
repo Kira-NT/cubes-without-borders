@@ -15,7 +15,7 @@ public final class WindowHints {
     public static final WindowHint RESTORED;
 
     static {
-        MACOS_RESIZABLE = OS.isMacOS() ? MinecraftWindow.MacOS::setResizable : (w, v) -> { };
+        MACOS_RESIZABLE = OS.isMacOS() ? OS.MacOS::setResizable : (w, v) -> { };
     }
 
     //? if >=26.3 {

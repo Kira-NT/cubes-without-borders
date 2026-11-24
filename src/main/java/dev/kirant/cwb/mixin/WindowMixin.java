@@ -75,7 +75,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         // Hide Minecraft from broken Nvidia drivers on Windows.
         if (OS.isWindows()) {
-            MinecraftWindow.Windows.concealCommandLine();
+            OS.Windows.concealCommandLine();
         }
 
         return getMonitor.call(monitorManager, monitor);
@@ -87,7 +87,7 @@ abstract class WindowMixin implements FullscreenManager {
     )
     private void init(Window window, Operation<Void> setMode) {
         if (OS.isWindows()) {
-            MinecraftWindow.Windows.restoreCommandLine();
+            OS.Windows.restoreCommandLine();
         }
 
         CWBConfig config = CWB.CONFIG;
@@ -101,7 +101,7 @@ abstract class WindowMixin implements FullscreenManager {
 
         //? if <26.3 && (forge || neoforge) {
         /*if (OS.isMacOS() && !config.getUseScaledFramebuffer()) {
-            MinecraftWindow.MacOS.setWantsBestResolutionOpenGLSurface(window, false);
+            OS.MacOS.setWantsBestResolutionOpenGLSurface(window, false);
         }
         *///?}
 
