@@ -78,9 +78,6 @@ abstract class WindowMixin implements FullscreenManager {
             MinecraftWindow.Windows.concealCommandLine();
         }
 
-        //? if <26.3
-        //org.lwjgl.glfw.GLFW.glfwWindowHint(org.lwjgl.glfw.GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER, CWB.CONFIG.getUseScaledFramebuffer() ? 1 : 0);
-
         return getMonitor.call(monitorManager, monitor);
     }
 
@@ -216,7 +213,13 @@ abstract class WindowMixin implements FullscreenManager {
         }
     }
     //?} else {
-    /*@WrapOperation(method = "setMode", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V", ordinal = 0))
+    /*@WrapOperation(method = "<init>", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/platform/Window;width:I", opcode = org.objectweb.asm.Opcodes.GETFIELD, ordinal = 0), require = 0)
+    private int patchPixelDensity(Window window, Operation<Integer> getWidth) {
+        org.lwjgl.glfw.GLFW.glfwWindowHint(org.lwjgl.glfw.GLFW.GLFW_COCOA_RETINA_FRAMEBUFFER, CWB.CONFIG.getUseScaledFramebuffer() ? 1 : 0);
+        return getWidth.call(window);
+    }
+
+    @WrapOperation(method = "setMode", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V", ordinal = 0))
     private void enableExclusiveFullscreenWithBorderlessFallback(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate, Operation<Void> glfwSetWindowMonitor) {
         try {
             glfwSetWindowMonitor.call(window, monitor, xpos, ypos, width, height, refreshRate);
